@@ -8,14 +8,14 @@ Attached is a Ruby on Rails file attachment tool that lets users upload to the c
   
 == Examples
 
-	has_attached :photo
-	
-	has_attached :video, :processor => :zencoder, :styles => { 
-		:mp4_720p => { :extension => 'mp4' },
-		:mp4_480p => { :extension => 'mp4' },
-		:ogv_720p => { :extension => 'ogv' },
-		:ogv_480p => { :extension => 'ogv' },
-	}
+  has_attached :photo
+  
+  has_attached :video, :processor => :zencoder, :styles => { 
+    :mp4_720p => { :extension => 'mp4' },
+    :mp4_480p => { :extension => 'mp4' },
+    :ogv_720p => { :extension => 'ogv' },
+    :ogv_480p => { :extension => 'ogv' },
+  }
   
 == Copyright
 
