@@ -1,0 +1,22 @@
+= Attached
+
+Attached is a Ruby on Rails file attachment tool that lets users upload to the cloud, then process in the cloud. The tool supports Amazon S3 by default. It surpasses Paperclip by providing built-in support for direct uploads to the cloud and by allowing integration with cloud based processing tools. However, in almost every other way Paperclip is better. If you aren't working in the cloud exclusively, this isn't for you!
+
+== Installation
+
+  gem install attached
+  
+== Examples
+
+	has_attached :photo
+	
+	has_attached :video, :processor => :zencoder, :styles => { 
+		:mp4_720p => { :extension => 'mp4' },
+		:mp4_480p => { :extension => 'mp4' },
+		:ogv_720p => { :extension => 'ogv' },
+		:ogv_480p => { :extension => 'ogv' },
+	}
+  
+== Copyright
+
+Copyright (c) 2010 Kevin Sylvestre. See LICENSE for details.
