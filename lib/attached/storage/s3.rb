@@ -23,6 +23,17 @@ module Attached
       end
       
       
+      # Access the host (e.g. bucket.s3.amazonaws.com) for a storage service.
+      #
+      # Usage:
+      #
+      #   storage.host
+      
+      def host()
+        "#{self.bucket}.s3.amazonaws.com"
+      end
+      
+      
       # Save a file to a given path on Amazon S3.
       #
       # Parameters:
@@ -55,7 +66,8 @@ module Attached
       
       def connect
         return AWS::S3::Base.establish_connection!(
-          :access_key_id => self.access_key_id, :secret_access_key => self.secret_access_key
+          :access_key_id => self.access_key_id, 
+          :secret_access_key => self.secret_access_key
         )
       end
       

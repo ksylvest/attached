@@ -1,6 +1,6 @@
 = Attached
 
-Attached is a Ruby on Rails file attachment tool that lets users upload to the cloud, then process in the cloud. The tool supports Amazon S3 by default. It surpasses Paperclip by providing built-in support for direct uploads to the cloud and by allowing integration with cloud based processing tools. However, in almost every other way Paperclip is better. If you aren't working in the cloud exclusively, this isn't for you!
+Attached is a Ruby on Rails file attachment tool that lets users upload to the cloud, then process in the cloud. The tool supports Amazon S3 by default. It surpasses Paperclip by providing built-in support for direct uploads to the cloud and by allowing integration with cloud based processing tools. However, in almost every other way Paperclip is better. The source code inspired (and copied) from Paperclip. If you aren't working in the cloud exclusively then this isn't for you!
 
 == Installation
 
@@ -13,10 +13,8 @@ Migration:
   class CreateVideo < ActiveRecord::Migration
     def self.up
       create_table :videos do |t|
-        t.string :name
-      
-        t.string :video_attached_uuid
-        t.integer :video_attached_size
+        t.string :video_extension
+        t.integer :video_size
 
         t.timestamps
       end

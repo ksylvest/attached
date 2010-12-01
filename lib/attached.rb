@@ -31,8 +31,8 @@ module Attached
     #
     # Options:
     #
-    # * :styles 
-    # * :storage 
+    # * :styles  - 
+    # * :storage - 
     #
     # Usage:
     #
@@ -43,13 +43,13 @@ module Attached
     
     def has_attached(name, options = {})
       
+      include InstanceMethods
+      
       initialize_attached_options unless attached_options
       attached_options[name] = options
       
-      include InstanceMethods
-      
-      before_save :save_attached
-      before_destroy :destroy_attached
+      after_save :save_attached
+      after_destroy :destroy_attached
       
       define_method name do
         attachment_for(name)
@@ -63,6 +63,21 @@ module Attached
         attachment_for(name).file?
       end
       
+      after_validation do
+        
+        self.errors[:"#{name}_size"].each do |message|
+          self.errors.add(name, message)
+        end
+        
+        self.errors[:"#{name}_extension"].each do |message|
+          self.errors.add(name, message)
+        end
+        
+        self.errors.delete(:"#{name}_size")
+        self.errors.delete(:"#{name}_extension")
+        
+      end
+      
     end
     
     
@@ -70,10 +85,10 @@ module Attached
     #
     # Options:
     #
-    # * :message string to be displayed with :minimum and :maximum variables
-    # * :minimum integer for the minimum byte size of the attached
-    # * :maximum integer for the maximum byte size of teh attached
-    # * :in range of bytes for file
+    # * :message - string to be displayed with :minimum and :maximum variables
+    # * :minimum - integer for the minimum byte size of the attached
+    # * :maximum - integer for the maximum byte size of teh attached
+    # * :in - range of bytes for file
     #
     # Usage:
     #   
@@ -93,7 +108,7 @@ module Attached
       message.gsub!(/:minimum/, minimum.to_s)
       message.gsub!(/:maximum/, maximum.to_s)
       
-      validates_inclusion_of :"#{name}_attached_size", :in => range, :message => message, 
+      validates_inclusion_of :"#{name}_size", :in => range, :message => message, 
         :if => options[:if], :unless => options[:unless]
       
     end
@@ -103,7 +118,7 @@ module Attached
     #
     # Options:
     #
-    # * :message string to be displayed
+    # * :message - string to be displayed
     #
     # Usage:
     #
@@ -114,7 +129,7 @@ module Attached
       
       message = options[:message] || "must be attached"
       
-      validates_presence_of :"#{name}_attached_uuid", :message => message,
+      validates_presence_of :"#{name}_extension", :message => message,
         :if => options[:if], :unless => options[:unless]
       
     end

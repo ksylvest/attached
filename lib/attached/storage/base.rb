@@ -34,6 +34,17 @@ module Attached
       end
       
       
+      # Access the host (e.g. localhost:3000) for a storage service.
+      #
+      # Usage:
+      #
+      #   storage.host
+      
+      def host()
+        raise NotImplementedError.new
+      end
+      
+      
       # Save a file to a given path (abstract).
       #
       # Parameters:

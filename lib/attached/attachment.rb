@@ -1,5 +1,3 @@
-require 'uuid'
-
 require 'attached/storage'
 
 module Attached
@@ -16,8 +14,10 @@ module Attached
     
     def self.options
       @options ||= {
-        :storage => :fs,
-        :path => "/:name/:style/:uuid.:extension"
+        :storage  => :fs,
+        :protocol => 'http',
+        :path     => "/:name/:style/:id:extension",
+        :styles   => {},
       }
     end
     
@@ -31,9 +31,9 @@ module Attached
     #
     # Options:
     #
-    # * path        - The location where the attachment is stored
-    # * storage     - The storage medium represented as a symbol such as ':s3' or ':fs'
-    # * credentials - A file, hash, or path used to authenticate with the specified storage medium
+    # * :path        - The location where the attachment is stored
+    # * :storage     - The storage medium represented as a symbol such as ':s3' or ':fs'
+    # * :credentials - A file, hash, or path used to authenticate with the specified storage medium
     
     def initialize(name, instance, options = {})
       @name       = name
@@ -50,8 +50,10 @@ module Attached
     def assign(file)
       @file = file
       
-      instance_set(:attached_uuid, UUID.generate)
-      instance_set(:attached_size, file.size)
+      extension = File.extname(file.original_filename)
+      
+      instance_set :size, file.size
+      instance_set :extension, extension
     end
     
     
@@ -62,7 +64,7 @@ module Attached
     def save
       @storage ||= Attached::Storage.medium(options[:storage], options[:credentials])
       
-      storage.save(self.file, self.path)
+      storage.save(self.file, self.path) if self.file
     end
     
     
@@ -84,7 +86,9 @@ module Attached
     #   @object.avatar.url(:large)
     
     def url(style = :original)
-      return path(style)
+      @storage ||= Attached::Storage.medium(options[:storage], options[:credentials])
+      
+      return "#{options[:protocol]}://#{@storage.host}#{path(style)}"
     end
     
     
@@ -97,10 +101,12 @@ module Attached
     #   @object.avatar.url(:large)
     
     def path(style = :original)
-      path = options[:path]
+      path = String.new(options[:path])
+      
+      path.gsub!(/:id/, instance.id.to_s)
       path.gsub!(/:name/, name.to_s)
-      path.gsub!(/:uuid/, uuid.to_s)
       path.gsub!(/:style/, style.to_s)
+      path.gsub!(/:extension/, extension(style).to_s)
 
       return path
     end
@@ -112,18 +118,7 @@ module Attached
     # @object.avatar.size
     
     def size
-      instance_get(:attached_size)
-    end
-    
-    
-    # Access the uuid for an attachment.
-    #
-    # Usage:
-    #
-    # @object.avatar.uuid
-    
-    def uuid
-      instance_get(:attached_uuid)
+      return instance_get(:size)
     end
     
     
@@ -133,8 +128,10 @@ module Attached
     #
     # @object.avatar.extension
     
-    def extension
-      instance_get(:attached_extension)
+    def extension(style)
+      return options[:styles][style][:extension] if style and options[:styles][style]
+      
+      return instance_get(:extension)
     end
     
     
@@ -145,7 +142,7 @@ module Attached
     # 
     # Usage:
     #
-    #   self.instance_set(attached_size, 12345)
+    #   self.instance_set(size, 12345)
   
     def instance_set(attribute, value)
       setter = :"#{self.name}_#{attribute}="
@@ -157,7 +154,7 @@ module Attached
     #
     # Usage:
     #
-    # self.instance_get(attached_size)
+    # self.instance_get(size)
     
     def instance_get(attribute)
       getter = :"#{self.name}_#{attribute}"
