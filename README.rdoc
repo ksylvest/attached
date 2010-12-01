@@ -36,8 +36,9 @@ Model:
   
 Form:
 
-  <%= form_for @user, :url => user_path, :html => { :multipart => true } do |form| %>
-    <%= form.file_field :avatar %>
+  <%= form_for @video, :html => { :multipart => true } do |form| %>
+    <%= form.file_field :video %>
+    <p class="errors"><%= @video.errors[:video] %></p>
   <% end %>
   
 View:
