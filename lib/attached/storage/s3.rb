@@ -1,3 +1,5 @@
+require 'aws/s3'
+
 module Attached
   module Storage
     class S3 < Base
