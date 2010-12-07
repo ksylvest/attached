@@ -36,10 +36,11 @@ module Attached
     #
     # Usage:
     #
-    #   has_attached :avatar
-    #   has_attached :avatar, :storage => :s3
-    #   has_attached :clip, styles => [ :mp4, :ogv ]
-    #   has_attached :clip, styles => { :main => { :size => "480p", :format => "mp4" } }
+    #   has_attached :video
+    #   has_attached :video, :storage => :s3
+    #   has_attached :video, styles => [ :mp4, :ogv ]
+    #   has_attached :video, styles => { :main => { :size => "480p", :format => "mp4" } }
+    #   has_attached :thumbnail, :range => (1..4)
     
     def has_attached(name, options = {})
       
@@ -73,8 +74,13 @@ module Attached
           self.errors.add(name, message)
         end
         
+        self.errors[:"#{name}_identifier"].each do |message|
+          self.errors.add(name, message)
+        end
+        
         self.errors.delete(:"#{name}_size")
         self.errors.delete(:"#{name}_extension")
+        self.errors.delete(:"#{name}_identifier")
         
       end
       
@@ -129,7 +135,7 @@ module Attached
       
       message = options[:message] || "must be attached"
       
-      validates_presence_of :"#{name}_extension", :message => message,
+      validates_presence_of :"#{name}_identifier", :message => message,
         :if => options[:if], :unless => options[:unless]
       
     end

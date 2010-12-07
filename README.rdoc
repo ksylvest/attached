@@ -13,6 +13,7 @@ Migration:
   class CreateVideo < ActiveRecord::Migration
     def self.up
       create_table :videos do |t|
+        t.string :video_identifier
         t.string :video_extension
         t.integer :video_size
 

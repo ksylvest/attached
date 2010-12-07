@@ -47,13 +47,14 @@ module Attached
     #
     #   @object.avatar.assign(...)
     
-    def assign(file)
+    def assign(file, identifier = UUID.generate)
       @file = file
       
       extension = File.extname(file.original_filename)
       
       instance_set :size, file.size
       instance_set :extension, extension
+      instance_set :identifier, identifier
     end
     
     
@@ -78,21 +79,22 @@ module Attached
       storage.destroy(self.path)
     end
     
-    
+    # Acesss the URL for an attachment.
+    #
     # Usage:
     #
     #   @object.avatar.url
     #   @object.avatar.url(:small)
     #   @object.avatar.url(:large)
     
-    def url(style = :original)
+    def url(style, options = {})
       @storage ||= Attached::Storage.medium(options[:storage], options[:credentials])
       
       return "#{options[:protocol]}://#{@storage.host}#{path(style)}"
     end
     
     
-    # Access the URL 
+    # Access the path for an attachment. 
     #
     # Usage:
     #
@@ -100,13 +102,13 @@ module Attached
     #   @object.avatar.url(:small)
     #   @object.avatar.url(:large)
     
-    def path(style = :original)
-      path = String.new(options[:path])
+    def path(style, options = {})
+      path = options[:path].clone
       
-      path.gsub!(/:id/, instance.id.to_s)
       path.gsub!(/:name/, name.to_s)
       path.gsub!(/:style/, style.to_s)
       path.gsub!(/:extension/, extension(style).to_s)
+      path.gsub!(/:identifier/, identifier(style).to_s)
 
       return path
     end
@@ -122,18 +124,33 @@ module Attached
     end
     
     
-    # Access the extension for an attachment.
+    # Access the extension for an attachment. It will first check the styles 
+    # to see if one is specified before checking the instance.
     #
     # Usage:
     #
     # @object.avatar.extension
     
     def extension(style)
-      return options[:styles][style][:extension] if style and options[:styles][style]
-      
-      return instance_get(:extension)
+      options[:styles] and 
+      options[:styles][style] and 
+      options[:styles][style][:extension] or 
+      instance_get(:extension)
     end
     
+    # Access the identifier for an attachment. It will first check the styles 
+    # to see if one is specified before checking the instance.
+    #
+    # Usage:
+    #
+    # @object.avatar.identifier
+    
+    def identifier(style)
+      options[:styles] and 
+      options[:styles][style] and 
+      options[:styles][style][:identifier] or 
+      instance_get(:identifier)
+    end
     
   private
   
