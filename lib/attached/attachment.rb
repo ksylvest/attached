@@ -1,3 +1,5 @@
+require 'uuid'
+
 require 'attached/storage'
 
 module Attached
@@ -9,14 +11,12 @@ module Attached
     attr_reader :name
     attr_reader :instance
     attr_reader :options
-    attr_reader :storage
     
     
     def self.options
       @options ||= {
-        :storage  => :fs,
-        :protocol => 'http',
-        :path     => "/:name/:style/:id:extension",
+        :storage  => :s3,
+        :path     => "/:name/:style/:identifier:extension",
         :styles   => {},
       }
     end
@@ -32,7 +32,7 @@ module Attached
     # Options:
     #
     # * :path        - The location where the attachment is stored
-    # * :storage     - The storage medium represented as a symbol such as ':s3' or ':fs'
+    # * :storage     - The storage medium represented as a symbol such as ':s3'
     # * :credentials - A file, hash, or path used to authenticate with the specified storage medium
     
     def initialize(name, instance, options = {})
@@ -48,7 +48,7 @@ module Attached
     #   @object.avatar.assign(...)
     
     def assign(file, identifier = UUID.generate)
-      @file = file
+      @file = file.tempfile
       
       extension = File.extname(file.original_filename)
       
@@ -65,7 +65,7 @@ module Attached
     def save
       @storage ||= Attached::Storage.medium(options[:storage], options[:credentials])
       
-      storage.save(self.file, self.path) if self.file
+      @storage.save(self.file, self.path) if self.file and self.path
     end
     
     
@@ -76,7 +76,7 @@ module Attached
     def destroy
       @storage ||= Attached::Storage.medium(options[:storage], options[:credentials])
       
-      storage.destroy(self.path)
+      @storage.destroy(self.path) if self.path
     end
     
     # Acesss the URL for an attachment.
@@ -87,10 +87,10 @@ module Attached
     #   @object.avatar.url(:small)
     #   @object.avatar.url(:large)
     
-    def url(style, options = {})
+    def url(style = :original)
       @storage ||= Attached::Storage.medium(options[:storage], options[:credentials])
       
-      return "#{options[:protocol]}://#{@storage.host}#{path(style)}"
+      return "#{@storage.host}#{path(style)}"
     end
     
     
@@ -102,7 +102,7 @@ module Attached
     #   @object.avatar.url(:small)
     #   @object.avatar.url(:large)
     
-    def path(style, options = {})
+    def path(style = :original)
       path = options[:path].clone
       
       path.gsub!(/:name/, name.to_s)
@@ -131,7 +131,8 @@ module Attached
     #
     # @object.avatar.extension
     
-    def extension(style)
+    def extension(style = nil)
+      style and
       options[:styles] and 
       options[:styles][style] and 
       options[:styles][style][:extension] or 
@@ -145,12 +146,37 @@ module Attached
     #
     # @object.avatar.identifier
     
-    def identifier(style)
+    def identifier(style = nil)
+      style and
       options[:styles] and 
       options[:styles][style] and 
       options[:styles][style][:identifier] or 
       instance_get(:identifier)
     end
+    
+    
+    # Set the extension for an attachment. It will act independently of the 
+    # defined style.
+    #
+    # Usage:
+    #
+    # @object.avatar.extension = ".png"
+    
+    def extension=(extension)
+      instance_set(:extension, extension)
+    end
+    
+    # Set the identifier for an attachment. It will act independently of the 
+    # defined style.
+    #
+    # Usage:
+    #
+    # @object.avatar.identifier = "1234"
+    
+    def identifier=(identifier)
+      instance_set(:identifier, identifier)
+    end
+    
     
   private
   

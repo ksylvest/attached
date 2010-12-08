@@ -1,5 +1,3 @@
-require 'attached/storage/base'
-
 module Attached
   module Storage
     class Base
@@ -34,7 +32,7 @@ module Attached
       end
       
       
-      # Access the host (e.g. localhost:3000) for a storage service.
+      # Access the host for a storage service or return null if local.
       #
       # Usage:
       #
