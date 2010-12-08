@@ -43,6 +43,17 @@ module Attached
     end
     
     
+    # 
+    #
+    # Usage:
+    #
+    #   @object.avatar.changed?
+    
+    def changed?
+      instance.changed.include? "#{name}_identifier"
+    end
+    
+    
     # Usage:
     #
     #   @object.avatar.assign(...)
