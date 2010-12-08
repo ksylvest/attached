@@ -104,15 +104,15 @@ module Attached
     
     def validates_attached_size(name, options = {})
       
-      message = options[:message] || "size must be between :minimum and :maximum bytes"
+      message = options[:message] || "size must be between :minimum and :maximum"
        
       minimum = options[:minimum] || options[:in] && options[:in].first || (0.0 / 1.0)
       maximum = options[:maximum] || options[:in] && options[:in].last  || (1.0 / 0.0)
        
       range = minimum..maximum
       
-      message.gsub!(/:minimum/, minimum.to_s)
-      message.gsub!(/:maximum/, maximum.to_s)
+      message.gsub!(/:minimum/, number_to_human_size(minimum))
+      message.gsub!(/:maximum/, number_to_human_size(maximum))
       
       validates_inclusion_of :"#{name}_size", :in => range, :message => message, 
         :if => options[:if], :unless => options[:unless]
