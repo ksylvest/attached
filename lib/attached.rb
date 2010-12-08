@@ -104,15 +104,22 @@ module Attached
     
     def validates_attached_size(name, options = {})
       
-      message = options[:message] || "size must be between :minimum and :maximum"
+      zero = (0.0 / 1.0)
+      infi = (1.0 / 0.0)
        
-      minimum = options[:minimum] || options[:in] && options[:in].first || (0.0 / 1.0)
-      maximum = options[:maximum] || options[:in] && options[:in].last  || (1.0 / 0.0)
+      minimum = options[:minimum] || options[:in] && options[:in].first || zero
+      maximum = options[:maximum] || options[:in] && options[:in].last  || infi
+      
+      message = options[:message]
+      message ||= "size must be specified" if minimum == zero && maximum == infi
+      message ||= "size must be a minimum of :minimum" if maximum == infi
+      message ||= "size must be a maximum of :maximum" if minimum == zero
+      message ||= "size must be between :minimum and :maximum bytes"
        
       range = minimum..maximum
       
-      message.gsub!(/:minimum/, number_to_human_size(minimum))
-      message.gsub!(/:maximum/, number_to_human_size(maximum))
+      message.gsub!(/:minimum/, number_to_human_size(minimum)) unless minimum == zero
+      message.gsub!(/:maximum/, number_to_human_size(maximum)) unless maximum == infi
       
       validates_inclusion_of :"#{name}_size", :in => range, :message => message, 
         :if => options[:if], :unless => options[:unless]
@@ -138,6 +145,29 @@ module Attached
       validates_presence_of :"#{name}_identifier", :message => message,
         :if => options[:if], :unless => options[:unless]
       
+    end
+    
+    
+  private
+  
+  
+    SINGULAR = 1
+    
+    def number_to_human_size(number, options = {})
+      return if number == 0.0 / 1.0
+      return if number == 1.0 / 0.0
+      
+      base  = 1024
+      units = ["byte", "kilobyte", "megabyte", "gigabyte", "terabyte", "petabyte"]
+      
+      exponent = (Math.log(number) / Math.log(base)).floor
+      
+      number /= base ** exponent
+      unit = units[exponent]
+      
+      number == SINGULAR ?  unit.gsub!(/s$/, '') : unit.gsub!(/$/, 's')
+      
+      "#{number} #{unit}"
     end
     
     
