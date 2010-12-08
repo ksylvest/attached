@@ -49,8 +49,8 @@ module Attached
       initialize_attached_options unless attached_options
       attached_options[name] = options
       
-      after_save :save_attached
-      after_destroy :destroy_attached
+      before_save :save_attached
+      before_destroy :destroy_attached
       
       define_method name do
         attachment_for(name)
