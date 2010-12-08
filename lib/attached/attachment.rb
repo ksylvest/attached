@@ -1,4 +1,4 @@
-require 'uuid'
+require 'guid'
 
 require 'attached/storage'
 
@@ -47,7 +47,7 @@ module Attached
     #
     #   @object.avatar.assign(...)
     
-    def assign(file, identifier = UUID.generate)
+    def assign(file, identifier = Guid.new)
       @file = file.tempfile
       
       extension = File.extname(file.original_filename)
