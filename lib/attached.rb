@@ -114,7 +114,7 @@ module Attached
       message ||= "size must be specified" if minimum == zero && maximum == infi
       message ||= "size must be a minimum of :minimum" if maximum == infi
       message ||= "size must be a maximum of :maximum" if minimum == zero
-      message ||= "size must be between :minimum and :maximum bytes"
+      message ||= "size must be between :minimum and :maximum"
        
       range = minimum..maximum
       
