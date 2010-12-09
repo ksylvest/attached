@@ -151,21 +151,29 @@ module Attached
   private
   
   
-    SINGULAR = 1
+    # Convert a number to a human readable size.
+    #
+    # Usage:
+    #
+    #   number_to_human_size(1) # 1 byte
+    #   number_to_human_size(2) # 2 bytes
+    #   number_to_human_size(1024) # 1 kilobyte
+    #   number_to_human_size(2048) # 2 kilobytes
     
     def number_to_human_size(number, options = {})
       return if number == 0.0 / 1.0
       return if number == 1.0 / 0.0
       
-      base  = 1024
-      units = ["byte", "kilobyte", "megabyte", "gigabyte", "terabyte", "petabyte"]
+      singular = options['singular'] || 1
+      base     = options['base']     || 1024
+      units    = options['units']    || ["byte", "kilobyte", "megabyte", "gigabyte", "terabyte", "petabyte"]
       
       exponent = (Math.log(number) / Math.log(base)).floor
       
       number /= base ** exponent
       unit = units[exponent]
       
-      number == SINGULAR ?  unit.gsub!(/s$/, '') : unit.gsub!(/$/, 's')
+      number == singular ?  unit.gsub!(/s$/, '') : unit.gsub!(/$/, 's')
       
       "#{number} #{unit}"
     end

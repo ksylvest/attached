@@ -13,9 +13,9 @@ Migration:
   class CreateVideo < ActiveRecord::Migration
     def self.up
       create_table :videos do |t|
-        t.string :video_identifier
-        t.string :video_extension
-        t.integer :video_size
+        t.string :encoding_identifier
+        t.string :encoding_extension
+        t.integer :encoding_size
 
         t.timestamps
       end
@@ -28,7 +28,7 @@ Migration:
 
 Model:
   
-  has_attached :video, :styles => { 
+  has_attached :encoding, :styles => { 
     :mp4_720p => { :extension => 'mp4' },
     :mp4_480p => { :extension => 'mp4' },
     :ogv_720p => { :extension => 'ogv' },
@@ -38,15 +38,15 @@ Model:
 Form:
 
   <%= form_for @video, :html => { :multipart => true } do |form| %>
-    <%= form.file_field :video %>
-    <p class="errors"><%= @video.errors[:video] %></p>
+    <%= form.file_field :encoding %>
+    <p class="errors"><%= @video.errors[:encoding] %></p>
   <% end %>
   
 View:
 
   <video>
-    <source src="<%= @video.video.url(:mp4_480p) %>" />
-    <source src="<%= @video.video.url(:ogv_480p) %>" />
+    <source src="<%= @video.encoding.url(:mp4_480p) %>" />
+    <source src="<%= @video.encoding.url(:ogv_480p) %>" />
   </video>
   
 == Copyright
