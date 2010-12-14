@@ -1,6 +1,6 @@
 = Attached
 
-Attached is a Ruby on Rails file attachment tool that lets users upload to the cloud, then process in the cloud. The tool supports Amazon S3 by default. It surpasses Paperclip by providing built-in support for direct uploads to the cloud and by allowing integration with cloud based processing tools. However, in almost every other way Paperclip is better. The source code inspired (and copied) from Paperclip. If you aren't working in the cloud exclusively then this isn't for you!
+Attached is a Ruby on Rails file attachment tool that lets users upload to the cloud, then process in the cloud. The tool supports Amazon S3 by default. It surpasses Paperclip by providing built-in support for direct uploads to the cloud and by allowing integration with cloud based processing tools. However, in almost every other way Paperclip is better. The source code is inspired (and copied) from Paperclip. If you aren't working in the cloud exclusively then this isn't for you!
 
 == Installation
 
@@ -29,11 +29,15 @@ Migration:
 Model:
   
   has_attached :encoding, :styles => { 
-    :mp4_720p => { :extension => 'mp4' },
-    :mp4_480p => { :extension => 'mp4' },
-    :ogv_720p => { :extension => 'ogv' },
-    :ogv_480p => { :extension => 'ogv' },
+    :mp4_720p => { :extension => '.mp4' },
+    :mp4_480p => { :extension => '.mp4' },
+    :ogg_720p => { :extension => '.ogv' },
+    :ogg_480p => { :extension => '.ogv' },
   }
+  
+  after_save do
+    remote.encode(self.encoding.url)
+  end
   
 Form:
 
@@ -46,8 +50,29 @@ View:
 
   <video>
     <source src="<%= @video.encoding.url(:mp4_480p) %>" />
-    <source src="<%= @video.encoding.url(:ogv_480p) %>" />
+    <source src="<%= @video.encoding.url(:ogg_480p) %>" />
   </video>
+  
+== Advanced
+
+=== Storage
+  
+  has_attached :avatar, :provider => :amazon, :credentials => {
+    :secret_access_key => "*****",
+    :access_key_id     => "*****",
+  }
+  
+  has_attached :avatar, :provider => :google, :credentials => {
+    :secret_access_key => "*****",
+    :access_key_id     => "*****",
+  }
+  
+=== Processor
+
+  has_attached :avatar, :processor => :resize, :styles => {
+    :small => { :size => "200x200#" }
+    :large => { :size => "200x200#" }
+  }
   
 == Copyright
 

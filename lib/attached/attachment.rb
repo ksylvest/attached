@@ -1,6 +1,8 @@
 require 'guid'
 
 require 'attached/storage'
+require 'attached/processor'
+require 'attached/resize'
 
 module Attached
   
@@ -11,12 +13,14 @@ module Attached
     attr_reader :name
     attr_reader :instance
     attr_reader :options
+    attr_reader :queue
+    attr_reader :path
+    attr_reader :styles
+    attr_reader :default
     attr_reader :medium
     attr_reader :credentials
     attr_reader :processors
     attr_reader :processor
-    attr_reader :styles
-    attr_reader :path
     
     
     # A default set of options that can be extended to customize the path, storage or credentials.
@@ -28,6 +32,7 @@ module Attached
     def self.options
       @options ||= {
         :path       => "/:name/:style/:identifier:extension",
+        :default    => :original,
         :styles     => {},
         :processors => [],
       }
@@ -51,11 +56,13 @@ module Attached
     def initialize(name, instance, options = {})
       @name        = name
       @instance    = instance
-      
       @options     = self.class.options.merge(options)
+      
+      @queue       = {}
       
       @path        = @options[:path]
       @styles      = @options[:styles]
+      @default     = @options[:default]
       @medium      = @options[:medium]
       @credentials = @options[:credentials]
       @processors  = @options[:processors]
@@ -91,6 +98,8 @@ module Attached
       instance_set :extension, extension
       instance_set :identifier, identifier
       
+      self.queue[self.default] = self.file
+      
       process()
     end
     
@@ -102,9 +111,11 @@ module Attached
     #   @object.avatar.save
     
     def save
-      @storage ||= Attached::Storage.storage(options[:medium], options[:credentials])
+      @storage ||= Attached::Storage.storage(self.medium, self.credentials)
       
-      @storage.save(self.file, self.path) if self.file and self.path
+      @queue.each do |style, file|
+        @storage.save(file, self.path(style)) if file and self.path(style)
+      end
     end
     
     
@@ -115,7 +126,7 @@ module Attached
     #   @object.avatar.destroy
     
     def destroy
-      @storage ||= Attached::Storage.storage(options[:medium], options[:credentials])
+      @storage ||= Attached::Storage.storage(self.medium, self.credentials)
       
       @storage.destroy(self.path) if self.path
     end
@@ -129,8 +140,8 @@ module Attached
     #   @object.avatar.url(:small)
     #   @object.avatar.url(:large)
     
-    def url(style = :original)
-      @storage ||= Attached::Storage.storage(options[:medium], options[:credentials])
+    def url(style = self.default)
+      @storage ||= Attached::Storage.storage(self.medium, self.credentials)
       
       return "#{@storage.host}#{path(style)}"
     end
@@ -144,8 +155,8 @@ module Attached
     #   @object.avatar.url(:small)
     #   @object.avatar.url(:large)
     
-    def path(style = :original)
-      path = options[:path].clone
+    def path(style = self.default)
+      path = @path.clone
       
       path.gsub!(/:name/, name.to_s)
       path.gsub!(/:style/, style.to_s)
@@ -176,9 +187,9 @@ module Attached
     
     def extension(style = nil)
       style and
-      options[:styles] and 
-      options[:styles][style] and 
-      options[:styles][style][:extension] or 
+      self.styles and 
+      self.styles[style] and 
+      self.styles[style][:extension] or 
       instance_get(:extension)
     end
     
@@ -192,9 +203,9 @@ module Attached
     
     def identifier(style = nil)
       style and
-      options[:styles] and 
-      options[:styles][style] and 
-      options[:styles][style][:identifier] or 
+      self.styles and 
+      self.styles[style] and 
+      self.styles[style][:identifier] or 
       instance_get(:identifier)
     end
     
@@ -232,7 +243,8 @@ module Attached
     
     def process
       @processors.each do |processor|
-        self.styles.each do |name, style|
+        self.styles.each do |style, options|
+          self.queue[style] = Attached::Resize.process(self.queue[style] || self.file, options, self)
         end
       end
     end

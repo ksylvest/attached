@@ -1,4 +1,4 @@
-require 'rmagick'
+require 'attached/processor'
 
 module Attached
   
@@ -21,6 +21,8 @@ module Attached
     
     def process
       puts "Attached::Resize.process"
+      
+      return self.file
     end
     
     

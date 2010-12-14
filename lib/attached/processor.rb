@@ -8,16 +8,16 @@ module Attached
     attr_accessor :attachment
     
     
-    # Create and execute a processor.
+    # Create and run a processor.
     #
     # Parameters:
     # 
-    # * file       - The file to be processed
+    # * file       - The file to be processed.
     # * options    - The options to be applied to the processing.
-    # * attachment - The attachment the processor is being execute on.
+    # * attachment - The attachment the processor is being run for.
 
     def self.process(file, options = {}, attachment = nil)
-      new(file, options, attachment).execute
+      new(file, options, attachment).process
     end
     
     
@@ -25,9 +25,9 @@ module Attached
     #
     # Parameters:
     # 
-    # * file       - The file to be processed
+    # * file       - The file to be processed.
     # * options    - The options to be applied to the processing.
-    # * attachment - The attachment the processor is being execute on.
+    # * attachment - The attachment the processor is being run for.
 
     def initialize(file, options = {}, attachment = nil)
       @file = file
@@ -36,7 +36,7 @@ module Attached
     end
     
     
-    # Execute the processor. 
+    # Run the processor. 
 
     def process
       raise NotImplementedError.new   
