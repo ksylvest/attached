@@ -31,8 +31,9 @@ module Attached
     #
     # Options:
     #
-    # * :styles  - 
-    # * :storage - 
+    # * :styles    - 
+    # * :storage   - 
+    # * :processor -
     #
     # Usage:
     #

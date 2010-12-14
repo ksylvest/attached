@@ -11,13 +11,25 @@ module Attached
     attr_reader :name
     attr_reader :instance
     attr_reader :options
+    attr_reader :medium
+    attr_reader :credentials
+    attr_reader :processors
+    attr_reader :processor
+    attr_reader :styles
+    attr_reader :path
     
+    
+    # A default set of options that can be extended to customize the path, storage or credentials.
+    #
+    # Usage:
+    #
+    #   Attached::Attachment.options = { :storage => :fs, :path => "/:name/:style/:identifier:extension" }
     
     def self.options
       @options ||= {
-        :storage  => :s3,
-        :path     => "/:name/:style/:identifier:extension",
-        :styles   => {},
+        :path       => "/:name/:style/:identifier:extension",
+        :styles     => {},
+        :processors => [],
       }
     end
     
@@ -34,16 +46,26 @@ module Attached
     # * :path        - The location where the attachment is stored
     # * :storage     - The storage medium represented as a symbol such as ':s3'
     # * :credentials - A file, hash, or path used to authenticate with the specified storage medium
+    # * :styles      - A hash containing optional parameters including extension and identifier
     
     def initialize(name, instance, options = {})
-      @name       = name
-      @instance   = instance
+      @name        = name
+      @instance    = instance
       
-      @options    = self.class.options.merge(options)
+      @options     = self.class.options.merge(options)
+      
+      @path        = @options[:path]
+      @styles      = @options[:styles]
+      @medium      = @options[:medium]
+      @credentials = @options[:credentials]
+      @processors  = @options[:processors]
+      @processor   = @options[:processor]
+      
+      @processors << @processor if @processor
     end
     
     
-    # 
+    # Check if an attachment has been modified.
     #
     # Usage:
     #
@@ -54,6 +76,8 @@ module Attached
     end
     
     
+    # Assign an attachment to a file.
+    #
     # Usage:
     #
     #   @object.avatar.assign(...)
@@ -62,33 +86,40 @@ module Attached
       @file = file.tempfile
       
       extension = File.extname(file.original_filename)
-      
+       
       instance_set :size, file.size
       instance_set :extension, extension
       instance_set :identifier, identifier
+      
+      process()
     end
     
     
+    # Save an attachment.
+    #
     # Usage:
     #
     #   @object.avatar.save
     
     def save
-      @storage ||= Attached::Storage.medium(options[:storage], options[:credentials])
+      @storage ||= Attached::Storage.storage(options[:medium], options[:credentials])
       
       @storage.save(self.file, self.path) if self.file and self.path
     end
     
     
+    # Destroy an attachment.
+    #
     # Usage:
     #
     #   @object.avatar.destroy
     
     def destroy
-      @storage ||= Attached::Storage.medium(options[:storage], options[:credentials])
+      @storage ||= Attached::Storage.storage(options[:medium], options[:credentials])
       
       @storage.destroy(self.path) if self.path
     end
+    
     
     # Acesss the URL for an attachment.
     #
@@ -99,7 +130,7 @@ module Attached
     #   @object.avatar.url(:large)
     
     def url(style = :original)
-      @storage ||= Attached::Storage.medium(options[:storage], options[:credentials])
+      @storage ||= Attached::Storage.storage(options[:medium], options[:credentials])
       
       return "#{@storage.host}#{path(style)}"
     end
@@ -123,6 +154,7 @@ module Attached
 
       return path
     end
+    
     
     # Access the size for an attachment.
     #
@@ -149,6 +181,7 @@ module Attached
       options[:styles][style][:extension] or 
       instance_get(:extension)
     end
+    
     
     # Access the identifier for an attachment. It will first check the styles 
     # to see if one is specified before checking the instance.
@@ -191,6 +224,19 @@ module Attached
     
   private
   
+    # Helper function for calling processors.
+    #
+    # Usage:
+    #
+    #   self.process
+    
+    def process
+      @processors.each do |processor|
+        self.styles.each do |name, style|
+        end
+      end
+    end
+  
   
     # Helper function for setting instance variables.
     # 
@@ -200,7 +246,7 @@ module Attached
   
     def instance_set(attribute, value)
       setter = :"#{self.name}_#{attribute}="
-      self.instance.send(setter, value)
+      self.instance.send(setter, value) if instance.respond_to?(setter)
     end
     
     
@@ -212,7 +258,7 @@ module Attached
     
     def instance_get(attribute)
       getter = :"#{self.name}_#{attribute}"
-      self.instance.send(getter)
+      self.instance.send(getter) if instance.respond_to?(getter)
     end
 
     

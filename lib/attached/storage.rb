@@ -9,9 +9,9 @@ module Attached
     #
     #   Attached::Storage.medium(s3)
     
-    def self.medium(storage = :s3, credentials = nil)
+    def self.storage(medium = :s3, credentials = nil)
       
-      case storage
+      case medium
       when :s3 then return Attached::Storage::S3.new(credentials)
       end
       
