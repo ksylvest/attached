@@ -10,5 +10,6 @@ Gem::Specification.new do |s|
   s.files       = Dir.glob("{bin,lib}/**/*") + %w(README.rdoc LICENSE Gemfile)
   s.add_dependency 'guid'
   s.add_dependency 'aws-s3'
+  s.add_dependency 'rmagick'
 end
 

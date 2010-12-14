@@ -119,8 +119,8 @@ module Attached
        
       range = minimum..maximum
       
-      message.gsub!(/:minimum/, number_to_human_size(minimum)) unless minimum == zero
-      message.gsub!(/:maximum/, number_to_human_size(maximum)) unless maximum == infi
+      message.gsub!(/:minimum/, number_to_size(minimum)) unless minimum == zero
+      message.gsub!(/:maximum/, number_to_size(maximum)) unless maximum == infi
       
       validates_inclusion_of :"#{name}_size", :in => range, :message => message, 
         :if => options[:if], :unless => options[:unless]
@@ -156,12 +156,12 @@ module Attached
     #
     # Usage:
     #
-    #   number_to_human_size(1) # 1 byte
-    #   number_to_human_size(2) # 2 bytes
-    #   number_to_human_size(1024) # 1 kilobyte
-    #   number_to_human_size(2048) # 2 kilobytes
+    #   number_to_size(1) # 1 byte
+    #   number_to_size(2) # 2 bytes
+    #   number_to_size(1024) # 1 kilobyte
+    #   number_to_size(2048) # 2 kilobytes
     
-    def number_to_human_size(number, options = {})
+    def number_to_size(number, options = {})
       return if number == 0.0 / 1.0
       return if number == 1.0 / 0.0
       

@@ -2,7 +2,7 @@ require 'guid'
 
 require 'attached/storage'
 require 'attached/processor'
-require 'attached/resize'
+require 'attached/image'
 
 module Attached
   
@@ -100,7 +100,7 @@ module Attached
       
       self.queue[self.default] = self.file
       
-      process()
+      process
     end
     
     
@@ -244,7 +244,7 @@ module Attached
     def process
       @processors.each do |processor|
         self.styles.each do |style, options|
-          self.queue[style] = Attached::Resize.process(self.queue[style] || self.file, options, self)
+          self.queue[style] = Attached::Image.process(self.queue[style] || self.file, options, self)
         end
       end
     end
