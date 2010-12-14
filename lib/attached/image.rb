@@ -38,8 +38,6 @@ module Attached
         width  = width.to_i
         height = height.to_i
         
-        image.resize_to_fill!(width, height)
-        
         image.each do |frame|
           case operation
             when /!/ then puts "hi"
