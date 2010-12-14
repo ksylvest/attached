@@ -26,7 +26,7 @@ module Attached
       result.binmode
       
       begin
-        image = ::Magick::Image.read(self.path).first
+        image = ::Magick::Image.read(self.path)
         image_list  = ::Magick::ImageList.new
         
         width, height, operation = self.options[:size].match(/\b(\d*)x?(\d*)\b([\#\<\>])?/)[1..3] if self.options[:size]
@@ -35,7 +35,7 @@ module Attached
         height    ||= self.options[:height]
         operation ||= self.options[:operation]
         
-        width = width.to_i
+        width  = width.to_i
         height = height.to_i
         
         image.resize_to_fill!(width, height)
