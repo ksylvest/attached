@@ -68,7 +68,7 @@ module Attached
       @processors  = @options[:processors]
       @processor   = @options[:processor]
       
-      @processors << @processor if @processor
+      @processors  = @processors + [@processor] if @processor
     end
     
     
@@ -244,7 +244,7 @@ module Attached
     #   self.process
     
     def process
-      @processors.each do |processor|
+      self.processors.each do |processor|
         self.styles.each do |style, options|
           case processor
           when :image then self.queue[style] = Attached::Image.process(self.queue[style] || self.file, options, self)
