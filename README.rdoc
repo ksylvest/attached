@@ -69,9 +69,14 @@ View:
   
 === Processor
 
-  has_attached :avatar, :processor => :resize, :styles => {
+  has_attached :avatar, :processor => :image, :styles => {
     :small => { :size => "200x200#" }
-    :large => { :size => "200x200#" }
+    :large => { :size => "400x400#" }
+  }
+  
+  has_attached :avatar, :processors => [:image], :styles => {
+    :small => { :size => "200x200#" }
+    :large => { :size => "400x400#" }
   }
   
 == Copyright

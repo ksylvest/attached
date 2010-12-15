@@ -5,5 +5,3 @@ gem 'rails'
 gem 'guid'
 
 gem 'aws-s3', :require => 'aws/s3'
-
-gem 'rmagick'
