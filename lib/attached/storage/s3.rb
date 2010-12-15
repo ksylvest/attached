@@ -50,7 +50,7 @@ module Attached
       def save(file, path)
         connect()
         begin
-          AWS::S3::S3Object.store(path, file, bucket, :access => :authenticated_read)
+          AWS::S3::S3Object.store(path, file, bucket, :access => :public_read)
         rescue AWS::S3::NoSuchBucket => e
   			  AWS::S3::Bucket.create(bucket)
           retry

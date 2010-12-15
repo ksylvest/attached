@@ -116,6 +116,8 @@ module Attached
       @queue.each do |style, file|
         @storage.save(file, self.path(style)) if file and self.path(style)
       end
+      
+      @queue = {}
     end
     
     
@@ -244,7 +246,9 @@ module Attached
     def process
       @processors.each do |processor|
         self.styles.each do |style, options|
-          self.queue[style] = Attached::Image.process(self.queue[style] || self.file, options, self)
+          case processor
+          when :image then self.queue[style] = Attached::Image.process(self.queue[style] || self.file, options, self)
+          end
         end
       end
     end
