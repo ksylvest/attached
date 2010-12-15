@@ -1,6 +1,12 @@
 require 'attached/processor'
 
-require 'rmagick'
+begin
+  require 'rmagick' 
+rescue LoadError
+  require 'RMagick' 
+rescue LoadError
+  raise "Installation of 'rmagick' is required before using the 'image' processor"
+end
 
 module Attached
   
