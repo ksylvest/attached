@@ -5,6 +5,7 @@ Attached is a Ruby on Rails file attachment tool that lets users upload to the c
 == Installation
 
   gem install attached
+  gem install rmagick
   
 == Examples
 
@@ -43,7 +44,6 @@ Form:
 
   <%= form_for @video, :html => { :multipart => true } do |form| %>
     <%= form.file_field :encoding %>
-    <p class="errors"><%= @video.errors[:encoding] %></p>
   <% end %>
   
 View:
@@ -57,12 +57,7 @@ View:
 
 === Storage
   
-  has_attached :avatar, :provider => :amazon, :credentials => {
-    :secret_access_key => "*****",
-    :access_key_id     => "*****",
-  }
-  
-  has_attached :avatar, :provider => :google, :credentials => {
+  has_attached :avatar, :provider => :aws, :credentials => {
     :secret_access_key => "*****",
     :access_key_id     => "*****",
   }
@@ -74,10 +69,14 @@ View:
     :large => { :size => "400x400#" }
   }
   
-  has_attached :avatar, :processors => [:image], :styles => {
-    :small => { :size => "200x200#" }
-    :large => { :size => "400x400#" }
-  }
+=== Alias
+
+  Attached::Attachment.options[:aliases] = %w(
+    d1kf5um3mxa8kv.cloudfront.net
+    d3d5wf186mp1rv.cloudfront.net
+    d2wmfkw6rydl1g.cloudfront.net
+    d1gqpdc40l7s16.cloudfront.net
+  )
   
 == Copyright
 
