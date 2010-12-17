@@ -5,7 +5,7 @@ require 'aws/s3'
 
 module Attached
 	module Storage
-		class S3 < Base
+		class AWS < Base
 			
 			
 			attr_reader :bucket
@@ -50,9 +50,9 @@ module Attached
       def save(file, path)
         connect()
         begin
-          AWS::S3::S3Object.store(path, file, bucket, :access => :public_read)
+          ::AWS::S3::S3Object.store(path, file, bucket, :access => :public_read)
         rescue AWS::S3::NoSuchBucket => e
-  			  AWS::S3::Bucket.create(bucket)
+  			  ::AWS::S3::Bucket.create(bucket)
           retry
         end
       end
@@ -67,9 +67,9 @@ module Attached
       def destroy(path)
         connect()
         begin
-          AWS::S3::S3Object.delete(path, bucket, :access => :authenticated_read)
+          ::AWS::S3::S3Object.delete(path, bucket, :access => :authenticated_read)
         rescue AWS::S3::NoSuchBucket => e
-  			  AWS::S3::Bucket.create(bucket)
+  			  ::AWS::S3::Bucket.create(bucket)
           retry
         end
       end
@@ -81,7 +81,7 @@ module Attached
 			# Connect to an AWS S3 server.
 			
 			def connect()
-        @connection ||= AWS::S3::Base.establish_connection!(
+        @connection ||= ::AWS::S3::Base.establish_connection!(
           :access_key_id => access_key_id, :secret_access_key => secret_access_key
         )
 			end

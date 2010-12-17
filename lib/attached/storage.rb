@@ -1,4 +1,4 @@
-require 'attached/storage/s3'
+require 'attached/storage/aws'
 
 module Attached
   module Storage
@@ -7,12 +7,12 @@ module Attached
     #
     # Usage:
     #
-    #   Attached::Storage.medium(s3)
+    #   Attached::Storage.medium(aws)
     
-    def self.storage(medium = :s3, credentials = nil)
+    def self.storage(medium = :aws, credentials = nil)
       
       case medium
-      when :s3 then return Attached::Storage::S3.new(credentials)
+      when :aws then return Attached::Storage::AWS.new(credentials)
       end
       
     end
