@@ -12,7 +12,6 @@ module Attached
     attr_reader :file
     attr_reader :name
     attr_reader :instance
-    attr_reader :options
     attr_reader :queue
     attr_reader :path
     attr_reader :styles
@@ -21,6 +20,10 @@ module Attached
     attr_reader :credentials
     attr_reader :processors
     attr_reader :processor
+    attr_reader :aliases
+    attr_reader :alias
+    attr_reader :storage
+    attr_reader :host
     
     
     # A default set of options that can be extended to customize the path, storage or credentials.
@@ -31,10 +34,12 @@ module Attached
     
     def self.options
       @options ||= {
-        :path       => "/:name/:style/:identifier:extension",
-        :default    => :original,
-        :styles     => {},
-        :processors => [],
+        :path        => "/:name/:style/:identifier:extension",
+        :default     => :original,
+        :credentials => {},
+        :styles      => {},
+        :processors  => [],
+        :aliases     => [],
       }
     end
     
@@ -54,21 +59,29 @@ module Attached
     # * :styles      - A hash containing optional parameters including extension and identifier
     
     def initialize(name, instance, options = {})
+      options      = self.class.options.merge(options)
+      
       @name        = name
       @instance    = instance
-      @options     = self.class.options.merge(options)
       
       @queue       = {}
       
-      @path        = @options[:path]
-      @styles      = @options[:styles]
-      @default     = @options[:default]
-      @medium      = @options[:medium]
-      @credentials = @options[:credentials]
-      @processors  = @options[:processors]
-      @processor   = @options[:processor]
+      @path        = options[:path]
+      @styles      = options[:styles]
+      @default     = options[:default]
+      @medium      = options[:medium]
+      @credentials = options[:credentials]
+      @processors  = options[:processors]
+      @processor   = options[:processor]
+      @aliases     = options[:aliases]
+      @alias       = options[:alias]
       
-      @processors  = @processors + [@processor] if @processor
+      @processors  = self.processors + [self.processor] if self.processor
+      @aliases     = self.aliases + [self.alias] if self.alias
+      
+      @storage     = Attached::Storage.storage(self.medium, self.credentials)
+      
+      @host        = self.storage.host
     end
     
     
@@ -80,6 +93,10 @@ module Attached
     
     def changed?
       instance.changed.include? "#{name}_identifier"
+    end
+    
+    def file?
+      not identifier.blank?
     end
     
     
@@ -111,8 +128,6 @@ module Attached
     #   @object.avatar.save
     
     def save
-      @storage ||= Attached::Storage.storage(self.medium, self.credentials)
-      
       @queue.each do |style, file|
         @storage.save(file, self.path(style)) if file and self.path(style)
       end
@@ -128,8 +143,6 @@ module Attached
     #   @object.avatar.destroy
     
     def destroy
-      @storage ||= Attached::Storage.storage(self.medium, self.credentials)
-      
       @storage.destroy(self.path) if self.path
     end
     
@@ -143,9 +156,12 @@ module Attached
     #   @object.avatar.url(:large)
     
     def url(style = self.default)
-      @storage ||= Attached::Storage.storage(self.medium, self.credentials)
+      path = self.path(style)
       
-      return "#{@storage.host}#{path(style)}"
+      host = self.host
+      host = self.aliases[path.hash % self.aliases.count] unless self.aliases.empty?
+      
+      return "#{host}#{path}"
     end
     
     
