@@ -251,6 +251,12 @@ module Attached
     end
     
     
+    # Todo.
+    
+    def reprocess!
+    end
+    
+    
   private
   
     # Helper function for calling processors.

@@ -1,6 +1,10 @@
 require 'attached/storage/base'
 
-require 'aws/s3'
+begin
+  require 'aws/s3'
+rescue LoadError
+  raise "Installation of 'aws/s3' is required before using 'aws' for storage"
+end
 
 
 module Attached
