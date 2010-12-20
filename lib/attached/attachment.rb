@@ -107,9 +107,10 @@ module Attached
     #   @object.avatar.assign(...)
     
     def assign(file, identifier = Guid.new)
-      @file = file.tempfile
+      @file = file.respond_to?(:tempfile) ? file.tempfile : file
       
-      extension = File.extname(file.original_filename)
+      extension ||= File.extname(file.original_filename) if file.respond_to?(:original_filename)
+      extension ||= File.extname(file.path)
        
       instance_set :size, file.size
       instance_set :extension, extension
