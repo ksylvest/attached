@@ -12,6 +12,7 @@ module Attached
 		class AWS < Base
 			
 			
+			attr_reader :access
 			attr_reader :bucket
 			attr_reader :access_key_id
 			attr_reader :secret_access_key
@@ -27,6 +28,7 @@ module Attached
 			def initialize(credentials)
 				credentials = parse(credentials)
 				
+				@access            = :public_read
 				@bucket						 = credentials[:bucket]            || credentials['bucket']
 				@access_key_id		 = credentials[:access_key_id]     || credentials['access_key_id']
 				@secret_access_key = credentials[:secret_access_key] || credentials['secret_access_key']
@@ -54,7 +56,7 @@ module Attached
       def save(file, path)
         connect()
         begin
-          ::AWS::S3::S3Object.store(path, file, bucket, :access => :public_read)
+          ::AWS::S3::S3Object.store(path, file, bucket, :access => access)
         rescue AWS::S3::NoSuchBucket => e
   			  ::AWS::S3::Bucket.create(bucket)
           retry
@@ -71,10 +73,8 @@ module Attached
       def destroy(path)
         connect()
         begin
-          ::AWS::S3::S3Object.delete(path, bucket, :access => :authenticated_read)
+          ::AWS::S3::S3Object.delete(path, bucket)
         rescue AWS::S3::NoSuchBucket => e
-  			  ::AWS::S3::Bucket.create(bucket)
-          retry
         end
       end
 			

@@ -7,12 +7,14 @@ module Attached
     #
     # Usage:
     #
-    #   Attached::Storage.medium(aws)
+    #   Attached::Storage.medium()
+    #   Attached::Storage.medium(:aws)
     
     def self.storage(medium = :aws, credentials = nil)
       
       case medium
-      when :aws then return Attached::Storage::AWS.new(credentials)
+      when :aws then return Attached::Storage::AWS.new credentials
+      else raise "Undefined storage medium '#{medium}'."
       end
       
     end
