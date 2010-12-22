@@ -29,10 +29,9 @@ GEM
       activesupport (= 3.0.3)
     activesupport (3.0.3)
     arel (2.0.6)
-    attached (0.2.1)
+    attached (0.1.8)
       aws-s3
       guid
-      rmagick
     aws-s3 (0.6.2)
       builder
       mime-types
@@ -69,7 +68,6 @@ GEM
       rake (>= 0.8.7)
       thor (~> 0.14.4)
     rake (0.8.7)
-    rmagick (2.13.1)
     rspec (2.3.0)
       rspec-core (~> 2.3.0)
       rspec-expectations (~> 2.3.0)
