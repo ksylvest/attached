@@ -1,0 +1,20 @@
+<h1>People</h1>
+
+<table>
+  <colgroup width="0%" />
+  <colgroup width="100%" />
+  <colgroup width="0%" />
+  <colgroup width="0%" />
+  <colgroup width="0%" />
+  <%- @people.each do |person| -%>
+    <%= content_tag :tr, person, :class => cycle('odd','even') do %>
+      <th><%= image_tag person.avatar.url(:thumb), :size => "100x100" %></th>
+      <td><%= person.name %></td>
+      <td><%= link_to 'Show', person_path(person) %></td>
+      <td><%= link_to 'Edit', edit_person_path(person) %></td>
+      <td><%= link_to 'Destroy', person_path(person), :method => :delete %></td>
+    <% end %>
+  <%- end -%>
+</table>
+
+<%= link_to 'New', new_person_path %>

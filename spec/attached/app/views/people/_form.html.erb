@@ -1,0 +1,18 @@
+<%= form_for @person, :html => { :multipart => true } do |f| %>
+  
+  <p>
+    <%= f.label :name, "Name:" %>
+    <%= f.text_field :name %>
+  </p>
+  
+  <p>
+    <%= f.label :avatar, "Avatar:" %>
+    <%= f.file_field :avatar %>
+  </p>
+  
+  <p>
+    <%= f.submit %>
+    <%= link_to 'Cancel', people_path %>
+  </p>
+  
+<% end %>
