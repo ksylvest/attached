@@ -4,3 +4,32 @@ html, body
   font-style: normal;
   font-weight: normal;
 }
+
+table
+{
+  border-collapse: collapse;
+}
+
+table td 
+{ 
+  padding: 10px; 
+}
+
+table th 
+{ 
+  padding: 10px; 
+}
+
+table .odd
+{
+  border-top: 1px solid #EEEEEE;
+  border-bottom: 1px solid #EEEEEE;
+  background-color: #FAFAFA;
+}
+
+table .even
+{
+  border-top: 1px solid #EEEEEE;
+  border-bottom: 1px solid #EEEEEE;
+  background-color: #FEFEFE;
+}
