@@ -1,20 +1,16 @@
 require 'attached/processor'
 
-begin
-  require 'rmagick' 
-rescue LoadError
-  require 'RMagick' 
-rescue LoadError
-  raise "Installation of 'rmagick' is required before using the 'image' processor"
-end
-
 module Attached
   
   class Image < Processor
     
     
     attr_reader :path
-    attr_reader :extname
+    attr_reader :extension
+    
+    attr_reader :width
+    attr_reader :height
+    attr_reader :operation
 
     # Create a processor.
     #
@@ -27,8 +23,24 @@ module Attached
     def initialize(file, options = {}, attachment = nil)
       super
         
-      @path     = @file.path
-      @extname  = File.extname(@file.path)
+      @path      = self.file.path
+      
+      @size      = options[:size]
+      @extension = options[:extension]
+      
+      @width, @height, @operation = @size.match(/(\d*)x?(\d*)(.*)/)[1..3] if @size
+      
+      @width     ||= options[:width]
+      @height    ||= options[:height]
+      @operation ||= options[:operation]
+      
+      @extension ||= File.extname(self.file.path)
+      
+      @width     = Integer(self.width)
+      @height    = Integer(self.height)
+      
+      raise "Image processor requires specification of 'width' or 'size'"  unless self.width
+      raise "Image processor requires specification of 'height' or 'size'" unless self.height
     end
     
     
@@ -39,32 +51,34 @@ module Attached
     #   self.process
     
     def process
-      result = Tempfile.new(["", options['extension'] || self.extname])
+      result = Tempfile.new(["", self.extension])
       result.binmode
+      
+      begin
+        parameters = []
         
-      image = ::Magick::Image.read(self.path)
-      image_list  = ::Magick::ImageList.new
-      
-      width, height, operation = self.options[:size].match(/\b(\d*)x?(\d*)\b([\#\<\>])?/)[1..3] if self.options[:size]
-      
-      width     ||= self.options[:width]
-      height    ||= self.options[:height]
-      operation ||= self.options[:operation]
-      
-      width  = width.to_i
-      height = height.to_i
-      
-      image.each do |frame|
+        parameters << self.path
+        
         case operation
-          when /!/ then puts "hi"
-          when /#/ then image_list << frame.resize_to_fill(width, height)
-          when /</ then image_list << frame.resize_to_fit(width, height)
-          when />/ then image_list << frame.resize_to_fit(width, height)
-          else image_list << frame.resize(width, height)
+        when '#' then parameters << "-resize #{width}x#{height}^ -gravity center -extent #{width}x#{height}"
+        when '<' then parameters << "-resize #{width}x#{height}\\<"
+        when '>' then parameters << "-resize #{width}x#{height}\\>"
+        else          parameters << "-resize #{width}x#{height}"
         end
-      end
+        
+        parameters << result.path
+        
+        parameters = parameters.join(" ").squeeze(" ")
+        
+        `convert #{parameters}`
+        
+        raise "Command 'convert' failed. Ensure upload file is an image and options are correct." unless $?.exitstatus == 0
+        
+      rescue Errno::ENOENT  
+        
+        raise "Command 'convert' not found. Ensure 'Image Magick' is installed."
       
-      image_list.write(result.path)
+      end
       
       return result
     end
