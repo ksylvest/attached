@@ -36,6 +36,7 @@ module Attached
       @options ||= {
         :path        => "/:name/:style/:identifier:extension",
         :default     => :original,
+        :medium      => :aws,
         :credentials => {},
         :styles      => {},
         :processors  => [],
@@ -110,13 +111,11 @@ module Attached
       @file = file.respond_to?(:tempfile) ? file.tempfile : file
       
       extension ||= File.extname(file.original_filename) if file.respond_to?(:original_filename)
-      extension ||= File.extname(file.path)
+      extension ||= File.extname(file.path) if file.respond_to?(:path)
        
       instance_set :size, file.size
       instance_set :extension, extension
       instance_set :identifier, identifier
-      
-      self.queue[self.default] = self.file
       
       process
     end
@@ -260,13 +259,15 @@ module Attached
     
   private
   
-    # Helper function for calling processors.
+    # Helper function for calling processors (will queue default).
     #
     # Usage:
     #
     #   self.process
     
     def process
+      self.queue[self.default] = self.file
+      
       self.processors.each do |processor|
         self.styles.each do |style, options|
           case processor
