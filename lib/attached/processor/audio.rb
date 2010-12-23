@@ -7,6 +7,7 @@ module Attached
     
       attr_reader :path
       attr_reader :extension
+      attr_reader :preset
       
 
       # Create a processor.
@@ -20,10 +21,12 @@ module Attached
       def initialize(file, options = {}, attachment = nil)
         super
         
+        @preset    = options[:preset]
         @path      = self.file.path
-      
-        @quality   = options[:quality]
+        
         @extension = options[:extension]
+        
+        @extension ||= File.extname(self.file.path)
       end
     
     
@@ -41,7 +44,9 @@ module Attached
         begin
         
           parameters = []
-        
+          
+          parameters << "--preset #{self.preset}" if self.preset
+      
           paramaters << self.path
           parameters << result.path
         
