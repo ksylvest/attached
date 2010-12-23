@@ -30,13 +30,4 @@ ActiveRecord::Schema.define(:version => 20101223191846) do
     t.datetime "updated_at"
   end
 
-  create_table "people", :force => true do |t|
-    t.string   "name"
-    t.string   "avatar_identifier"
-    t.string   "avatar_extension"
-    t.integer  "avatar_size"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
 end
