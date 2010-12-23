@@ -21,9 +21,9 @@ module Attached
       def initialize(file, options = {}, attachment = nil)
         super
         
-        @preset    = options[:preset]
         @path      = self.file.path
         
+        @preset    = options[:preset]
         @extension = options[:extension]
         
         @extension ||= File.extname(self.file.path)
@@ -47,7 +47,7 @@ module Attached
           
           parameters << "--preset #{self.preset}" if self.preset
       
-          paramaters << self.path
+          parameters << self.path
           parameters << result.path
         
           parameters = parameters.join(" ").squeeze(" ")
