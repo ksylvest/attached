@@ -1,15 +1,16 @@
 require 'attached/processor/base'
+require 'attached/processor/error'
 
 module Attached
   module Processor
     class Audio < Base
-    
-    
+      
+      
       attr_reader :path
       attr_reader :extension
       attr_reader :preset
       
-
+      
       # Create a processor.
       #
       # Parameters:
@@ -37,35 +38,35 @@ module Attached
       #   self.process
     
       def process
-      
+        
         result = Tempfile.new(["", self.extension])
         result.binmode
-      
-        begin
         
+        begin
+          
           parameters = []
           
           parameters << "--preset #{self.preset}" if self.preset
-      
+          
           parameters << self.path
           parameters << result.path
-        
+          
           parameters = parameters.join(" ").squeeze(" ")
-        
+          
           `lame #{parameters}`
-        
-          raise "Command 'lame' failed. Ensure file is an audio and attachment options are valid." unless $?.exitstatus == 0
-        
+          
         rescue Errno::ENOENT  
-        
-          raise "Command 'lame' not found. Ensure 'LAME' is installed."
-      
+          raise "command 'lame' not found: ensure LAME is installed"
         end
-      
+        
+        unless $?.exitstatus == 0
+          raise Attached::Processor::Error, "attachment file must be an audio file"
+        end
+        
         return result
-      
+        
       end
-    
+      
     end
   end
 end
