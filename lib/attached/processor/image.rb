@@ -1,4 +1,5 @@
 require 'attached/processor/base'
+require 'attached/processor/error'
 
 module Attached
   module Processor
@@ -37,11 +38,8 @@ module Attached
       
         @extension ||= File.extname(self.file.path)
       
-        @width     = Integer(self.width)
-        @height    = Integer(self.height)
-      
-        raise "Image processor requires specification of 'width' or 'size'"  unless self.width
-        raise "Image processor requires specification of 'height' or 'size'" unless self.height
+        @width     = Integer(self.width)  if self.width
+        @height    = Integer(self.height) if self.height
       end
     
     
@@ -62,25 +60,27 @@ module Attached
         
           parameters << self.path
         
-          case operation
-          when '#' then parameters << "-resize #{width}x#{height}^ -gravity center -extent #{width}x#{height}"
-          when '<' then parameters << "-resize #{width}x#{height}\\<"
-          when '>' then parameters << "-resize #{width}x#{height}\\>"
-          else          parameters << "-resize #{width}x#{height}"
+          if width and height
+            case operation
+            when '#' then parameters << "-resize #{width}x#{height}^ -gravity center -extent #{width}x#{height}"
+            when '<' then parameters << "-resize #{width}x#{height}\\<"
+            when '>' then parameters << "-resize #{width}x#{height}\\>"
+            else          parameters << "-resize #{width}x#{height}"
+            end
           end
-        
+          
           parameters << result.path
         
           parameters = parameters.join(" ").squeeze(" ")
         
           `convert #{parameters}`
         
-          raise "Command 'convert' failed. Ensure file is an image and attachment options are valid." unless $?.exitstatus == 0
+        rescue Errno::ENOENT
+          raise "command 'convert' not found: ensure ImageMagick is installed"
+        end
         
-        rescue Errno::ENOENT  
-        
-          raise "Command 'convert' not found. Ensure 'Image Magick' is installed."
-      
+        unless $?.exitstatus == 0
+          raise Attached::Processor::Error, "attachment file must be an image file"
         end
       
         return result
