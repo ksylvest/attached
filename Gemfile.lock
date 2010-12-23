@@ -1,10 +1,9 @@
 PATH
   remote: .
   specs:
-    attached (0.2.1)
+    attached (0.1.9)
       aws-s3
       guid
-      rmagick
 
 GEM
   remote: http://rubygems.org/
@@ -16,7 +15,6 @@ GEM
     builder (3.0.0)
     guid (0.1.1)
     mime-types (1.16)
-    rmagick (2.13.1)
     xml-simple (1.0.12)
 
 PLATFORMS
@@ -26,4 +24,3 @@ DEPENDENCIES
   attached!
   aws-s3
   guid
-  rmagick
