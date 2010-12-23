@@ -1,7 +1,7 @@
 PATH
   remote: ../..
   specs:
-    attached (0.1.9)
+    attached (0.2.0)
       aws-s3
       guid
 
