@@ -1,7 +1,10 @@
 require 'guid'
 
 require 'attached/storage'
+require 'attached/storage/error'
+
 require 'attached/processor'
+require 'attached/processor/error'
 
 module Attached
   
@@ -12,6 +15,7 @@ module Attached
     attr_reader :name
     attr_reader :instance
     attr_reader :queue
+    attr_reader :errors
     attr_reader :path
     attr_reader :styles
     attr_reader :default
@@ -65,6 +69,7 @@ module Attached
       @instance    = instance
       
       @queue       = {}
+      @errors      = []
       
       @path        = options[:path]
       @styles      = options[:styles]
@@ -266,15 +271,18 @@ module Attached
     
     def process
       self.queue[self.default] = self.file
+              
+      begin
       
-      self.processors.each do |processor|
-        
-        processor = Attached::Processor.processor(processor)
-        
-        self.styles.each do |style, options|
-          self.queue[style] = processor.process(self.queue[style] || self.file, options, self)
+        self.processors.each do |processor|
+          processor = Attached::Processor.processor(processor)
+          self.styles.each do |style, options|
+            self.queue[style] = processor.process(self.queue[style] || self.file, options, self)
+          end
         end
         
+      rescue Attached::Processor::Error => error
+        self.errors << error.message
       end
     end
   
