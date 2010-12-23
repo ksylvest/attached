@@ -65,6 +65,13 @@ module Attached
         attachment_for(name).file?
       end
       
+      validates_each(name) do |record, attr, value|
+        attachment = record.attachment_for(name)
+        attachment.errors.each do |error|
+          record.errors.add(name, error)
+        end
+      end
+      
       after_validation do
         
         self.errors[:"#{name}_size"].each do |message|
