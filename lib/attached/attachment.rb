@@ -2,7 +2,6 @@ require 'guid'
 
 require 'attached/storage'
 require 'attached/processor'
-require 'attached/image'
 
 module Attached
   
@@ -269,11 +268,13 @@ module Attached
       self.queue[self.default] = self.file
       
       self.processors.each do |processor|
+        
+        processor = Attached::Processor.processor(processor)
+        
         self.styles.each do |style, options|
-          case processor
-          when :image then self.queue[style] = Attached::Image.process(self.queue[style] || self.file, options, self)
-          end
+          self.queue[style] = processor.process(self.queue[style] || self.file, options, self)
         end
+        
       end
     end
   

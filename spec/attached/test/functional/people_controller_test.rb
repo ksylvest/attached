@@ -1,8 +1,13 @@
 require 'test_helper'
 
 class PeopleControllerTest < ActionController::TestCase
-  # Replace this with your real tests.
-  test "the truth" do
-    assert true
+  
+  test "create valid person" do
+    post(:create, :person => { :name => "Kevin", :avatar => fixture_file_upload('people/avatars/avatar.jpeg') })
   end
+  
+  test "create person without avatar" do
+    post(:create, :person => { :name => "Kevin" })
+  end
+  
 end

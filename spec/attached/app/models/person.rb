@@ -7,6 +7,9 @@ class Person < ActiveRecord::Base
     :large => { :size => "400x400<" },
   }
   
+  validates_attached_presence :avatar
+  validates_attached_size :avatar, :in => 2.kilobytes..2.megabytes
+  
 end
 
 

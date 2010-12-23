@@ -5,6 +5,11 @@ html, body
   font-weight: normal;
 }
 
+.field_with_errors 
+{ 
+  display: inline;
+}
+
 table
 {
   border-collapse: collapse;

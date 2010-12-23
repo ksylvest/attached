@@ -57,8 +57,8 @@ module Attached
         connect()
         begin
           ::AWS::S3::S3Object.store(path, file, bucket, :access => access)
-        rescue AWS::S3::NoSuchBucket => e
-  			  ::AWS::S3::Bucket.create(bucket)
+        rescue ::AWS::S3::NoSuchBucket => e
+          ::AWS::S3::Bucket.create(bucket)
           retry
         end
       end
@@ -74,7 +74,7 @@ module Attached
         connect()
         begin
           ::AWS::S3::S3Object.delete(path, bucket)
-        rescue AWS::S3::NoSuchBucket => e
+        rescue ::AWS::S3::NoSuchBucket => e
         end
       end
 			

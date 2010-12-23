@@ -1,48 +1,32 @@
+require 'attached/processor/base'
+require 'attached/processor/audio'
+require 'attached/processor/image'
+
 module Attached
-
-  class Processor
+  module Processor
     
     
-    attr_accessor :file
-    attr_accessor :options
-    attr_accessor :attachment
-    
-    
-    # Create and run a processor.
+    # Create a storage object given a medium and credentials.
     #
-    # Parameters:
-    # 
-    # * file       - The file to be processed.
-    # * options    - The options to be applied to the processing.
-    # * attachment - The attachment the processor is being run for.
-
-    def self.process(file, options = {}, attachment = nil)
-      new(file, options, attachment).process
-    end
-    
-    
-    # Create a processor.
+    # Usage:
     #
-    # Parameters:
-    # 
-    # * file       - The file to be processed.
-    # * options    - The options to be applied to the processing.
-    # * attachment - The attachment the processor is being run for.
-
-    def initialize(file, options = {}, attachment = nil)
-      @file = file
-      @options = options
-      @attachment = attachment
-    end
+    #   Attached::Processor.processor(:audio)
+    #   Attached::Processor.processor(:image)
+    #   Attached::Processor.processor(Attached::Processor::Video)
     
-    
-    # Run the processor. 
-
-    def process
-      raise NotImplementedError.new   
+    def self.processor(processor)
+      
+      return processor if processor.is_a? Attached::Processor::Base
+      
+      case processor
+        when :audio then return Attached::Processor::Audio
+        when :image then return Attached::Processor::Image
+      end
+      
+      raise "Undefined processor '#{processor}'."
+      
     end
     
     
   end
-
 end
