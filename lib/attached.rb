@@ -128,6 +128,29 @@ module Attached
     end
     
     
+    # Validates an attached extension in a specified set. 
+    #
+    # Options:
+    #
+    # * :in - allowed values for attached
+    #
+    # Usage:
+    #   
+    #   validates_attached_extension :avatar, :in => %w(png jpg)
+    #   validates_attached_extension :avatar, :in => [:png, :jpg]
+    #   validates_attached_extension :avatar, :in => %w(png jpg), :message => "extension must be :in"
+    #   validates_attached_extension :avatar, :in => %w(png jpg), :message => "extension must be :in"
+    
+    def validates_attached_extension(name, options = {})
+      
+      message = options[:message]
+      message ||= "extension must be specified"
+       
+      range = options[:in].map { |element| /element/ }
+      
+    end
+    
+    
     # Validates that an attachment is included.
     #
     # Options:
