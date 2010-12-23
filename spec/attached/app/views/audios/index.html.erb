@@ -1,0 +1,17 @@
+<h1>Audios</h1>
+
+<table>
+  <%- @audios.each do |audio| -%>
+    <%= content_tag :tr, audio, :class => cycle('odd','even') do %>
+      <td><%= audio.name %></td>
+      <td><%= link_to 'Show', audio_path(audio) %></td>
+      <td><%= link_to 'Edit', edit_audio_path(audio) %></td>
+      <td><%= link_to 'Destroy', audio_path(audio), :method => :delete %></td>
+    <% end %>
+  <%- end -%>
+</table>
+
+<p>
+  <%= link_to 'New', new_audio_path %>
+  <%= link_to 'Back', root_path %>
+</p>

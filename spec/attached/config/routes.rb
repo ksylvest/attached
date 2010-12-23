@@ -1,5 +1,8 @@
 Attached::Application.routes.draw do
   
-  resources :people
+  root :to => "main#index"
+  
+  resources :images
+  resources :audios
   
 end

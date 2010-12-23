@@ -1,0 +1,27 @@
+<%= form_for @image, :html => { :multipart => true } do |f| %>
+
+  <%- if @image.errors.any? -%>
+    <p class="count"><%= pluralize(@image.errors.count, "error") %> prohibited this from being saved:</p>
+    <ul class="errors">
+      <% @image.errors.each do |method, message| %>
+        <li class="error"><b><%= method %></b> <i><%= message %></i></li>
+      <% end %>
+    </ul>
+  <%- end -%>
+  
+  <p>
+    <%= f.label :name, "Name:" %>
+    <%= f.text_field :name %>
+  </p>
+  
+  <p>
+    <%= f.label :file, "File:" %>
+    <%= f.file_field :file %>
+  </p>
+  
+  <p>
+    <%= f.submit %>
+    <%= link_to 'Cancel', images_path %>
+  </p>
+  
+<% end %>
