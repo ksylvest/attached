@@ -1,3 +1,4 @@
+require 'attached/storage/base'
 require 'attached/storage/aws'
 
 module Attached
@@ -16,7 +17,7 @@ module Attached
       
       case medium
         when :aws then return Attached::Storage::AWS.new credentials
-        else raise "Undefined storage medium '#{medium}'."
+        else raise "undefined storage medium '#{medium}'"
       end
       
     end

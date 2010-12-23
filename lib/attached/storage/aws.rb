@@ -3,7 +3,7 @@ require 'attached/storage/base'
 begin
   require 'aws/s3'
 rescue LoadError
-  raise "Installation of 'aws/s3' is required before using 'aws' for storage"
+  raise "installation of 'aws/s3' is required before using 'aws' for storage"
 end
 
 

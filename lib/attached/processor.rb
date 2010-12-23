@@ -23,7 +23,7 @@ module Attached
         when :image then return Attached::Processor::Image
       end
       
-      raise "Undefined processor '#{processor}'."
+      raise "undefined processor '#{processor}'"
       
     end
     
