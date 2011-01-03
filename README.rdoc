@@ -9,7 +9,6 @@ The gem has only been tested with Ruby 1.9.2 and Rails 3.0.3 but may well work w
 == Installation
 
   gem install attached
-  gem install rmagick
   
 == Examples
 
