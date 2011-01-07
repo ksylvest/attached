@@ -3,37 +3,36 @@ require 'attached/storage/base'
 begin
   require 'fog'
 rescue LoadError
-  raise "installation of 'fog' is required before using 'aws' for storage"
+  raise "installation of 'fog' is required before using 'rackspace' for storage"
 end
 
 
 module Attached
 	module Storage
-		class AWS < Base
+		class Rackspace < Base
 			
 			
 			attr_reader :permissions
-			
-			attr_reader :bucket
-			attr_reader :access_key_id
-			attr_reader :secret_access_key
+			attr_reader :container
+			attr_reader :username
+			attr_reader :api_key
 			
 			
 			# Create a new AWS interface supporting save and destroy operations.
 			#
 			# Usage:
 			#
-			#		Attached::Storage::AWS.new()
-			#		Attached::Storage::AWS.new("aws.yml")
+			#		Attached::Storage::Rackspace.new()
+			#		Attached::Storage::Rackspace.new("rackspace.yml")
 			
 			def initialize(credentials)
 				credentials = parse(credentials)
 				
-				@permissions       = { :public => true }
+				@permissions  = { :public => true }
 				
-				@bucket						 = credentials[:bucket]            || credentials['bucket']
-				@access_key_id		 = credentials[:access_key_id]     || credentials['access_key_id']
-				@secret_access_key = credentials[:secret_access_key] || credentials['secret_access_key']
+				@container		= credentials[:container] || credentials['container']
+				@username     = credentials[:username]  || credentials['username']
+				@api_key      = credentials[:api_key]   || credentials['api_key']
 			end
 			
 			
@@ -85,9 +84,9 @@ module Attached
 			
 			def connection
 			  @connection ||= Fog::Storage.new(
-          :aws_secret_access_key => self.secret_access_key,
-          :aws_access_key_id     => self.access_key_id,
-          :provider => 'AWS'
+          :rackspace_username => self.username,
+          :rackspace_api_key  => self.api_key,
+          :provider => 'Rackspace'
         )
 			end
 			

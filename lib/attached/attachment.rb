@@ -33,11 +33,11 @@ module Attached
     #
     # Usage:
     #
-    #   Attached::Attachment.options = { :storage => :fs, :path => "/:name/:style/:identifier:extension" }
+    #   Attached::Attachment.options = { :storage => :fs, :path => ":name/:style/:identifier:extension" }
     
     def self.options
       @options ||= {
-        :path        => "/:name/:style/:identifier:extension",
+        :path        => ":name/:style/:identifier:extension",
         :default     => :original,
         :medium      => :aws,
         :credentials => {},
