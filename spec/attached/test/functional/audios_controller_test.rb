@@ -1,6 +1,7 @@
 require 'test_helper'
 
 class AudiosControllerTest < ActionController::TestCase
+  
   setup do
     @audio = audios(:one)
   end
