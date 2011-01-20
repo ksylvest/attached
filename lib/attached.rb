@@ -31,17 +31,15 @@ module Attached
     #
     # Options:
     #
-    # * :styles    - 
-    # * :storage   - 
-    # * :processor -
+    # * :styles    - a hash containing style names followed by parameters passed to processor
+    # * :storage   - a symbol for a predefined storage or a custom storage class
+    # * :processor - a symbol for a predefined processor or a custom processor class
     #
     # Usage:
     #
     #   has_attached :video
     #   has_attached :video, :storage => :s3
-    #   has_attached :video, styles => [ :mp4, :ogv ]
-    #   has_attached :video, styles => { :main => { :size => "480p", :format => "mp4" } }
-    #   has_attached :thumbnail, :range => (1..4)
+    #   has_attached :video, styles => { :mov => { :size => "480p", :format => "mov" } }
     
     def has_attached(name, options = {})
       
