@@ -1,6 +1,7 @@
 require 'test_helper'
 
 class ImagesControllerTest < ActionController::TestCase
+  
   setup do
     @image = images(:one)
   end
