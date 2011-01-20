@@ -44,7 +44,7 @@ module Attached
 			#		storage.host
 			
 			def host()
-				"https://#{self.bucket}.s3.amazonaws.com/"
+			  "https://#{self.bucket}.commondatastorage.googleapis.com/"
 			end
 			
 			
