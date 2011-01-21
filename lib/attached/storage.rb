@@ -10,11 +10,11 @@ module Attached
     #
     # Usage:
     #
-    #   Attached::Storage.storage(:aws)
-    #   Attached::Storage.storage(:google)
-    #   Attached::Storage.storage(:rackspace)
+    #   Attached::Storage.storage(:aws,       "#{Rails.root}/config/aws.yml"      )
+    #   Attached::Storage.storage(:google,    "#{Rails.root}/config/google.yml"   )
+    #   Attached::Storage.storage(:rackspace, "#{Rails.root}/config/rackspace.yml")
     
-    def self.storage(medium = :aws, credentials = nil)
+    def self.storage(medium, credentials)
       
       case medium
         when :aws       then return Attached::Storage::AWS.new       credentials
