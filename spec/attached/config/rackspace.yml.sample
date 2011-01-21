@@ -1,0 +1,14 @@
+development:
+  bucket: attached-development
+  username: 
+  api_key: 
+
+test:
+  bucket: attached-test
+  username: 
+  api_key: 
+
+production:
+  bucket: attached-production
+  username: 
+  api_key: 
