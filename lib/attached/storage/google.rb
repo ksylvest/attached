@@ -37,7 +37,7 @@ module Attached
 			end
 			
 			
-			# Access the host (e.g. bucket.s3.amazonaws.com) for a storage service.
+			# Access the host (e.g. https://attached.commondatastorage.googleapis.com/) for a storage service.
 			#
 			# Usage:
 			#
@@ -48,7 +48,7 @@ module Attached
 			end
 			
 			
-      # Save a file to a given path on AWS S3.
+      # Save a file to a given path.
       #
       # Parameters:
       #
@@ -65,7 +65,7 @@ module Attached
       end
       
       
-      # Destroy a file at a given path on AWS S3.
+      # Destroy a file at a given path.
       #
       # Parameters:
       #
