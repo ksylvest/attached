@@ -99,7 +99,7 @@ View:
 === Aliases
 
   # app/initializer/attached.rb
-  Attached::Attachment.options[:alias] = http://c0378198.cdn2.cloudfiles.rackspacecloud.com
+  Attached::Attachment.options[:alias] = http://c0378198.cdn2.cloudfiles.rackspacecloud.com/
 
   # app/initializer/attached.rb
   Attached::Attachment.options[:aliases] = %w(
