@@ -99,11 +99,14 @@ View:
 === Aliases
 
   # app/initializer/attached.rb
+  Attached::Attachment.options[:alias] = http://c0378198.cdn2.cloudfiles.rackspacecloud.com
+
+  # app/initializer/attached.rb
   Attached::Attachment.options[:aliases] = %w(
-    d1kf5um3mxa8kv.cloudfront.net
-    d3d5wf186mp1rv.cloudfront.net
-    d2wmfkw6rydl1g.cloudfront.net
-    d1gqpdc40l7s16.cloudfront.net
+    http://d1kf5um3mxa8kv.cloudfront.net/
+    http://d3d5wf186mp1rv.cloudfront.net/
+    http://d2wmfkw6rydl1g.cloudfront.net/
+    http://d1gqpdc40l7s16.cloudfront.net/
   )
   
 == Copyright

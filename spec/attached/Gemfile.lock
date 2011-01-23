@@ -29,7 +29,7 @@ GEM
       activesupport (= 3.0.3)
     activesupport (3.0.3)
     arel (2.0.7)
-    attached (0.2.3)
+    attached (0.2.4)
       fog
       guid
     builder (2.1.2)

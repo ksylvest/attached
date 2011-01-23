@@ -36,7 +36,7 @@ module Attached
 			end
 			
 			
-			# Access the host (e.g. bucket.s3.amazonaws.com) for a storage service.
+			# Access the host (e.g. https://storage.clouddrive.com/container) for a storage service.
 			#
 			# Usage:
 			#
@@ -57,8 +57,8 @@ module Attached
       def save(file, path)
         file = File.open(file.path)
         
-        directory = connection.directories.get(self.bucket)
-        directory ||= connection.directories.create(self.permissions.merge(:key => self.bucket))
+        directory = connection.directories.get(self.container)
+        directory ||= connection.directories.create(self.permissions.merge(:key => self.container))
         
         directory.files.create(self.permissions.merge(:body => file, :key => path))
       end
@@ -71,8 +71,8 @@ module Attached
       # * path - The path to destroy.
       
       def destroy(path)
-        directory = connection.directories.get(self.bucket)
-        directory ||= connection.directories.create(self.permissions.merge(:key => self.bucket))
+        directory = connection.directories.get(self.container)
+        directory ||= connection.directories.create(self.permissions.merge(:key => self.container))
         
         file = directory.files.get(path)
         file.destroy if file
