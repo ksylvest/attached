@@ -43,7 +43,7 @@ module Attached
 			#		storage.host
 			
 			def host()
-				"https://#{self.bucket}.s3.amazonaws.com/"
+			  "https://storage.clouddrive.com/#{self.container}/"
 			end
 			
 			
