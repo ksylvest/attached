@@ -70,10 +70,10 @@ View:
   has_attached :avatar, :medium => :aws, :credentials => "#{Rails.root}/config/aws.yml"
   
   # app/models/person.rb
-  has_attached :avatar, :medium => :google, "#{Rails.root}/config/google.yml"
+  has_attached :avatar, :medium => :google, :credentials => "#{Rails.root}/config/google.yml"
   
   # app/models/person.rb
-  has_attached :avatar, :medium => :rackspace, "#{Rails.root}/config/rackspace.yml"
+  has_attached :avatar, :medium => :rackspace, :credentials => "#{Rails.root}/config/rackspace.yml"
   
   # config/initializers/attached.rb
   Attached::Attachment.options[:medium] = :aws
