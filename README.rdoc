@@ -1,6 +1,6 @@
 = Attached
 
-Attached is a Ruby on Rails file attachment tool that lets users upload to the cloud, then process in the cloud. The gem supports AWS, Google and Rackspace for storage networks by default. It is influenced (and copied) from Paperclip.
+Attached is a Ruby on Rails file attachment tool that lets users upload to the cloud. The gem supports AWS, Google and Rackspace for storage networks by default. It is influenced (and copied) from Paperclip and uses the incredibly awesome Fog library in the back.
 
 == Requirements
 
