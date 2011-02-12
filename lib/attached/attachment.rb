@@ -15,6 +15,7 @@ module Attached
     attr_reader :name
     attr_reader :instance
     attr_reader :queue
+    attr_reader :purge
     attr_reader :errors
     attr_reader :path
     attr_reader :styles
@@ -58,9 +59,13 @@ module Attached
     # Options:
     #
     # * :path        - The location where the attachment is stored
-    # * :storage     - The storage medium represented as a symbol such as ':s3'
-    # * :credentials - A file, hash, or path used to authenticate with the specified storage medium
     # * :styles      - A hash containing optional parameters including extension and identifier
+    # * :credentials - A file, hash, or path used to authenticate with the specified storage medium
+    # * :medium      - A symbol or subclass of 'Attached::Storage::Base' to be used
+    # * :processor   - A symbol or subclass of 'Attached::Processor::Base' to be used
+    # * :alias       - A string representing a fully qualified host alias
+    # * :processors  - An array of processors 
+    # * :aliases     - An array of aliases
     
     def initialize(name, instance, options = {})
       options      = self.class.options.merge(options)
@@ -68,8 +73,9 @@ module Attached
       @name        = name
       @instance    = instance
       
-      @queue       = {}
-      @errors      = []
+      @queue = {}
+      @purge = []
+      @errors = []
       
       @path        = options[:path]
       @styles      = options[:styles]
@@ -111,12 +117,14 @@ module Attached
     #
     #   @object.avatar.assign(...)
     
-    def assign(file, identifier = Guid.new)
+    def assign(file, identifier = "#{Guid.new}")
       @file = file.respond_to?(:tempfile) ? file.tempfile : file
       
       extension ||= File.extname(file.original_filename) if file.respond_to?(:original_filename)
       extension ||= File.extname(file.path) if file.respond_to?(:path)
-       
+      
+      @purge = [self.path, *self.styles.map { |style, options| self.path(style) }] if file?
+      
       instance_set :size, file.size
       instance_set :extension, extension
       instance_set :identifier, identifier
@@ -132,10 +140,16 @@ module Attached
     #   @object.avatar.save
     
     def save
-      @queue.each do |style, file|
-        @storage.save(file, self.path(style)) if file and self.path(style)
+      self.purge.each do |path|
+        self.storage.destroy(path)
       end
       
+      self.queue.each do |style, file|
+        path = self.path(style)
+        self.storage.save(file, path) if file and path
+      end
+      
+      @purge = []
       @queue = {}
     end
     
@@ -147,7 +161,15 @@ module Attached
     #   @object.avatar.destroy
     
     def destroy
-      @storage.destroy(self.path) if self.path
+      if file?
+        self.storage.destroy(self.path)
+        self.styles.each do |style, options|
+          self.storage.destroy(self.path(style))
+        end
+      end
+      
+      @purge = []
+      @queue = {}
     end
     
     
@@ -243,6 +265,7 @@ module Attached
       instance_set(:extension, extension)
     end
     
+    
     # Set the identifier for an attachment. It will act independently of the 
     # defined style.
     #
@@ -262,6 +285,7 @@ module Attached
     
     
   private
+    
   
     # Helper function for calling processors (will queue default).
     #
