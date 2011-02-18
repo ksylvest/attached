@@ -35,8 +35,8 @@ GEM
     builder (2.1.2)
     erubis (2.6.6)
       abstract (>= 1.0.0)
-    excon (0.5.2)
-    fog (0.5.2)
+    excon (0.5.5)
+    fog (0.5.3)
       builder
       excon (>= 0.5.2)
       formatador (>= 0.0.16)
