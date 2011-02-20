@@ -74,6 +74,8 @@ module Attached
           parameters = parameters.join(" ").squeeze(" ")
         
           `convert #{parameters}`
+          
+          raise Errno::ENOENT if $?.exitstatus == 127
         
         rescue Errno::ENOENT
           raise "command 'convert' not found: ensure ImageMagick is installed"
