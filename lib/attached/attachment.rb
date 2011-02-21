@@ -139,14 +139,14 @@ module Attached
     #
     #   @object.avatar.save
     
-    def save
-      self.purge.each do |path|
-        self.storage.destroy(path)
-      end
-      
+    def save      
       self.queue.each do |style, file|
         path = self.path(style)
         self.storage.save(file, path) if file and path
+      end
+      
+      self.purge.each do |path|
+        self.storage.destroy(path)
       end
       
       @purge = []
