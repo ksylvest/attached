@@ -41,6 +41,13 @@ module Attached
         @width     = Integer(self.width)  if self.width
         @height    = Integer(self.height) if self.height
       end
+      
+      
+      # Redirect output path.
+      
+      def redirect
+        ">/dev/null 2>&1" if File.exist?("/dev/null")
+      end
     
     
       # Helper function for calling processors.
@@ -73,7 +80,7 @@ module Attached
         
           parameters = parameters.join(" ").squeeze(" ")
         
-          `convert #{parameters}`
+          `convert #{parameters} #{redirect}`
           
           raise Errno::ENOENT if $?.exitstatus == 127
         
@@ -82,7 +89,7 @@ module Attached
         end
         
         unless $?.exitstatus == 0
-          raise Attached::Processor::Error, "attachment file must be an image file"
+          raise Attached::Processor::Error, "must be an image file"
         end
       
         return result

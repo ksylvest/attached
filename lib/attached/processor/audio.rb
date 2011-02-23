@@ -29,6 +29,13 @@ module Attached
         
         @extension ||= File.extname(self.file.path)
       end
+      
+      
+      # Redirect output path.
+      
+      def redirect
+        ">/dev/null 2>&1" if File.exist?("/dev/null")
+      end
     
     
       # Helper function for calling processors.
@@ -53,7 +60,7 @@ module Attached
           
           parameters = parameters.join(" ").squeeze(" ")
           
-          `lame #{parameters}`
+          `lame #{parameters} #{redirect}`
           
           raise Errno::ENOENT if $?.exitstatus == 127
           
@@ -62,7 +69,7 @@ module Attached
         end
         
         unless $?.exitstatus == 0
-          raise Attached::Processor::Error, "attachment file must be an audio file"
+          raise Attached::Processor::Error, "must be an audio file"
         end
         
         return result
