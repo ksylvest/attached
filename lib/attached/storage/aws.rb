@@ -19,7 +19,7 @@ module Attached
 			attr_reader :secret_access_key
 			
 			
-			# Create a new AWS interface supporting save and destroy operations.
+			# Create a new interface supporting save and destroy operations.
 			#
 			# Usage:
 			#
