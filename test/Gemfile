@@ -4,4 +4,4 @@ gem 'rails', '3.0.4'
 
 gem 'sqlite3'
 
-gem 'attached'
+gem 'attached', :path => ".."

@@ -1,3 +1,10 @@
+PATH
+  remote: ../..
+  specs:
+    attached (0.2.8)
+      fog
+      guid
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -29,9 +36,6 @@ GEM
       activesupport (= 3.0.4)
     activesupport (3.0.4)
     arel (2.0.8)
-    attached (0.2.8)
-      fog
-      guid
     builder (2.1.2)
     erubis (2.6.6)
       abstract (>= 1.0.0)
@@ -88,6 +92,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  attached
+  attached!
   rails (= 3.0.4)
   sqlite3
