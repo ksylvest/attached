@@ -12,7 +12,7 @@ module Attached
     #
     #   Attached::Processor.processor(:audio)
     #   Attached::Processor.processor(:image)
-    #   Attached::Processor.processor(Attached::Processor::Video)
+    #   Attached::Processor.processor(Attached::Processor::Custom.new)
     
     def self.processor(processor)
       
