@@ -132,7 +132,7 @@ module Attached
       process
       
     ensure
-      file.close if file.respond_to?(close)
+      file.close if file.respond_to?(:close)
     end
     
     
