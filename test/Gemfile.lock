@@ -1,5 +1,5 @@
 PATH
-  remote: ../..
+  remote: ..
   specs:
     attached (0.2.8)
       fog
