@@ -40,7 +40,7 @@ module Attached
       @options ||= {
         :path        => ":name/:style/:identifier:extension",
         :default     => :original,
-        :medium      => :aws,
+        :medium      => :local,
         :credentials => {},
         :styles      => {},
         :processors  => [],
