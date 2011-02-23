@@ -41,11 +41,9 @@ module Attached
         path = "#{Rails.root}/public/system/#{path}"
         dirname, basename = File.split(path)
         
-        file.close
-        
         begin
           FileUtils.mkdir_p(dirname)
-          FileUtils.mv(file.path, path)
+          FileUtils.cp(file.path, path)
           FileUtils.chmod(self.mode, path)
         rescue Errno::ENOENT
         end
