@@ -118,6 +118,11 @@ module Attached
     #   @object.avatar.assign(...)
     
     def assign(file, identifier = "#{Guid.new}")
+      
+      if file.is_a?(Attached::Attachment)
+        file = file.file
+      end
+      
       @file = file.respond_to?(:tempfile) ? file.tempfile : file
       
       extension ||= File.extname(file.original_filename) if file.respond_to?(:original_filename)
