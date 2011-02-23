@@ -3,7 +3,8 @@ require 'test_helper'
 class AudiosControllerTest < ActionController::TestCase
   
   setup do
-    @audio = audios(:one)
+    @audio = audios(:audio)
+    @file = fixture_file_upload("/audios/audio.m4a")
   end
 
   test "should get index" do
@@ -19,7 +20,7 @@ class AudiosControllerTest < ActionController::TestCase
 
   test "should create audio" do
     assert_difference('Audio.count') do
-      post :create, :audio => @audio.attributes
+      post :create, :audio => { :name => "Audio", :file => @file }
     end
 
     assert_redirected_to audio_path(assigns(:audio))

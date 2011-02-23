@@ -1,17 +1,5 @@
-audio_1:
-  name: Audio 1
+audio:
+  name: Audio
   file_identifier: 7f110c2f-5474-dcbf-bd79-b284b489cb7a
-  file_extension: .m4a
-  file_size: 399085
-  
-audio_2:
-  name: Audio 2
-  file_identifier: 4abcf9f3-7113-6ebb-e41c-6869f96b604d
-  file_extension: .m4a
-  file_size: 399085
-  
-audio_3:
-  name: Audio 3
-  file_identifier: 1ebfd3bb-68d4-87e6-49bb-86f3b230a1a9
   file_extension: .m4a
   file_size: 399085

@@ -1,8 +1,15 @@
 require 'test_helper'
 
 class AudioTest < ActiveSupport::TestCase
-  # Replace this with your real tests.
-  test "the truth" do
-    assert true
+  
+  setup do
+    @audio = audios(:audio)
+    @file = File.open("#{Rails.root}/test/fixtures/audios/audio.m4a")
   end
+  
+  test "file assignment" do
+    # @audio.file = @file
+    # @audio.save
+  end
+  
 end

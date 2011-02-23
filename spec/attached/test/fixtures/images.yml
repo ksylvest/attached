@@ -1,17 +1,5 @@
-image_1:
-  name: Image 1
+image:
+  name: Image
   file_identifier: 7f110c2f-5474-dcbf-bd79-b284b489cb7a
-  file_extension: .png
-  file_size: 399085
-  
-image_2:
-  name: Image 2
-  file_identifier: 4abcf9f3-7113-6ebb-e41c-6869f96b604d
-  file_extension: .png
-  file_size: 399085
-  
-image_3:
-  name: Image 3
-  file_identifier: 1ebfd3bb-68d4-87e6-49bb-86f3b230a1a9
   file_extension: .png
   file_size: 399085

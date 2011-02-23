@@ -3,7 +3,8 @@ require 'test_helper'
 class ImagesControllerTest < ActionController::TestCase
   
   setup do
-    @image = images(:one)
+    @image = images(:image)
+    @file = fixture_file_upload("/images/image.png")
   end
 
   test "should get index" do
@@ -19,7 +20,7 @@ class ImagesControllerTest < ActionController::TestCase
 
   test "should create image" do
     assert_difference('Image.count') do
-      post :create, :image => @image.attributes
+      post :create, :image => { :name => "Image", :file => @file }
     end
 
     assert_redirected_to image_path(assigns(:image))

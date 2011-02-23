@@ -130,6 +130,9 @@ module Attached
       instance_set :identifier, identifier
       
       process
+      
+    ensure
+      file.close if file.respond_to?(close)
     end
     
     
