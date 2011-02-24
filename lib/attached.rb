@@ -38,7 +38,7 @@ module Attached
     # Usage:
     #
     #   has_attached :video
-    #   has_attached :video, :storage => :s3
+    #   has_attached :video, :storage => :aws
     #   has_attached :video, styles => { :mov => { :size => "480p", :format => "mov" } }
     
     def has_attached(name, options = {})
