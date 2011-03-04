@@ -153,7 +153,7 @@ module Attached
        
       range = options[:in].map { |element| ".#{element}" }
       
-      validates_inclusion_of :"#{name}_extension", :message => message,
+      validates_inclusion_of :"#{name}_extension", :in => range, :message => message,
         :if => options[:if], :unless => options[:unless]
     end
     
