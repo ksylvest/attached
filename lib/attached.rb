@@ -149,10 +149,12 @@ module Attached
     def validates_attached_extension(name, options = {})
       
       message = options[:message]
-      message ||= "extension must be specified"
+      message ||= "extension is not valid"
        
-      range = options[:in].map { |element| /element/ }
+      range = options[:in].map { |element| ".#{element}" }
       
+      validates_inclusion_of :"#{name}_extension", :message => message,
+        :if => options[:if], :unless => options[:unless]
     end
     
     
@@ -169,7 +171,8 @@ module Attached
     
     def validates_attached_presence(name, options = {})
       
-      message = options[:message] || "must be attached"
+      message = options[:message]
+      message ||= "must be attached"
       
       validates_presence_of :"#{name}_identifier", :message => message,
         :if => options[:if], :unless => options[:unless]
