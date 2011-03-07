@@ -1,14 +1,14 @@
 development:
-  bucket: attached-development
+  container: attached-development
   username: 
   api_key: 
 
 test:
-  bucket: attached-test
+  container: attached-test
   username: 
   api_key: 
 
 production:
-  bucket: attached-production
+  container: attached-production
   username: 
   api_key: 
