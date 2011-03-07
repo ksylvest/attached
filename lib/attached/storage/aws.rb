@@ -34,6 +34,8 @@ module Attached
 				@bucket						 = credentials[:bucket]            || credentials['bucket']
 				@access_key_id		 = credentials[:access_key_id]     || credentials['access_key_id']
 				@secret_access_key = credentials[:secret_access_key] || credentials['secret_access_key']
+				
+				raise "'bucket' must be specified if using 'aws' for storage" unless @bucket
 			end
 			
 			

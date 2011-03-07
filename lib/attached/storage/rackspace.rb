@@ -33,6 +33,8 @@ module Attached
 				@container		= credentials[:container] || credentials['container']
 				@username     = credentials[:username]  || credentials['username']
 				@api_key      = credentials[:api_key]   || credentials['api_key']
+				
+				raise "'container' must be specified if using 'rackspace' for storage" unless @container
 			end
 			
 			
