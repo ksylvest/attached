@@ -149,7 +149,7 @@ module Attached
     def validates_attached_extension(name, options = {})
       
       message = options[:message]
-      message ||= "extension is not valid"
+      message ||= "extension is invalid"
        
       range = options[:in].map { |element| ".#{element}" }
       
