@@ -55,8 +55,8 @@ module Attached
       # * path - The path to save.
       
       def save(file, path)
-        directory = connection.directories.get(self.bucket)
-        directory ||= connection.directories.create(self.permissions.merge(:key => self.bucket))
+        directory = connection.directories.get(self.container)
+        directory ||= connection.directories.create(self.permissions.merge(:key => self.container))
         
         directory.files.create(self.options(path).merge(self.permissions.merge(:key => path, :body => file.read)))
       end
