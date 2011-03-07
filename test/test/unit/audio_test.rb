@@ -9,6 +9,13 @@ class AudioTest < ActiveSupport::TestCase
     @invalid = File.open("#{Rails.root}/test/fixtures/audios/invalid")
   end
   
+  def teardown
+    @valid.close
+    @small.close
+    @large.close
+    @invalid.close
+  end
+  
   test "valid file assignment" do
     @audio = Audio.create(:file => @valid)
     assert @audio.valid?, "valid file assignment failed"

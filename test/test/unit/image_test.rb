@@ -9,6 +9,13 @@ class ImageTest < ActiveSupport::TestCase
     @invalid = File.open("#{Rails.root}/test/fixtures/images/invalid")
   end
   
+  def teardown
+    @valid.close
+    @small.close
+    @large.close
+    @invalid.close
+  end
+  
   test "valid file assignment" do
     @image = Image.create(:file => @valid)
     assert @image.valid?, "valid file assignment failed"
