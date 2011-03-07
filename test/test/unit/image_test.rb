@@ -6,7 +6,8 @@ class ImageTest < ActiveSupport::TestCase
     @valid = File.open("#{Rails.root}/test/fixtures/images/image.png")
     @small = File.open("#{Rails.root}/test/fixtures/images/small.png")
     @large = File.open("#{Rails.root}/test/fixtures/images/large.png")
-    @invalid = File.open("#{Rails.root}/test/fixtures/images/invalid")
+    @invalid = File.open("#{Rails.root}/test/fixtures/images/invalid.png")
+    @undefined = File.open("#{Rails.root}/test/fixtures/images/undefined.zip")
   end
   
   def teardown
@@ -14,6 +15,7 @@ class ImageTest < ActiveSupport::TestCase
     @small.close
     @large.close
     @invalid.close
+    @undefined.close
   end
   
   test "valid file assignment" do
@@ -25,6 +27,12 @@ class ImageTest < ActiveSupport::TestCase
     @image = Image.create(:file => @invalid)
     assert !@image.valid?, "invalid file assignment succeeded"
     assert @image.errors[:file].include? "must be an image file"
+  end
+  
+  test "undefined file assignment" do
+    @image = Image.create(:file => @undefined)
+    assert !@image.valid?, "undefined file assignment succeeded"
+    assert @image.errors[:file].include? "extension is invalid"
   end
 
   test "too large file assignment" do
