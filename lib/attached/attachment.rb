@@ -73,9 +73,9 @@ module Attached
       @name        = name
       @instance    = instance
       
-      @queue = {}
-      @purge = []
-      @errors = []
+      @queue       = {}
+      @purge       = []
+      @errors      = []
       
       @path        = options[:path]
       @styles      = options[:styles]
@@ -118,10 +118,7 @@ module Attached
     #   @object.avatar.assign(...)
     
     def assign(file, identifier = "#{Guid.new}")
-      
-      if file.is_a?(Attached::Attachment)
-        file = file.file
-      end
+      file = file.file if file.is_a?(Attached::Attachment)
       
       @file = file.respond_to?(:tempfile) ? file.tempfile : file
       
