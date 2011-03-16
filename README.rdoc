@@ -1,6 +1,6 @@
 = Attached
 
-Attached is a Ruby on Rails file attachment tool that lets users upload to the cloud. The gem supports AWS, Google and Rackspace for storage networks by default. It is influenced (and copied) from Paperclip and uses the incredibly awesome Fog library in the back.
+Attached is a Ruby on Rails file attachment tool that lets users upload to the cloud. The gem supports AWS, Google and Rackspace for storage networks by default. It is influenced (and copied) from Paperclip and makes heavy use of the incredibly awesome Fog library.
 
 == Requirements
 
@@ -14,12 +14,13 @@ The gem is tested with Ruby 1.9.2 and Rails 3.0.5 but may well work with other v
 
 Migration:
 
+  rails g model video name:string encoding:attached
+
   class CreateVideo < ActiveRecord::Migration
     def self.up
       create_table :videos do |t|
-        t.string :encoding_identifier
-        t.string :encoding_extension
-        t.integer :encoding_size
+        t.string :name
+        t.attached :encoding
 
         t.timestamps
       end
@@ -31,16 +32,19 @@ Migration:
   end
 
 Model:
+
+  class Video < ActiveRecord::Base
   
-  has_attached :encoding, :styles => { 
-    :mp4_720p => { :extension => '.mp4' },
-    :mp4_480p => { :extension => '.mp4' },
-    :ogg_720p => { :extension => '.ogv' },
-    :ogg_480p => { :extension => '.ogv' },
-  }
+    has_attached :encoding, :styles => { 
+      :webm => { :extension => '.webm' },
+      :mp4  => { :extension => '.mp4' },
+      :ogv  => { :extension => '.ogv' },
+    }
   
-  after_save do
-    remote.encode(self.encoding.url)
+    after_save do
+      remote.encode(self.encoding.url)
+    end
+  
   end
   
 Form:
@@ -52,8 +56,9 @@ Form:
 View:
 
   <video>
-    <source src="<%= @video.encoding.url(:mp4_480p) %>" />
-    <source src="<%= @video.encoding.url(:ogg_480p) %>" />
+    <source src="<%= @video.encoding.url(:webm)" />
+    <source src="<%= @video.encoding.url(:mp4) %>" />
+    <source src="<%= @video.encoding.url(:ogg) %>" />
   </video>
   
 == Advanced
@@ -63,6 +68,7 @@ View:
   # app/models/person.rb
   validates_attached_presence :avatar
   validates_attached_size :avatar, :in => 2.kilobytes..2.megabytes
+  validates_attached_extension :avatar, :in => %w(jpe jpg jpeg png)
 
 ==== Storage
   

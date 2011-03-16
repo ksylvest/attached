@@ -3,9 +3,7 @@ class CreateAudios < ActiveRecord::Migration
     create_table :audios do |t|
       t.string :name
       
-      t.string :file_identifier
-      t.string :file_extension
-      t.integer :file_size
+      t.attachment :file
 
       t.timestamps
     end

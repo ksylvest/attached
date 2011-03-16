@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101223191846) do
+ActiveRecord::Schema.define(:version => 20110316050522) do
 
   create_table "audios", :force => true do |t|
     t.string   "name"
@@ -26,6 +26,14 @@ ActiveRecord::Schema.define(:version => 20101223191846) do
     t.string   "file_identifier"
     t.string   "file_extension"
     t.integer  "file_size"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "stupids", :force => true do |t|
+    t.string   "avatar_identifier"
+    t.string   "avatar_extension"
+    t.integer  "avatar_size"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
