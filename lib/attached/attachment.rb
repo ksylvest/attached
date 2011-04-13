@@ -106,6 +106,13 @@ module Attached
       instance.changed.include? "#{name}_identifier"
     end
     
+    
+    # Check if an attachment is present.
+    #
+    # Usage:
+    #
+    #   @object.avatar.file?
+    
     def file?
       not identifier.blank?
     end

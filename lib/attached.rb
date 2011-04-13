@@ -154,6 +154,7 @@ module Attached
     #
     # Usage:
     #   
+    #   validates_attached_extension :avatar, :is => 'png'
     #   validates_attached_extension :avatar, :in => %w(png jpg)
     #   validates_attached_extension :avatar, :in => [:png, :jpg]
     #   validates_attached_extension :avatar, :in => %w(png jpg), :message => "extension must be :in"
@@ -163,6 +164,8 @@ module Attached
       
       message = options[:message]
       message ||= "extension is invalid"
+      
+      options[:in] ||= [options[:is]] if options[:is]
        
       range = options[:in].map { |element| ".#{element}" }
       

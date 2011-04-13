@@ -4,12 +4,17 @@ Attached is a Ruby on Rails file attachment tool that lets users upload to the c
 
 == Requirements
 
-The gem is tested with Ruby 1.9.2 and Rails 3.0.5 but may well work with other versions of Ruby and Rails.
+The gem is tested with Ruby 1.9.2 and Rails 3.0.6 but may well work with other versions of Ruby and Rails.
 
 == Installation
 
   gem install attached
-  
+
+== Optional
+
+  brew install imagemagick
+  port install imagemagick
+
 == Examples
 
 Migration:
@@ -37,8 +42,8 @@ Model:
   
     has_attached :encoding, :styles => { 
       :webm => { :extension => '.webm' },
-      :mp4  => { :extension => '.mp4' },
-      :ogv  => { :extension => '.ogv' },
+      :mp4  => { :extension => '.mp4'  },
+      :ogv  => { :extension => '.ogv'  },
     }
   
     after_save do
