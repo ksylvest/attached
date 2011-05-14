@@ -36,7 +36,7 @@ module Attached
         @height    ||= options[:height]
         @operation ||= options[:operation]
       
-        @extension ||= File.extname(self.file.path)
+        @extension ||= self.attachment.extension
       
         @width     = Integer(self.width)  if self.width
         @height    = Integer(self.height) if self.height

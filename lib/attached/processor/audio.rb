@@ -9,6 +9,7 @@ module Attached
       attr_reader :path
       attr_reader :extension
       attr_reader :preset
+      attr_reader :attachment
       
       
       # Create a processor.
@@ -27,7 +28,7 @@ module Attached
         @preset    = options[:preset]
         @extension = options[:extension]
         
-        @extension ||= File.extname(self.file.path)
+        @extension ||= self.attachment.extension
       end
       
       
@@ -46,16 +47,19 @@ module Attached
     
       def process
         
+        source = Tempfile.new(["", self.attachment.extension])
         result = Tempfile.new(["", self.extension])
         result.binmode
         
         begin
           
+          FileUtils.mv(self.path, source.path)
+        
           parameters = []
           
           parameters << "--preset #{self.preset}" if self.preset
           
-          parameters << self.path
+          parameters << source.path
           parameters << result.path
           
           parameters = parameters.join(" ").squeeze(" ")
@@ -65,7 +69,13 @@ module Attached
           raise Errno::ENOENT if $?.exitstatus == 127
           
         rescue Errno::ENOENT  
+          
           raise "command 'lame' not found: ensure LAME is installed"
+          
+        ensure
+          
+          FileUtils.mv(source.path, self.path)
+          
         end
         
         unless $?.exitstatus == 0
