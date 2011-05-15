@@ -63,6 +63,8 @@ module Attached
         directory ||= connection.directories.create(self.permissions.merge(:key => self.container))
         
         directory.files.create(self.options(path).merge(self.permissions.merge(:key => path, :body => file)))
+        
+        file.close
       end
       
       
