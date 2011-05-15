@@ -47,19 +47,16 @@ module Attached
     
       def process
         
-        source = Tempfile.new(["", self.attachment.extension])
         result = Tempfile.new(["", self.extension])
         result.binmode
         
         begin
-          
-          FileUtils.mv(self.path, source.path)
         
           parameters = []
           
           parameters << "--preset #{self.preset}" if self.preset
           
-          parameters << source.path
+          parameters << self.path
           parameters << result.path
           
           parameters = parameters.join(" ").squeeze(" ")
@@ -71,10 +68,6 @@ module Attached
         rescue Errno::ENOENT  
           
           raise "command 'lame' not found: ensure LAME is installed"
-          
-        ensure
-          
-          FileUtils.mv(source.path, self.path)
           
         end
         

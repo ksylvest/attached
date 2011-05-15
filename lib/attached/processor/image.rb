@@ -11,6 +11,7 @@ module Attached
     
       attr_reader :width
       attr_reader :height
+      attr_reader :quality
       attr_reader :operation
       
 
@@ -28,6 +29,7 @@ module Attached
         @path      = self.file.path
       
         @size      = options[:size]
+        @quality   = options[:quality]
         @extension = options[:extension]
       
         @width, @height, @operation = @size.match(/(\d*)x?(\d*)(.*)/)[1..3] if @size
@@ -75,6 +77,8 @@ module Attached
             else          parameters << "-resize #{width}x#{height}"
             end
           end
+          
+          parameters << "-quality #{quality}" if quality
           
           parameters << result.path
         
