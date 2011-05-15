@@ -4,7 +4,7 @@ class ImagesControllerTest < ActionController::TestCase
   
   setup do
     @image = images(:image)
-    @file = fixture_file_upload("/images/image.png")
+    @file = fixture_file_upload("/images/image.png", "image/png", :binary)
   end
 
   test "should get index" do

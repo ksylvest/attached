@@ -4,7 +4,7 @@ class AudiosControllerTest < ActionController::TestCase
   
   setup do
     @audio = audios(:audio)
-    @file = fixture_file_upload("/audios/audio.wav")
+    @file = fixture_file_upload("/audios/audio.wav", "audio/wav", :binary)
   end
 
   test "should get index" do
