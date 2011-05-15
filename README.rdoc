@@ -13,7 +13,7 @@ The gem is tested with Ruby 1.9.2 and Rails 3.0.6 but may well work with other v
 == Optional
 
   brew install imagemagick
-  port install imagemagick
+  brew install lame
 
 == Examples
 
@@ -71,20 +71,20 @@ View:
 === Validations
 
   # app/models/person.rb
-  validates_attached_presence :avatar
-  validates_attached_size :avatar, :in => 2.kilobytes..2.megabytes
-  validates_attached_extension :avatar, :in => %w(jpe jpg jpeg png)
+  validates_attached_presence :file
+  validates_attached_size :file, :in => 2.kilobytes..2.megabytes
+  validates_attached_extension :file, :in => %w(jpe jpg jpeg png)
 
 ==== Storage
   
-  # app/models/person.rb
-  has_attached :avatar, :medium => :aws, :credentials => "#{Rails.root}/config/aws.yml"
+  # app/models/user.rb
+  has_attached :file, :medium => :aws, :credentials => "#{Rails.root}/config/aws.yml"
   
-  # app/models/person.rb
-  has_attached :avatar, :medium => :google, :credentials => "#{Rails.root}/config/google.yml"
+  # app/models/user.rb
+  has_attached :file, :medium => :google, :credentials => "#{Rails.root}/config/google.yml"
   
-  # app/models/person.rb
-  has_attached :avatar, :medium => :rackspace, :credentials => "#{Rails.root}/config/rackspace.yml"
+  # app/models/user.rb
+  has_attached :file, :medium => :rackspace, :credentials => "#{Rails.root}/config/rackspace.yml"
   
   # config/initializers/attached.rb
   Attached::Attachment.options[:medium] = :aws
@@ -100,24 +100,31 @@ View:
   
 === Processor
 
-  # app/models/person.rb
-  has_attached :avatar, :processor => :image, :styles => {
-    :small => { :size => '200x200<', :extension => 'png' },
-    :large => { :size => '400x400>', :extension => 'png' },
-    :default => { :size => '300x300#' },
+  # app/models/image.rb
+  has_attached :file, :processor => :image, :styles => {
+    :small   => { :size => '200x200<', :extension => '.jpg', :quality => 90 },
+    :large   => { :size => '400x400>', :extension => '.jpg', :quality => 90 },
+    :default => { :size => '300x300#', :extension => '.jpg', :quality => 90 },
+  }
+  
+  # app/models/audio.rb
+  has_attached :file, :processor => :audio, :styles => {
+    :full  => { :preset => '320kbps', :extension => '.wav' },
+    :large => { :preset => '256kbps', :extension => '.wav' },
+    :small => { :preset => '128kbps', :extension => '.wav' },
   }
   
 === Aliases
 
   # app/initializer/attached.rb
-  Attached::Attachment.options[:alias] = http://c0378198.cdn2.cloudfiles.rackspacecloud.com/
+  Attached::Attachment.options[:alias] = http://storage.ksylvest.com/
 
   # app/initializer/attached.rb
   Attached::Attachment.options[:aliases] = %w(
-    http://d1kf5um3mxa8kv.cloudfront.net/
-    http://d3d5wf186mp1rv.cloudfront.net/
-    http://d2wmfkw6rydl1g.cloudfront.net/
-    http://d1gqpdc40l7s16.cloudfront.net/
+    http://a.storage.ksylvest.com/
+    http://b.storage.ksylvest.com/
+    http://c.storage.ksylvest.com/
+    http://d.storage.ksylvest.com/
   )
   
 == Copyright
