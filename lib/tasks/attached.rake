@@ -10,6 +10,7 @@ namespace :attached do
     
     klass.all.each do |instance|
       instance.send(attachment).reprocess!
+      instance.send(attachment).save
     end
     
   end

@@ -1,3 +1,5 @@
+require 'open-uri'
+
 require 'guid'
 
 require 'attached/storage'
@@ -111,10 +113,22 @@ module Attached
     #
     # Usage:
     #
-    #   @object.avatar.file?
+    #   @object.avatar.attached?
     
-    def file?
+    def attached?
       not identifier.blank?
+    end
+    
+    
+    # Custom setter for specifying an attachment.
+    # 
+    # Usage:
+    #
+    #    @object.avatar.file = File.open(...)
+    
+    def file=(file)
+      @file = file
+      @file = file.tempfile if file.respond_to?(:tempfile)
     end
     
     
@@ -125,14 +139,12 @@ module Attached
     #   @object.avatar.assign(...)
     
     def assign(file, identifier = "#{Guid.new}")
-      file = file.file if file.is_a?(Attached::Attachment)
-      
-      @file = file.respond_to?(:tempfile) ? file.tempfile : file
+      self.file = file
       
       extension ||= File.extname(file.original_filename) if file.respond_to?(:original_filename)
       extension ||= File.extname(file.path) if file.respond_to?(:path)
       
-      @purge = [self.path, *self.styles.map { |style, options| self.path(style) }] if file?
+      @purge = [self.path, *self.styles.map { |style, options| self.path(style) }] if attached?
       
       instance_set :size, file.size
       instance_set :extension, extension
@@ -170,7 +182,7 @@ module Attached
     #   @object.avatar.destroy
     
     def destroy
-      if file?
+      if attached?
         self.storage.destroy(self.path)
         self.styles.each do |style, options|
           self.storage.destroy(self.path(style))
@@ -287,9 +299,16 @@ module Attached
     end
     
     
-    # Todo.
+    # Access the original file .
     
     def reprocess!
+      uri = URI.parse(self.url)
+      root = "#{Rails.root}/public"
+      
+      self.file ||= File.open("#{root}#{self.url}") unless uri.absolute?
+      self.file ||= open(uri)
+      
+      process
     end
     
     

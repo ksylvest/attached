@@ -73,7 +73,7 @@ module Attached
       end
 
       define_method "#{name}?" do
-        attachment_for(name).file?
+        attachment_for(name).attached?
       end
       
       validates_each(name) do |record, attr, value|

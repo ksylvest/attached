@@ -114,6 +114,10 @@ View:
     :small => { :preset => '128kbps', :extension => '.wav' },
   }
   
+=== Reprocessing
+
+  rake attached:process[Image,file]
+  
 === Aliases
 
   # app/initializer/attached.rb

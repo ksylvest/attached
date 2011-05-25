@@ -19,7 +19,7 @@ module Attached
 			end
 			
 			
-			# Access the host (e.g. https://attached.commondatastorage.googleapis.com/) for a storage service.
+			# Access the host (e.g. /system/) for a storage service.
 			#
 			# Usage:
 			#
@@ -40,6 +40,8 @@ module Attached
       def save(file, path)
         path = "#{Rails.root}/public/system/#{path}"
         dirname, basename = File.split(path)
+        
+        return if file.path == path
         
         begin
           FileUtils.mkdir_p(dirname)
