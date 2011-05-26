@@ -1,7 +1,7 @@
 namespace :attached do
   
   desc "Process a given 'model' and 'attachment'"
-  task :process, :model, :attachment, :needs => :environment do |t, args|
+  task :process, [:model, :attachment] => :environment do |t, args|
     
     model = args[:model] or raise "must specify model"
     attachment = args[:attachment] or raise "must specify attachment"
