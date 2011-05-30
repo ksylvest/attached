@@ -40,10 +40,10 @@ Model:
 
   class Video < ActiveRecord::Base
   
-    has_attached :encoding, :styles => { 
-      :webm => { :extension => '.webm' },
-      :mp4  => { :extension => '.mp4'  },
-      :ogv  => { :extension => '.ogv'  },
+    has_attached :encoding, styles: { 
+      webm: { extension: '.webm' },
+      mp4:  { extension: '.mp4'  },
+      ogv:  { extension: '.ogv'  },
     }
   
     after_save do
@@ -54,7 +54,7 @@ Model:
   
 Form:
 
-  <%= form_for @video, :html => { :multipart => true } do |form| %>
+  <%= form_for @video, html: { multipart: true } do |form| %>
     <%= form.file_field :encoding %>
   <% end %>
   
@@ -72,19 +72,19 @@ View:
 
   # app/models/person.rb
   validates_attached_presence :file
-  validates_attached_size :file, :in => 2.kilobytes..2.megabytes
-  validates_attached_extension :file, :in => %w(jpe jpg jpeg png)
+  validates_attached_size :file, in: 2.kilobytes..2.megabytes
+  validates_attached_extension :file, in: %w(jpe jpg jpeg png)
 
 ==== Storage
   
   # app/models/user.rb
-  has_attached :file, :medium => :aws, :credentials => "#{Rails.root}/config/aws.yml"
+  has_attached :file, medium: :aws, credentials: "#{Rails.root}/config/aws.yml"
   
   # app/models/user.rb
-  has_attached :file, :medium => :google, :credentials => "#{Rails.root}/config/google.yml"
+  has_attached :file, medium: :google, credentials: "#{Rails.root}/config/google.yml"
   
   # app/models/user.rb
-  has_attached :file, :medium => :rackspace, :credentials => "#{Rails.root}/config/rackspace.yml"
+  has_attached :file, medium: :rackspace, credentials: "#{Rails.root}/config/rackspace.yml"
   
   # config/initializers/attached.rb
   Attached::Attachment.options[:medium] = :aws
@@ -101,17 +101,17 @@ View:
 === Processor
 
   # app/models/image.rb
-  has_attached :file, :processor => :image, :styles => {
-    :small   => { :size => '200x200<', :extension => '.jpg', :quality => 90 },
-    :large   => { :size => '400x400>', :extension => '.jpg', :quality => 90 },
-    :default => { :size => '300x300#', :extension => '.jpg', :quality => 90 },
+  has_attached :file, processor: :image, styles: {
+    small:   { size: '200x200<', extension: '.jpg', quality: 90 },
+    large:   { size: '400x400>', extension: '.jpg', quality: 90 },
+    default: { size: '300x300#', extension: '.jpg', quality: 90 },
   }
   
   # app/models/audio.rb
-  has_attached :file, :processor => :audio, :styles => {
-    :full  => { :preset => '320kbps', :extension => '.wav' },
-    :large => { :preset => '256kbps', :extension => '.wav' },
-    :small => { :preset => '128kbps', :extension => '.wav' },
+  has_attached :file, processor: :audio, styles: {
+    full:  { preset: '320kbps', extension: '.wav' },
+    large: { preset: '256kbps', extension: '.wav' },
+    small: { preset: '128kbps', extension: '.wav' },
   }
   
 === Reprocessing
