@@ -116,6 +116,17 @@ module Attached
     #
     # Usage:
     #
+    #   @object.avatar.file?
+    
+    def file?
+      not identifier.blank?
+    end
+    
+    
+    # Check if an attachment is present.
+    #
+    # Usage:
+    #
     #   @object.avatar.attached?
     
     def attached?
