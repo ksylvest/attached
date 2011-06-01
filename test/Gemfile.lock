@@ -1,7 +1,7 @@
 PATH
   remote: ..
   specs:
-    attached (0.3.7)
+    attached (0.3.8)
       fog
       guid
 
@@ -41,7 +41,7 @@ GEM
     erubis (2.6.6)
       abstract (>= 1.0.0)
     excon (0.6.3)
-    fog (0.8.1)
+    fog (0.8.2)
       builder
       excon (~> 0.6.1)
       formatador (>= 0.1.3)

@@ -20,6 +20,7 @@ module Attached
     attr_reader :purge
     attr_reader :errors
     attr_reader :path
+    attr_reader :missing
     attr_reader :styles
     attr_reader :default
     attr_reader :medium
@@ -41,6 +42,7 @@ module Attached
     def self.options
       @options ||= {
         :path        => ":name/:style/:identifier:extension",
+        :missing     => ":name/:style/missing:extension",
         :default     => :original,
         :medium      => :local,
         :credentials => {},
@@ -80,6 +82,7 @@ module Attached
       @errors      = []
       
       @path        = options[:path]
+      @missing     = options[:missing]
       @styles      = options[:styles]
       @default     = options[:default]
       @medium      = options[:medium]
@@ -221,7 +224,7 @@ module Attached
     #   @object.avatar.url(:large)
     
     def path(style = self.default)
-      path = @path.clone
+      path = self.attached? ? @path.clone : @missing.clone
       
       path.gsub!(/:name/, name.to_s)
       path.gsub!(/:style/, style.to_s)
