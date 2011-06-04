@@ -52,6 +52,19 @@ module Attached
       end
       
       
+      # Retrieve a file from a given path.
+      #
+      # Parameters:
+      #
+      # * path - The path to retrieve.
+      
+      def retrieve(path)
+        path = "#{Rails.root}/public/system/#{path}"
+        
+        File.open(path)
+      end
+      
+      
       # Destroy a file at a given path.
       #
       # Parameters:

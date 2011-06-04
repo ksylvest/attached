@@ -1,5 +1,3 @@
-require 'open-uri'
-
 require 'guid'
 
 require 'attached/storage'
@@ -316,11 +314,7 @@ module Attached
     # Access the original file .
     
     def reprocess!
-      uri = URI.parse(self.url)
-      root = "#{Rails.root}/public"
-      
-      self.file ||= File.open("#{root}#{self.url}") unless uri.absolute?
-      self.file ||= open(uri)
+      self.file = self.storage.retrieve(self.path)
       
       process
     end

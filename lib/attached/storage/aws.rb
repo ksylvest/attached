@@ -69,6 +69,32 @@ module Attached
       end
       
       
+      # Retrieve a file from a given path.
+      #
+      # Parameters:
+      #
+      # * path - The path to retrieve.
+      
+      def retrieve(path)
+        directory = connection.directories.get(self.bucket)
+        directory ||= connection.directories.create(self.permissions.merge(:key => self.bucket))
+        
+        file = directory.files.get(path)
+        
+        body = file.body
+        
+        extname = File.extname(path)
+        basename = File.basename(path, extname)
+        
+        file = Tempfile.new([basename, extname])
+        file.binmode
+        file.write(body)
+        file.rewind
+        
+        file
+      end
+      
+      
       # Destroy a file at a given path.
       #
       # Parameters:

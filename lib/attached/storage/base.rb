@@ -98,6 +98,17 @@ module Attached
       end
       
       
+      # Retrieve a file from a given path.
+      #
+      # Parameters:
+      #
+      # * path - The path to retrieve.
+      
+      def retrieve(path)
+        raise NotImplementedError.new
+      end
+      
+      
       # Destroy a file at a given path (abstract).
       #
       # Parameters:
