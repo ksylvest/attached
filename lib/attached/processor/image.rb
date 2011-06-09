@@ -37,7 +37,16 @@ module Attached
         @width     ||= options[:width]
         @height    ||= options[:height]
         @operation ||= options[:operation]
-      
+        
+        if @operation
+          case @operation.intern
+          when :decrease then @operation = '>'
+          when :increase then @operation = '<'
+          when :default  then @operation = '#'
+          end
+        end
+        
+        @operation ||= '#'
         @extension ||= self.attachment.extension
       
         @width     = Integer(self.width)  if self.width

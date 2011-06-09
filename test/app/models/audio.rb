@@ -2,9 +2,9 @@ class Audio < ActiveRecord::Base
   
   has_attached :file, :processor => :audio, :path => "audios/files/:style/:identifier:extension", 
     :styles => {
-      :full  => { :preset => "320kbps", :extension => ".wav" },
-      :large => { :preset => "256kbps", :extension => ".wav" },
-      :small => { :preset => "128kbps", :extension => ".wav" },
+      :full  => { :preset => "320kbps", :extension => ".aac" },
+      :large => { :preset => "256kbps", :extension => ".aac" },
+      :small => { :preset => "128kbps", :extension => ".aac" },
     }
   
   validates_attached_presence :file

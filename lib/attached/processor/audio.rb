@@ -66,9 +66,7 @@ module Attached
           raise Errno::ENOENT if $?.exitstatus == 127
           
         rescue Errno::ENOENT  
-          
           raise "command 'lame' not found: ensure LAME is installed"
-          
         end
         
         unless $?.exitstatus == 0

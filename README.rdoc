@@ -102,9 +102,16 @@ View:
 
   # app/models/image.rb
   has_attached :file, processor: :image, styles: {
-    small:   { size: '200x200<', extension: '.jpg', quality: 90 },
-    large:   { size: '400x400>', extension: '.jpg', quality: 90 },
+    small:   { size: '200x200>', extension: '.jpg', quality: 90 },
+    large:   { size: '400x400<', extension: '.jpg', quality: 90 },
     default: { size: '300x300#', extension: '.jpg', quality: 90 },
+  }
+  
+  # app/models/image.rb
+  has_attached :file, processor: :image, styles: {
+    small:   { operation: :decrease, width: 200, height: 200, extension: '.jpg', quality: 90 },
+    large:   { operation: :increase, width: 400, height: 400, extension: '.jpg', quality: 90 },
+    default: { operation: :resize,   width: 300, height: 300, extension: '.jpg', quality: 90 },
   }
   
   # app/models/audio.rb
@@ -113,6 +120,22 @@ View:
     large: { preset: '256kbps', extension: '.wav' },
     small: { preset: '128kbps', extension: '.wav' },
   }
+  
+  # app/models/audio.rb
+  has_attached :file, processor: :audio, styles: {
+    full:  { preset: '320kbps', extension: '.wav' },
+    large: { preset: '256kbps', extension: '.wav' },
+    small: { preset: '128kbps', extension: '.wav' },
+  }
+  
+  # app/models/audio.rb
+  has_attached :file, processor: :audio, styles: {
+    full:  { preset: 'insane',  extension: '.wav' },
+    large: { preset: 'extreme', extension: '.wav' },
+    small: { preset: 'medium',  extension: '.wav' },
+  }
+  
+  -preset fast extreme
   
 === Reprocessing
 
