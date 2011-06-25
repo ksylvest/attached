@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 $:.push File.join(File.dirname(__FILE__), 'lib')
 require "attached/version"
 
@@ -12,6 +13,4 @@ Gem::Specification.new do |s|
   s.description = "Attached is a Ruby on Rails cloud attachment and processor library inspired by Paperclip. Attached lets users push files to the cloud, then perform remote processing on the files."
   s.files       = Dir.glob("{bin,lib}/**/*") + %w(README.rdoc LICENSE Gemfile Rakefile)
   s.add_dependency 'fog'
-  s.add_dependency 'guid'
 end
-
