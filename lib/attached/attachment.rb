@@ -1,4 +1,4 @@
-require 'guid'
+require 'identifier'
 
 require 'attached/storage'
 require 'attached/storage/error'
@@ -21,6 +21,7 @@ module Attached
     attr_reader :missing
     attr_reader :styles
     attr_reader :default
+    attr_reader :strategy
     attr_reader :medium
     attr_reader :credentials
     attr_reader :processors
@@ -83,6 +84,7 @@ module Attached
       @missing     = options[:missing]
       @styles      = options[:styles]
       @default     = options[:default]
+      @strategy    = options[:strategy]
       @medium      = options[:medium]
       @credentials = options[:credentials]
       @processors  = options[:processors]
@@ -90,8 +92,8 @@ module Attached
       @aliases     = options[:aliases]
       @alias       = options[:alias]
       
-      @processors  = self.processors + [self.processor] if self.processor
-      @aliases     = self.aliases + [self.alias] if self.alias
+      @aliases     = self.aliases << self.alias if self.alias
+      @processors  = self.processors << self.processor if self.processor
       
       @storage     = Attached::Storage.storage(self.medium, self.credentials)
       
@@ -150,7 +152,7 @@ module Attached
     #
     #   @object.avatar.assign(...)
     
-    def assign(file, identifier = "#{Guid.new}")
+    def assign(file, identifier = Identifier.generate)
       self.file = file
       
       extension ||= File.extname(file.original_filename) if file.respond_to?(:original_filename)
