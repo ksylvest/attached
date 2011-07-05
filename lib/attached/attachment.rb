@@ -160,9 +160,9 @@ module Attached
       
       @purge = [self.path, *self.styles.map { |style, options| self.path(style) }] if attached?
       
-      instance_set :size, file.size
-      instance_set :extension, extension
-      instance_set :identifier, identifier
+      self.size = file.size
+      self.extension = extension
+      self.identifier = identifier
       
       process
     end
@@ -257,6 +257,17 @@ module Attached
     end
     
     
+    # Access the status for an attachment.
+    #
+    # Usage:
+    #
+    # @object.avatar.status
+    
+    def status
+      instance_get(:status)
+    end
+    
+    
     # Access the extension for an attachment. It will first check the styles 
     # to see if one is specified before checking the instance.
     #
@@ -286,6 +297,28 @@ module Attached
       self.styles[style] and 
       self.styles[style][:identifier] or 
       instance_get(:identifier)
+    end
+    
+    
+    # Set the size for an attachment.
+    #
+    # Usage:
+    #
+    # @object.avatar.size = 1024
+    
+    def size=(size)
+      instance_set(:size, size)
+    end
+    
+    
+    # Set the status for an attachment.
+    #
+    # Usage:
+    #
+    # @object.avatar.status = 'processing'
+    
+    def status=(status)
+      instance_set(:size, status)
     end
     
     
