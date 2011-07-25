@@ -156,16 +156,18 @@ module Attached
     def assign(file, identifier = Identifier.generate)
       self.file = file
       
-      extension ||= File.extname(file.original_filename) if file.respond_to?(:original_filename)
-      extension ||= File.extname(file.path) if file.respond_to?(:path)
+      if file
+        extension ||= File.extname(file.original_filename) if file.respond_to?(:original_filename)
+        extension ||= File.extname(file.path) if file.respond_to?(:path)
+      end
       
       @purge = [self.path, *self.styles.map { |style, options| self.path(style) }] if attached?
       
-      self.size = file.size
-      self.extension = extension
-      self.identifier = identifier
+      self.size       = file ? file.size  : nil
+      self.extension  = file ? extension  : nil
+      self.identifier = file ? identifier : nil
       
-      process
+      process if file
     end
     
     

@@ -1,7 +1,7 @@
 PATH
   remote: ..
   specs:
-    attached (0.4.1)
+    attached (0.4.2)
       fog
       identifier
 
