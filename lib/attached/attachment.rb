@@ -45,9 +45,6 @@ module Attached
         :default     => :original,
         :medium      => :local,
         :credentials => {},
-        :styles      => {},
-        :processors  => [],
-        :aliases     => [],
       }
     end
     
@@ -71,7 +68,11 @@ module Attached
     # * :aliases     - An array of aliases
     
     def initialize(name, instance, options = {})
-      options      = self.class.options.merge(options)
+      options      = self.class.options.clone.merge(options)
+      
+      options[:styles]     ||= {}
+      options[:aliases]    ||= []
+      options[:processors] ||= []
       
       @name        = name
       @instance    = instance
