@@ -17,7 +17,6 @@ module Attached
       args.each do |name|
         column("#{name}_identifier", :string, options)
         column("#{name}_extension", :string, options)
-        column("#{name}_status", :string, options)
         column("#{name}_size", :integer, options)
       end
     end
