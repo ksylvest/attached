@@ -157,6 +157,7 @@ module Attached
       self.file = file
       
       if file
+        extension ||= file.extension if file.respond_to?(:extension)
         extension ||= File.extname(file.original_filename) if file.respond_to?(:original_filename)
         extension ||= File.extname(file.path) if file.respond_to?(:path)
       end
