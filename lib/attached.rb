@@ -85,21 +85,26 @@ module Attached
       
       after_validation do
         
-        self.errors[:"#{name}_size"].each do |message|
-          self.errors.add(name, message)
+        if self.errors.include?(:"#{name}_size")
+          self.errors[:"#{name}_size"].each do |message|
+            self.errors.add(name, message)
+          end
+          self.errors[:"#{name}_size"].clear
         end
         
-        self.errors[:"#{name}_extension"].each do |message|
-          self.errors.add(name, message)
+        if self.errors.include?(:"#{name}_extension")
+          self.errors[:"#{name}_extension"].each do |message|
+            self.errors.add(name, message)
+          end
+          self.errors[:"#{name}_extension"].clear
         end
         
-        self.errors[:"#{name}_identifier"].each do |message|
-          self.errors.add(name, message)
+        if self.errors.include?(:"#{name}_identifier")
+          self.errors[:"#{name}_identifier"].each do |message|
+            self.errors.add(name, message)
+          end
+          self.errors[:"#{name}_identifier"].clear
         end
-        
-        self.errors[:"#{name}_size"].clear
-        self.errors[:"#{name}_extension"].clear
-        self.errors[:"#{name}_identifier"].clear
         
       end
       

@@ -1,7 +1,7 @@
 PATH
   remote: ..
   specs:
-    attached (0.4.4)
+    attached (0.4.5)
       fog
       identifier
 
@@ -93,7 +93,7 @@ GEM
     redis (2.2.2)
     redis-namespace (1.0.3)
       redis (< 3.0.0)
-    resque (1.18.5)
+    resque (1.19.0)
       multi_json (~> 1.0)
       redis-namespace (~> 1.0.2)
       sinatra (>= 0.9.2)
