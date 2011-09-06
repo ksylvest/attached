@@ -97,9 +97,9 @@ module Attached
           self.errors.add(name, message)
         end
         
-        self.errors.delete(:"#{name}_size")
-        self.errors.delete(:"#{name}_extension")
-        self.errors.delete(:"#{name}_identifier")
+        self.errors[:"#{name}_size"].clear
+        self.errors[:"#{name}_extension"].clear
+        self.errors[:"#{name}_identifier"].clear
         
       end
       

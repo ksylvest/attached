@@ -1,7 +1,7 @@
 PATH
   remote: ..
   specs:
-    attached (0.4.3)
+    attached (0.4.4)
       fog
       identifier
 
@@ -54,7 +54,7 @@ GEM
     foreman (0.20.0)
       term-ansicolor (~> 1.0.5)
       thor (>= 0.13.6)
-    formatador (0.2.0)
+    formatador (0.2.1)
     i18n (0.5.0)
     identifier (1.1.1)
     mail (2.2.19)
