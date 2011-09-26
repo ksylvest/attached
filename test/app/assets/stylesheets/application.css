@@ -1,0 +1,16 @@
+/*
+ *= require_self
+ *= require_tree . 
+*/
+
+html, body
+{
+  font-family: Helvetica, Verdana, Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+}
+
+.field_with_errors 
+{ 
+  display: inline;
+}
