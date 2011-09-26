@@ -1,15 +1,10 @@
 class CreateImages < ActiveRecord::Migration
-  def self.up
+  def change
     create_table :images do |t|
       t.string :name
-      
       t.attachment :file
 
       t.timestamps
     end
-  end
-
-  def self.down
-    drop_table :images
   end
 end
