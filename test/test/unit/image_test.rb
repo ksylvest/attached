@@ -21,6 +21,7 @@ class ImageTest < ActiveSupport::TestCase
   test "valid file assignment" do
     @image = Image.create(:file => @valid)
     assert @image.valid?, "valid file assignment failed"
+    assert @image.file?, "should have a file"
   end
 
   test "inavlid file assignment" do

@@ -21,6 +21,7 @@ class AudioTest < ActiveSupport::TestCase
   test "valid file assignment" do
     @audio = Audio.create(:file => @valid)
     assert @audio.valid?, "valid file assignment failed"
+    assert @audio.file?, "should have a file"
   end
 
   test "inavlid file assignment" do
