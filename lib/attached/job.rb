@@ -1,5 +1,7 @@
 module Attached
+  
   class Job
+    
     @queue = :attached
     
     def self.perform(klass, id, method)
@@ -17,4 +19,5 @@ module Attached
     end
     
   end
+  
 end
