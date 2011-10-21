@@ -1,8 +1,8 @@
-gemfile: test/Gemfile
 rvm:
   - 1.8.7
   - 1.9.2
   - 1.9.3
   - jruby
   - ree
-script: "sh -e 'cd test' && bundle exec rake db:drop db:create db:migrate test"
+after_script:  "sh -c 'cd test/dummy' && bundle exec rake db:drop db:create db:migrate rake db:test:prepare"
+before_script: "sh -c 'cd test/dummy' && bundle exec rake db:drop db:create db:migrate rake db:test:prepare"
