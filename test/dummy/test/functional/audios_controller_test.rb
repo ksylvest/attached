@@ -2,6 +2,8 @@ require 'test_helper'
 
 class AudiosControllerTest < ActionController::TestCase
 
+  fixtures :all
+
   setup do
     @audio = audios(:audio)
     @file = fixture_file_upload("/audios/audio.wav", "audio/wav", :binary)

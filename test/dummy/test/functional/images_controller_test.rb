@@ -2,6 +2,8 @@ require 'test_helper'
 
 class ImagesControllerTest < ActionController::TestCase
 
+  fixtures :all
+
   setup do
     @image = images(:image)
     @file = fixture_file_upload("/images/image.png", "image/png", :binary)
