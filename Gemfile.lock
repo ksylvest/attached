@@ -65,6 +65,7 @@ GEM
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
     mime-types (1.16)
+    minitest (2.6.2)
     multi_json (1.0.3)
     net-scp (1.0.4)
       net-ssh (>= 1.99.1)
@@ -119,6 +120,7 @@ PLATFORMS
 DEPENDENCIES
   attached!
   jquery-rails
+  minitest
   rails (= 3.1.1)
   sqlite3
   turn
