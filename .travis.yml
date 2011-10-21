@@ -5,6 +5,6 @@ rvm:
   - jruby
   - ree
 after_script:  
-  - "sh -c 'cd test/dummy' && bundle exec rake db:create db:migrate db:test:prepare"
+  - "sh -c 'cd test/dummy && bundle exec rake db:create db:migrate db:test:prepare'"
 before_script: 
-  - "sh -c 'cd test/dummy' && bundle exec rake db:create db:migrate db:test:prepare"
+  - "sh -c 'cd test/dummy && bundle exec rake db:create db:migrate db:test:prepare'"
