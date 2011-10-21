@@ -3,12 +3,7 @@
 require 'bundler'
 
 require 'rdoc/task'
-require 'rdoc/rdoc'
-
 require 'rake/testtask'
-require 'rake/rdoctask'
-
-RDoc::Task ||= Rake::RDocTask
 
 Bundler::GemHelper.install_tasks
 
