@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class AudiosControllerTest < ActionController::TestCase
-  
+
   setup do
     @audio = audios(:audio)
     @file = fixture_file_upload("/audios/audio.wav", "audio/wav", :binary)
@@ -20,30 +20,30 @@ class AudiosControllerTest < ActionController::TestCase
 
   test "should create audio" do
     assert_difference('Audio.count') do
-      post :create, :audio => { :name => "Audio", :file => @file }
+      post :create, :audio => { :name => @audio.name, :file => @file }
     end
-    
+
     assert_redirected_to audio_path(assigns(:audio))
   end
 
   test "should show audio" do
-    get :show, :id => @audio.to_param
+    get :show, :id => @audio.id
     assert_response :success
   end
 
   test "should get edit" do
-    get :edit, :id => @audio.to_param
+    get :edit, :id => @audio.id
     assert_response :success
   end
 
   test "should update audio" do
-    put :update, :id => @audio.to_param, :audio => @audio.attributes
+    put :update, :id => @audio.id, :audio => @audio.attributes
     assert_redirected_to audio_path(assigns(:audio))
   end
 
   test "should destroy audio" do
     assert_difference('Audio.count', -1) do
-      delete :destroy, :id => @audio.to_param
+      delete :destroy, :id => @audio.id
     end
 
     assert_redirected_to audios_path
