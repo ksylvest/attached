@@ -1,4 +1,4 @@
-Attached::Application.configure do
+Dummy::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
   # The test environment is used exclusively to run your application's
@@ -36,7 +36,4 @@ Attached::Application.configure do
 
   # Print deprecation notices to the stderr
   config.active_support.deprecation = :stderr
-
-  # Allow pass debug_assets=true as a query parameter to load pages with unpackaged assets
-  config.assets.allow_debugging = true
 end

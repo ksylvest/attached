@@ -1,2 +1,2 @@
-Attached::Application.config.session_store :cookie_store, key: '_attached_session'
-Attached::Application.config.secret_token = '1eb1ba2c43e9b29c12139d1e79b9a34cdc6693f92eda1baee84787ab6ea3958cd1ce7190023c97c30cdb4d65f8514a2c5480d0b86fc41b7d34b68b5df809f8c3'
+Dummy::Application.config.session_store :cookie_store, key: '_dummy_session'
+Dummy::Application.config.secret_token = '1e5317cd7c88dbca519161b32cecf866cf369a3e9045d2a4b64eb963be92729ceeb4fee4084f4035e290e8abcc81bfebc09b5d4121a717f9382006c255154df3'
