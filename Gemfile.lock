@@ -96,7 +96,7 @@ GEM
       rake (>= 0.8.7)
       rdoc (~> 3.4)
       thor (~> 0.14.6)
-    rake (0.9.2.2)
+    rake (0.9.2)
     rdoc (3.11)
       json (~> 1.4)
     ruby-hmac (0.4.0)
@@ -121,6 +121,6 @@ DEPENDENCIES
   attached!
   jquery-rails
   minitest
-  rails (= 3.1.1)
+  rails
   sqlite3
   turn
