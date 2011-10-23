@@ -10,7 +10,7 @@ class AudioTest < ActiveSupport::TestCase
     @undefined = File.open("#{Rails.root}/test/fixtures/audios/undefined.zip")
   end
   
-  def teardown
+  teardown do
     @valid.close
     @small.close
     @large.close
@@ -23,7 +23,7 @@ class AudioTest < ActiveSupport::TestCase
     assert @audio.valid?, "valid file assignment failed"
     assert @audio.file?, "should have a file"
   end
-
+  
   test "inavlid file assignment" do
     @audio = Audio.create(:file => @invalid)
     assert !@audio.valid?, "invalid file assignment succeeded"
@@ -35,19 +35,19 @@ class AudioTest < ActiveSupport::TestCase
     assert !@audio.valid?, "undefined file assignment succeeded"
     assert @audio.errors[:file].include? "extension is invalid"
   end
-
+  
   test "too large file assignment" do
     @audio = Audio.create(:file => @large)
     assert !@audio.valid?, "invalid file assignment succeeded"
     assert @audio.errors[:file].include? "size must be between 2 kilobytes and 2 megabytes"
   end
-
+  
   test "too small file assignment" do
     @audio = Audio.create(:file => @small)
     assert !@audio.valid?, "invalid file assignment succeeded"
     assert @audio.errors[:file].include? "size must be between 2 kilobytes and 2 megabytes"
   end
-
+  
   test "no file assignment" do
     @audio = Audio.create()
     assert !@audio.valid?, "invalid file assignment succeeded"
