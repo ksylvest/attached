@@ -157,14 +157,17 @@ module Attached
       self.file = file
       
       if file
-        extension ||= file.extension if file.respond_to?(:extension)
-        extension ||= File.extname(file.original_filename) if file.respond_to?(:original_filename)
-        extension ||= File.extname(file.path) if file.respond_to?(:path)
+        extension ||= file.extension if file.respond_to? :extension
+        extension ||= File.extname(file.original_filename) if file.respond_to? :original_filename
+        extension ||= File.extname(file.path) if file.respond_to? :path
+        
+        size ||= file.size if file.respond_to? :size
+        size ||= File.size(file.path) if file.respond_to? :path
       end
       
       @purge = [self.path, *self.styles.map { |style, options| self.path(style) }] if attached?
       
-      self.size       = file ? file.size  : nil
+      self.size       = file ? size       : nil
       self.extension  = file ? extension  : nil
       self.identifier = file ? identifier : nil
       
