@@ -33,7 +33,7 @@ Migration:
     def self.up
       create_table :videos do |t|
         t.string :name
-        t.attached :encoding
+        t.attachment :encoding
 
         t.timestamps
       end
