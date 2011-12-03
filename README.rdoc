@@ -169,7 +169,7 @@ View:
   
 === Status
 
-  {<img src="http://travis-ci.org/ksylvest/attached.png" />}[http://travis-ci.org/ksylvest/attached]
+{<img src="http://travis-ci.org/ksylvest/attached.png" />}[http://travis-ci.org/ksylvest/attached]
   
 == Copyright
 
