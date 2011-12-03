@@ -5,6 +5,7 @@ rvm:
   - 1.9.3
   - ree
   - rbx
-before_script: 
+script: 
   - "sudo aptitude -y -q install lame"
   - "sh -c 'cd test/dummy && bundle exec rake db:create db:migrate db:test:prepare'"
+  - "bundle exec rake test"
