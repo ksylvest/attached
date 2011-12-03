@@ -167,6 +167,10 @@ View:
     http://d.storage.ksylvest.com/
   )
   
+=== Status
+
+  {<img src="http://travis-ci.org/ksylvest/attached.png" />}[http://travis-ci.org/ksylvest/attached]
+  
 == Copyright
 
 Copyright (c) 2010 - 2011 Kevin Sylvestre. See LICENSE for details.
