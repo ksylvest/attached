@@ -1,6 +1,0 @@
-.bundle
-.sass*
-coverage
-log/*
-tmp/*
-db/*.sqlite*
