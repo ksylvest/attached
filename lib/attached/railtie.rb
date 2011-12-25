@@ -5,7 +5,7 @@ module Attached
   class Railtie < Rails::Railtie
     
     rake_tasks do
-      load 'tasks/attached.rake'
+      load 'tasks/attached_tasks.rake'
     end
     
     initializer 'attached.initialize' do
