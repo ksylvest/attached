@@ -1,0 +1,17 @@
+<h1>Show Audio</h1>
+
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @audio.name %>
+</p>
+
+<p>
+  <%= audio_tag @audio.file.url(:large) %>
+</p>
+
+<p>
+  <%= link_to 'Edit', edit_audio_path(@audio) %>
+  <%= link_to 'Back', audios_path %>
+</p>
