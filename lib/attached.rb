@@ -7,6 +7,7 @@ module Attached
   
   def self.included(base)
     base.extend ClassMethods
+    base.class_attribute :attached_options
   end
   
   
@@ -24,20 +25,6 @@ module Attached
   
   
   module ClassMethods
-    
-    
-    # Initialize attached options used for communicating between class and instance methods.
-    
-    def initialize_attached_options
-      write_inheritable_attribute(:attached_options, {})
-    end
-    
-    
-    # Access attached options used for communicating between class and instance methods.
-    
-    def attached_options
-      read_inheritable_attribute(:attached_options)
-    end
     
     
     # Add an attachment to a class.
@@ -58,8 +45,8 @@ module Attached
       
       include InstanceMethods
       
-      initialize_attached_options unless attached_options
-      attached_options[name] = options
+      self.attached_options ||= {}
+      self.attached_options[name] = options
       
       before_save :save_attached
       before_destroy :destroy_attached

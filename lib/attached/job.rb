@@ -9,6 +9,7 @@ module Attached
       attachment = object.send(name)
       attachment.reprocess!
       attachment.status = 'active'
+      object.save
     end
     
     def self.enqueue(attachment)
