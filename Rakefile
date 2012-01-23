@@ -1,5 +1,7 @@
 #!/usr/bin/env rake
 
+require 'appraisal'
+
 require 'bundler'
 
 require 'rake/testtask'
