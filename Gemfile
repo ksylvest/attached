@@ -9,9 +9,4 @@ group :test do
   gem 'turn', :require => false
 end
 
-platforms :jruby do
-  gem 'jruby-openssl'
-  gem 'activerecord-jdbcmysql-adapter'
-  gem 'activerecord-jdbcpostgresql-adapter'
-  gem 'activerecord-jdbcsqlite3-adapter'
-end
+gem 'jruby-openssl', :platform => :jruby
