@@ -6,8 +6,8 @@ require 'attached/storage/local'
 
 module Attached
   module Storage
-    
-    
+
+
     # Create a storage object given a medium and credentials.
     #
     # Usage:
@@ -17,11 +17,11 @@ module Attached
     #   Attached::Storage.storage(:google,    "#{Rails.root}/config/google.yml"   )
     #   Attached::Storage.storage(:rackspace, "#{Rails.root}/config/rackspace.yml")
     #   Attached::Storage.storage(Attached::Storage::Custom.new)
-    
+
     def self.storage(storage, credentials)
-      
+
       return storage if storage.is_a? Attached::Storage::Base
-      
+
       case storage
         when :aws       then return Attached::Storage::AWS.new       credentials
         when :google    then return Attached::Storage::Google.new    credentials
@@ -29,9 +29,9 @@ module Attached
         when :local     then return Attached::Storage::Local.new
         else raise "undefined storage '#{storage}'"
       end
-      
+
     end
-    
-    
+
+
   end
 end
