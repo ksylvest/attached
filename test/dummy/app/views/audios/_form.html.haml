@@ -3,15 +3,15 @@
     = render 'shared/error', :method => method, :message => message
 
   .control-group
-    = form.label :name, class: "control-label"
+    = form.label :name, :class => "control-label"
     .controls
       = form.text_field :name
 
   .control-group
-    = form.label :file, class: "control-label"
+    = form.label :file, :class => "control-label"
     .controls
       = form.file_field :file
 
   .form-actions
-    = form.submit "Submit", class: 'btn btn-primary'
+    = form.submit "Submit", :class => 'btn btn-primary'
     = link_to 'Cancel', :back, :class => 'btn'
