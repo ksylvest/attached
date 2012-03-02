@@ -1,5 +1,5 @@
-= form_for @image, :html => { :multipart => true, :class => 'form-horizontal' } do |form|
-  - @image.errors.each do |method, message|
+= form_for image, :html => { :multipart => true, :class => 'form-horizontal' } do |form|
+  - image.errors.each do |method, message|
     = render 'shared/error', :method => method, :message => message
 
   .control-group
