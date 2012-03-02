@@ -2,7 +2,16 @@ source 'http://rubygems.org'
 
 gemspec
 
+gem 'rails'
+
+group :assets do
+  gem 'sass-rails', '3.2.4'
+  gem 'coffee-rails', '3.2.2'
+end
+
+gem 'haml-rails'
 gem 'jquery-rails'
+gem 'bootstrap-sass'
 
 group :test do
   gem 'minitest'
