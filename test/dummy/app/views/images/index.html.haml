@@ -3,9 +3,9 @@
     List
     %small Images
 %table.table.table-striped.table-bordered
-  %colgroup{ width: '60%' }
-  %colgroup{ width: '20%' }
-  %colgroup{ width: '20%' }
+  %colgroup{ :width => '60%' }
+  %colgroup{ :width => '20%' }
+  %colgroup{ :width => '20%' }
   - @images.each do |image|
     %tr
       %th= image.name

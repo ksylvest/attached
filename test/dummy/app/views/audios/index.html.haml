@@ -3,9 +3,9 @@
     List
     %small Audios
 %table.table.table-striped.table-bordered
-  %colgroup{ width: '60%' }
-  %colgroup{ width: '20%' }
-  %colgroup{ width: '20%' }
+  %colgroup{ :width => '60%' }
+  %colgroup{ :width => '20%' }
+  %colgroup{ :width => '20%' }
   - @audios.each do |audio|
     %tr
       %th= audio.name
