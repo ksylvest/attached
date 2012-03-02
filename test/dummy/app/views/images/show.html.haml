@@ -1,0 +1,13 @@
+.page-header
+  %h1 
+    Show
+    %small Image
+%p#notice= notice
+%p
+  %strong Name:
+  = @image.name
+%p
+  = image_tag @image.file.url(:full), :size => "400x400"
+%p
+  = link_to 'Edit', edit_image_path(@image), :class => 'btn btn-warning'
+  = link_to 'Back', images_path, :class => 'btn'

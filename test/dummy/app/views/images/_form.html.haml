@@ -1,0 +1,17 @@
+= form_for @image, :html => { :multipart => true, :class => 'form-horizontal' } do |form|
+  - @image.errors.each do |method, message|
+    = render 'shared/error', :method => method, :message => message
+
+  .control-group
+    = form.label :name, class: "control-label"
+    .controls
+      = form.text_field :name
+
+  .control-group
+    = form.label :file, class: "control-label"
+    .controls
+      = form.file_field :file
+
+  .form-actions
+    = form.submit "Submit", class: 'btn btn-primary'
+    = link_to 'Cancel', :back, :class => 'btn'

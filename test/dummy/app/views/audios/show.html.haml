@@ -1,0 +1,13 @@
+.page-header
+  %h1 
+    Show
+    %small Audio
+%p#notice= notice
+%p
+  %strong Name:
+  = @audio.name
+%p
+  = audio_tag @audio.file.url(:large)
+%p
+  = link_to 'Edit', edit_audio_path(@audio), :class => 'btn btn-warning'
+  = link_to 'Back', audios_path, :class => 'btn'

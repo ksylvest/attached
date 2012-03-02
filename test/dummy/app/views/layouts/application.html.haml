@@ -1,0 +1,17 @@
+!!!
+%html
+  %head
+    %title Attached
+    = stylesheet_link_tag    "application"
+    = javascript_include_tag "application"
+    = csrf_meta_tags
+  %body
+    .navbar.navbar-fixed-top
+      .navbar-inner
+        .container
+          = link_to 'Attached', root_path, class: 'brand'
+          %ul.nav
+            %li= link_to 'Audios', audios_path
+            %li= link_to 'Images', images_path
+    .container
+      = yield
