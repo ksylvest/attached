@@ -1,0 +1,215 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Attached by ksylvest</title>
+    
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="javascripts/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Attached</h1>
+        <p>A file attachment tool that lets users upload to the cloud</p>
+        <p class="view"><a href="https://github.com/ksylvest/attached">View the Project on GitHub <small>ksylvest/attached</small></a></p>
+        <ul>
+          <li><a href="https://github.com/ksylvest/attached/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/ksylvest/attached/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/ksylvest/attached">Fork On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>Attached</h1>
+
+<p>Attached is a Ruby on Rails file attachment tool that lets users upload to the cloud. The gem supports AWS, Google and Rackspace for storage networks by default. It is influenced (and copied) from Paperclip and makes heavy use of the incredibly awesome Fog library.</p>
+
+<h2>Requirements</h2>
+
+<p>The gem is tested with:</p>
+
+<ul>
+<li>Ruby on Rails 3.1.2</li>
+<li>Ruby (MRI) 1.9.3 (p0)</li>
+<li>Ruby (MRI) 1.9.2 (p290)</li>
+<li>Ruby (MRI) 1.8.7 (p352)</li>
+<li>Ruby (REE) 1.8.7 (2011.03)</li>
+<li>JRuby 1.6.5</li>
+<li>Rubinius 1.2.4</li>
+</ul><h2>Installation</h2>
+
+<p>gem install attached</p>
+
+<h2>Optional</h2>
+
+<p>brew install imagemagick
+  brew install lame</p>
+
+<h2>Examples</h2>
+
+<p>Migration:</p>
+
+<pre><code>rails g model video name:string encoding:attached
+
+class CreateVideo &lt; ActiveRecord::Migration
+  def self.up
+    create_table :videos do |t|
+      t.string :name
+      t.attachment :encoding
+
+      t.timestamps
+    end
+  end
+
+  def self.down
+    drop_table :videos
+  end
+end
+</code></pre>
+
+<p>Model:</p>
+
+<pre><code>class Video &lt; ActiveRecord::Base
+
+  has_attached :encoding, styles: { 
+    webm: { extension: '.webm' },
+    mp4:  { extension: '.mp4'  },
+    ogv:  { extension: '.ogv'  },
+  }
+
+  after_save do
+    remote.encode(self.encoding.url)
+  end
+
+end
+</code></pre>
+
+<p>Form:</p>
+
+<pre><code>&lt;%= form_for @video, html: { multipart: true } do |form| %&gt;
+  &lt;%= form.file_field :encoding %&gt;
+&lt;% end %&gt;
+</code></pre>
+
+<p>View:</p>
+
+<pre><code>&lt;video&gt;
+  &lt;source src="&lt;%= @video.encoding.url(:webm)" /&gt;
+  &lt;source src="&lt;%= @video.encoding.url(:mp4) %&gt;" /&gt;
+  &lt;source src="&lt;%= @video.encoding.url(:ogg) %&gt;" /&gt;
+&lt;/video&gt;
+</code></pre>
+
+<h2>Advanced</h2>
+
+<h3>Validations</h3>
+
+<pre><code># app/models/person.rb
+validates_attached_presence :file
+validates_attached_size :file, in: 2.kilobytes..2.megabytes
+validates_attached_extension :file, in: %w(jpe jpg jpeg png)
+</code></pre>
+
+<h3>Storage</h3>
+
+<pre><code># app/models/user.rb
+has_attached :file, medium: :aws, credentials: "#{Rails.root}/config/aws.yml"
+
+# app/models/user.rb
+has_attached :file, medium: :google, credentials: "#{Rails.root}/config/google.yml"
+
+# app/models/user.rb
+has_attached :file, medium: :rackspace, credentials: "#{Rails.root}/config/rackspace.yml"
+
+# config/initializers/attached.rb
+Attached::Attachment.options[:medium] = :aws
+Attached::Attachment.options[:credentials] = "#{Rails.root}/config/aws.yml"
+
+# config/initializers/attached.rb
+Attached::Attachment.options[:medium] = :google
+Attached::Attachment.options[:credentials] = "#{Rails.root}/config/google.yml"
+
+# config/initializers/attached.rb
+Attached::Attachment.options[:medium] = :rackspace
+Attached::Attachment.options[:credentials] = "#{Rails.root}/config/rackspace.yml"
+</code></pre>
+
+<h3>Processors</h3>
+
+<pre><code># app/models/image.rb
+has_attached :file, processor: :image, styles: {
+  small:   { size: '200x200&gt;', extension: '.jpg', quality: 90 },
+  large:   { size: '400x400&lt;', extension: '.jpg', quality: 90 },
+  default: { size: '300x300#', extension: '.jpg', quality: 90 },
+}
+
+# app/models/image.rb
+has_attached :file, processor: :image, styles: {
+  small:   { operation: :decrease, width: 200, height: 200, extension: '.jpg', quality: 90 },
+  large:   { operation: :increase, width: 400, height: 400, extension: '.jpg', quality: 90 },
+  default: { operation: :resize,   width: 300, height: 300, extension: '.jpg', quality: 90 },
+}
+
+# app/models/audio.rb
+has_attached :file, processor: :audio, styles: {
+  full:  { preset: '320kbps', extension: '.wav' },
+  large: { preset: '256kbps', extension: '.wav' },
+  small: { preset: '128kbps', extension: '.wav' },
+}
+
+# app/models/audio.rb
+has_attached :file, processor: :audio, styles: {
+  full:  { preset: '320kbps', extension: '.wav' },
+  large: { preset: '256kbps', extension: '.wav' },
+  small: { preset: '128kbps', extension: '.wav' },
+}
+
+# app/models/audio.rb
+has_attached :file, processor: :audio, styles: {
+  full:  { preset: 'insane',  extension: '.wav' },
+  large: { preset: 'extreme', extension: '.wav' },
+  small: { preset: 'medium',  extension: '.wav' },
+}
+</code></pre>
+
+<h3>Strategies</h3>
+
+<pre><code># app/models/sample.rb
+has_attached :file, processor: ..., styles: { ... }, strategy: :delay
+has_attached :file, processor: ..., styles: { ... }, strategy: :cache
+</code></pre>
+
+<h3>Reprocessing</h3>
+
+<pre><code>rake attached:process[Image,file]
+rake attached:process[Audio,file]
+</code></pre>
+
+<h3>Aliases</h3>
+
+<pre><code># app/initializer/attached.rb
+Attached::Attachment.options[:alias] = <a href="http://storage.ksylvest.com/">http://storage.ksylvest.com/</a>
+
+# app/initializer/attached.rb
+Attached::Attachment.options[:aliases] = %w(
+  <a href="http://a.storage.ksylvest.com/">http://a.storage.ksylvest.com/</a>
+  <a href="http://b.storage.ksylvest.com/">http://b.storage.ksylvest.com/</a>
+  <a href="http://c.storage.ksylvest.com/">http://c.storage.ksylvest.com/</a>
+  <a href="http://d.storage.ksylvest.com/">http://d.storage.ksylvest.com/</a>
+)
+</code></pre>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/ksylvest">ksylvest</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><!--<![endif]-->
+  </body>
+</html>
