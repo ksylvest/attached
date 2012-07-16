@@ -73,7 +73,7 @@ GEM
       railties (~> 3.0)
     hike (1.2.1)
     i18n (0.6.0)
-    identifier (1.1.2)
+    identifier (1.1.3)
     journey (1.0.4)
     jquery-rails (2.0.2)
       railties (>= 3.2.0, < 5.0)
@@ -118,7 +118,7 @@ GEM
       json (~> 1.4)
     ruby-hmac (0.4.0)
     sass (3.1.20)
-    sass-rails (3.2.4)
+    sass-rails (3.2.5)
       railties (~> 3.2.0)
       sass (>= 3.1.10)
       tilt (~> 1.3)
@@ -149,6 +149,6 @@ DEPENDENCIES
   jruby-openssl
   minitest
   rails
-  sass-rails (= 3.2.4)
+  sass-rails (= 3.2.5)
   sqlite3
   turn
