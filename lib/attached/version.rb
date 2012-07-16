@@ -1,3 +1,3 @@
 module Attached
-  VERSION = "1.0.0"
+  VERSION = "0.5.3"
 end
