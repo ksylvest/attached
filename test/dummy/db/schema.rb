@@ -18,8 +18,8 @@ ActiveRecord::Schema.define(:version => 20101223191846) do
     t.string   "file_identifier"
     t.string   "file_extension"
     t.integer  "file_size"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
   end
 
   create_table "images", :force => true do |t|
@@ -27,8 +27,8 @@ ActiveRecord::Schema.define(:version => 20101223191846) do
     t.string   "file_identifier"
     t.string   "file_extension"
     t.integer  "file_size"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
   end
 
 end
