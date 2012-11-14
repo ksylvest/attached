@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    attached (0.5.4)
+    attached (0.5.5)
       fog
       identifier
       rails (> 3.0.0)
@@ -141,6 +141,9 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  activerecord-jdbcmysql-adapter
+  activerecord-jdbcpostgresql-adapter
+  activerecord-jdbcsqlite3-adapter
   appraisal
   attached!
   bootstrap-sass
