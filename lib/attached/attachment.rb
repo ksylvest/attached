@@ -1,3 +1,5 @@
+require 'open-uri'
+
 require 'identifier'
 
 require 'attached/storage'
@@ -172,6 +174,24 @@ module Attached
       self.identifier = file ? identifier : nil
 
       process if file
+    end
+
+
+    # Assign an attachment to a file.
+    #
+    # Usage:
+    #
+    #   @object.avatar.url = "https://.../file"
+
+    def url=(url)
+      extension = File.extname(url)
+
+      file = Tempfile.new(["", extension])
+      file.binmode
+
+      file << open(url).read
+
+      self.assign(file)
     end
 
 
