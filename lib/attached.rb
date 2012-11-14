@@ -5,6 +5,11 @@ require 'attached/railtie'
 module Attached
 
 
+  def self.mock!
+    Fog.mock!
+  end
+
+
   def self.included(base)
     base.extend ClassMethods
     base.class_attribute :attached_options
