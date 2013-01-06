@@ -144,8 +144,7 @@ module Attached
     #    @object.avatar.file = File.open(...)
 
     def file=(file)
-      @file = file
-      @file = file.tempfile if file.respond_to?(:tempfile)
+      @file = file.respond_to?(:tempfile) ? file.tempfile : file
     end
 
 
