@@ -6,8 +6,8 @@ Attached is a Ruby on Rails file attachment tool that lets users upload to the c
 
 The gem is tested with:
 
-* Ruby on Rails 3.1.8
-* Ruby on Rails 3.2.9
+* Ruby on Rails 3.1.9
+* Ruby on Rails 3.2.10
 * Ruby (MRI) 1.9.3
 * Ruby (MRI) 1.9.2
 * Ruby (MRI) 1.8.7
