@@ -158,14 +158,14 @@ View:
 === Aliases
 
   # app/initializer/attached.rb
-  Attached::Attachment.options[:alias] = http://storage.ksylvest.com/
+  Attached::Attachment.options[:alias] = https://storage.ksylvest.com/
 
   # app/initializer/attached.rb
   Attached::Attachment.options[:aliases] = %w(
-    http://a.storage.ksylvest.com/
-    http://b.storage.ksylvest.com/
-    http://c.storage.ksylvest.com/
-    http://d.storage.ksylvest.com/
+    https://a.storage.ksylvest.com/
+    https://b.storage.ksylvest.com/
+    https://c.storage.ksylvest.com/
+    https://d.storage.ksylvest.com/
   )
 
 == Status
