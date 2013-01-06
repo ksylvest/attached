@@ -19,6 +19,5 @@ group :test do
 end
 
 gem 'jruby-openssl', :platform => :jruby
-gem 'activerecord-jdbcmysql-adapter', :platform => :jruby
-gem 'activerecord-jdbcpostgresql-adapter', :platform => :jruby
 gem 'activerecord-jdbcsqlite3-adapter', :platform => :jruby
+gem 'sqlite3', :platform => :ruby
