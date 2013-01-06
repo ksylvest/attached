@@ -171,7 +171,8 @@ View:
 == Status
 
 {<img src="https://travis-ci.org/ksylvest/attached.png" />}[https://travis-ci.org/ksylvest/attached]
-  
+{<img src="https://codeclimate.com/badge.png"}[https://codeclimate.com/github/ksylvest/attached]
+
 == Copyright
 
-Copyright (c) 2010 - 2012 Kevin Sylvestre. See LICENSE for details.
+Copyright (c) 2010 - 2013 Kevin Sylvestre. See LICENSE for details.
