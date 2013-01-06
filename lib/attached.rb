@@ -68,6 +68,10 @@ module Attached
         attachment_for(name).attached?
       end
 
+      define_method "#{name}_url=" do |url|
+        attachment_for(name).url = url
+      end
+
       validates_each(name) do |record, attr, value|
         attachment = record.attachment_for(name)
         attachment.errors.each do |error|
