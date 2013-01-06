@@ -1,7 +1,7 @@
 class AudiosController < ApplicationController
-  
+
   respond_to :html
-  
+
   # GET /audios
   def index
     @audios = Audio.all
@@ -26,7 +26,7 @@ class AudiosController < ApplicationController
   # GET /audios/1/edit
   def edit
     @audio = Audio.find(params[:id])
-    
+  
     respond_with(@audio)
   end
 
@@ -42,7 +42,7 @@ class AudiosController < ApplicationController
     @audio = Audio.find(params[:id])
     @audio.attributes = params[:audio]
     @audio.save
-    
+  
     respond_with(@audio)
   end
 
@@ -53,5 +53,5 @@ class AudiosController < ApplicationController
 
     respond_with(@audio)
   end
-  
+
 end

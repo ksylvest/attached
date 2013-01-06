@@ -1,7 +1,7 @@
 class ImagesController < ApplicationController
-  
+
   respond_to :html
-  
+
   # GET /images
   def index
     @images = Image.all
@@ -52,5 +52,5 @@ class ImagesController < ApplicationController
 
     respond_with(@image)
   end
-  
+
 end
