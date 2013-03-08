@@ -8,11 +8,12 @@ The gem is tested with:
 
 * Ruby on Rails 3.1.9
 * Ruby on Rails 3.2.10
+* Ruby (MRI) 2.0.0
 * Ruby (MRI) 1.9.3
 * Ruby (MRI) 1.9.2
 * Ruby (MRI) 1.8.7
 * Ruby (REE) 1.8.7
-* JRuby 1.7.1
+* JRuby 1.7.2
 * Rubinius 1.2.4
 
 == Installation
