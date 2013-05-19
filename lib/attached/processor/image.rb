@@ -79,11 +79,11 @@ module Attached
           parameters << self.path
 
           if width and height
-            case operation
-            when '#' then parameters << "-resize #{width}x#{height}^ -gravity center -extent #{width}x#{height}"
-            when '<' then parameters << "-resize #{width}x#{height}\\<"
-            when '>' then parameters << "-resize #{width}x#{height}\\>"
-            else          parameters << "-resize #{width}x#{height}"
+            parameters << case operation
+            when '#' then "-resize #{width}x#{height}^ -gravity center -extent #{width}x#{height}"
+            when '<' then "-resize #{width}x#{height}\\<"
+            when '>' then "-resize #{width}x#{height}\\>"
+            else          "-resize #{width}x#{height}"
             end
           end
 
