@@ -14,7 +14,6 @@ gem 'haml-rails'
 gem 'jquery-rails'
 
 group :test do
-  gem 'minitest'
   gem 'turn', :require => false
 end
 

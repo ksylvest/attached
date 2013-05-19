@@ -86,7 +86,6 @@ GEM
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
     mime-types (1.23)
-    minitest (5.0.1)
     multi_json (1.7.3)
     net-scp (1.1.1)
       net-ssh (>= 2.6.5)
@@ -151,7 +150,6 @@ DEPENDENCIES
   haml-rails
   jquery-rails
   jruby-openssl
-  minitest
   rails
   sass-rails
   sqlite3
