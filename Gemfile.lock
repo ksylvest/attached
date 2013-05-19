@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    attached (0.5.8)
+    attached (0.5.9)
       fog
       identifier
       rails (> 3.0.0)
