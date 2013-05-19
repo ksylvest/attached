@@ -13,10 +13,6 @@ end
 gem 'haml-rails'
 gem 'jquery-rails'
 
-group :test do
-  gem 'turn', :require => false
-end
-
 gem 'jruby-openssl', :platform => :jruby
 gem 'activerecord-jdbcsqlite3-adapter', :platform => :jruby
 gem 'sqlite3', :platform => :ruby
