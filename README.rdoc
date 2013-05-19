@@ -172,7 +172,7 @@ View:
 == Status
 
 {<img src="https://travis-ci.org/ksylvest/attached.png" />}[https://travis-ci.org/ksylvest/attached]
-{<img src="https://codeclimate.com/badge.png"}[https://codeclimate.com/github/ksylvest/attached]
+{<img src="https://codeclimate.com/github/ksylvest/attached.png" />}[https://codeclimate.com/github/ksylvest/attached]
 
 == Copyright
 
