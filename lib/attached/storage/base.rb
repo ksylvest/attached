@@ -32,32 +32,31 @@ module Attached
 
       def options(path)
         options = {}
-        type = File.extname(path)
 
-        case type
-        when /tiff/ then options[:content_type] = "image/tiff"
-        when /tif/  then options[:content_type] = "image/tiff"
-        when /jpeg/ then options[:content_type] = "image/jpeg"
-        when /jpe/  then options[:content_type] = "image/jpeg"
-        when /jpg/  then options[:content_type] = "image/jpeg"
-        when /png/  then options[:content_type] = "image/png"
-        when /gif/  then options[:content_type] = "image/gif"
-        when /bmp/  then options[:content_type] = "image/bmp"
-        when /mpeg/ then options[:content_type] = "video/mpeg"
-        when /mpa/  then options[:content_type] = "video/mpeg"
-        when /mpe/  then options[:content_type] = "video/mpeg"
-        when /mpg/  then options[:content_type] = "video/mpeg"
-        when /mov/  then options[:content_type] = "video/mov"
-        when /josn/ then options[:content_type] = "application/json"
-        when /xml/  then options[:content_type] = "application/xml"
-        when /pdf/  then options[:content_type] = "application/pdf"
-        when /rtf/  then options[:content_type] = "application/rtf"
-        when /zip/  then options[:content_type] = "application/zip"
-        when /js/   then options[:content_type] = "application/js"
-        when /html/ then options[:content_type] = "text/html"
-        when /html/ then options[:content_type] = "text/htm"
-        when /txt/  then options[:content_type] = "text/plain"
-        when /csv/  then options[:content_type] = "text/csv"
+        options[:content_type] = case File.extname(path)
+        when /tiff/ then "image/tiff"
+        when /tif/  then "image/tiff"
+        when /jpeg/ then "image/jpeg"
+        when /jpe/  then "image/jpeg"
+        when /jpg/  then "image/jpeg"
+        when /png/  then "image/png"
+        when /gif/  then "image/gif"
+        when /bmp/  then "image/bmp"
+        when /mpeg/ then "video/mpeg"
+        when /mpa/  then "video/mpeg"
+        when /mpe/  then "video/mpeg"
+        when /mpg/  then "video/mpeg"
+        when /mov/  then "video/mov"
+        when /josn/ then "application/json"
+        when /xml/  then "application/xml"
+        when /pdf/  then "application/pdf"
+        when /rtf/  then "application/rtf"
+        when /zip/  then "application/zip"
+        when /js/   then "application/js"
+        when /html/ then "text/html"
+        when /html/ then "text/htm"
+        when /txt/  then "text/plain"
+        when /csv/  then "text/csv"
         end
 
         return options
