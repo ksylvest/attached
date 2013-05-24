@@ -70,8 +70,8 @@ module Attached
       # * path - The path to retrieve.
 
       def retrieve(path)
-        directory = connection.directories.get(self.bucket)
-        directory ||= connection.directories.create(self.permissions.merge(:key => self.bucket))
+        directory = connection.directories.get(self.container)
+        directory ||= connection.directories.create(self.permissions.merge(:key => self.container))
 
         file = directory.files.get(path)
 

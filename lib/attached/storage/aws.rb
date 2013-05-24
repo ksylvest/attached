@@ -56,7 +56,7 @@ module Attached
         file = File.open(file.path)
 
         directory = connection.directories.get(self.bucket)
-        directory ||= connection.directories.create(self.permissions.merge(:key => self.bucket))
+        directory || connection.directories.create(self.permissions.merge(:key => self.bucket))
 
         directory.files.create(self.options(path).merge(self.permissions.merge(:key => path, :body => file)))
 
