@@ -1,5 +1,6 @@
 require 'attached/storage/base'
 
+
 module Attached
   module Storage
     class Local < Base

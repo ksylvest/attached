@@ -1,10 +1,5 @@
 require 'attached/storage/base'
-
-begin
-  require 'fog'
-rescue LoadError
-  raise "installation of 'fog' is required before using 'aws' for storage"
-end
+require 'fog'
 
 
 module Attached
