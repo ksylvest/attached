@@ -169,6 +169,11 @@ View:
     https://d.storage.ksylvest.com/
   )
 
+=== Metadata
+
+  # app/initializers/attached.rb
+  Attached::Attachment.options[:metadata] = { 'Cache-Control' => 'max-age=3153600' }
+
 == Status
 
 {<img src="https://travis-ci.org/ksylvest/attached.png" />}[https://travis-ci.org/ksylvest/attached]

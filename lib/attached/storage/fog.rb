@@ -17,7 +17,7 @@ module Attached
       # Create a new interface supporting save and destroy operations (should be overridden and called).
 
       def initialize(credentials)
-        @defaults = { :public => true, metadata: { 'Cache-Control' => 'max-age=86400' } }
+        @defaults = { :public => true, :metadata => Attached::Attachment.options[:metadata] }
       end
 
 

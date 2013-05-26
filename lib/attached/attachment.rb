@@ -47,6 +47,7 @@ module Attached
         :default     => :original,
         :medium      => :local,
         :credentials => {},
+        :metadata    => { 'Cache-Control' => 'max-age=3153600' }
       }
     end
 
