@@ -159,7 +159,7 @@ View:
 === Aliases
 
   # app/initializer/attached.rb
-  Attached::Attachment.options[:alias] = https://storage.ksylvest.com/
+  Attached::Attachment.options[:alias] = "https://storage.ksylvest.com/"
 
   # app/initializer/attached.rb
   Attached::Attachment.options[:aliases] = %w(
