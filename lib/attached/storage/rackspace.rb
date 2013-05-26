@@ -47,7 +47,7 @@ module Attached
 
 
     def directory()
-      connection.directories.get(self.container) || connection.directories.create(self.permissions.merge(:key => self.container))
+      connection.directories.get(self.container) || connection.directories.create(self.defaults.merge(:key => self.container))
     end
 
 

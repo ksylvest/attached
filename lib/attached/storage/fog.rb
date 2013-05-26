@@ -7,7 +7,7 @@ module Attached
     class Fog < Base
 
 
-      attr_reader :permissions
+      attr_reader :defaults
 
       attr_reader :bucket
       attr_reader :access_key_id
@@ -17,7 +17,7 @@ module Attached
       # Create a new interface supporting save and destroy operations (should be overridden and called).
 
       def initialize(credentials)
-        @permissions = { :public => true }
+        @defaults = { :public => true, metadata: { 'Cache-Control' => 'max-age=86400' } }
       end
 
 
@@ -41,7 +41,7 @@ module Attached
 
       def save(file, path)
         file = File.open(file.path)
-        directory.files.create(self.options(path).merge(self.permissions.merge(:key => path, :body => file)))
+        directory.files.create(self.options(path).merge(self.defaults.merge(:key => path, :body => file)))
         file.close
       end
 

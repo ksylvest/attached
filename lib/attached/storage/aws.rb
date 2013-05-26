@@ -47,7 +47,7 @@ module Attached
 
 
     def directory()
-      connection.directories.get(self.bucket) || connection.directories.create(self.permissions.merge(:key => self.bucket))
+      connection.directories.get(self.bucket) || connection.directories.create(self.defaults.merge(:key => self.bucket))
     end
 
 
