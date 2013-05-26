@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    attached (0.5.9)
+    attached (0.6.0)
       fog
       identifier
       rails (> 3.0.0)
@@ -40,7 +40,7 @@ GEM
       bundler
       rake
     arel (3.0.2)
-    bootstrap-sass-rails (2.3.1.2)
+    bootstrap-sass-rails (2.3.2.0)
       railties (>= 3.1.0)
       sass-rails (>= 3.1.0)
     builder (3.0.4)
@@ -66,7 +66,7 @@ GEM
       nokogiri (~> 1.5.0)
       ruby-hmac
     formatador (0.2.4)
-    haml (4.0.2)
+    haml (4.0.3)
       tilt
     haml-rails (0.4)
       actionpack (>= 3.1, < 4.1)
