@@ -4,10 +4,9 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <title>Attached by ksylvest</title>
-    
+
     <link rel="stylesheet" href="stylesheets/styles.css">
     <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-    <script src="javascripts/scale.fix.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -18,19 +17,24 @@
       <header>
         <h1>Attached</h1>
         <p>A file attachment tool that lets users upload to the cloud</p>
+
         <p class="view"><a href="https://github.com/ksylvest/attached">View the Project on GitHub <small>ksylvest/attached</small></a></p>
+
+
         <ul>
           <li><a href="https://github.com/ksylvest/attached/zipball/master">Download <strong>ZIP File</strong></a></li>
           <li><a href="https://github.com/ksylvest/attached/tarball/master">Download <strong>TAR Ball</strong></a></li>
-          <li><a href="https://github.com/ksylvest/attached">Fork On <strong>GitHub</strong></a></li>
+          <li><a href="https://github.com/ksylvest/attached">View On <strong>GitHub</strong></a></li>
         </ul>
       </header>
       <section>
-        <h1>Attached</h1>
+        <h1>
+<a name="attached" class="anchor" href="#attached"><span class="octicon octicon-link"></span></a>Attached</h1>
 
 <p>Attached is a Ruby on Rails file attachment tool that lets users upload to the cloud. The gem supports AWS, Google and Rackspace for storage networks by default. It is influenced (and copied) from Paperclip and makes heavy use of the incredibly awesome Fog library.</p>
 
-<h2>Requirements</h2>
+<h2>
+<a name="requirements" class="anchor" href="#requirements"><span class="octicon octicon-link"></span></a>Requirements</h2>
 
 <p>The gem is tested with:</p>
 
@@ -42,16 +46,19 @@
 <li>Ruby (REE) 1.8.7 (2011.03)</li>
 <li>JRuby 1.6.5</li>
 <li>Rubinius 1.2.4</li>
-</ul><h2>Installation</h2>
+</ul><h2>
+<a name="installation" class="anchor" href="#installation"><span class="octicon octicon-link"></span></a>Installation</h2>
 
 <p>gem install attached</p>
 
-<h2>Optional</h2>
+<h2>
+<a name="optional" class="anchor" href="#optional"><span class="octicon octicon-link"></span></a>Optional</h2>
 
 <p>brew install imagemagick
   brew install lame</p>
 
-<h2>Examples</h2>
+<h2>
+<a name="examples" class="anchor" href="#examples"><span class="octicon octicon-link"></span></a>Examples</h2>
 
 <p>Migration:</p>
 
@@ -106,9 +113,11 @@ end
 &lt;/video&gt;
 </code></pre>
 
-<h2>Advanced</h2>
+<h2>
+<a name="advanced" class="anchor" href="#advanced"><span class="octicon octicon-link"></span></a>Advanced</h2>
 
-<h3>Validations</h3>
+<h3>
+<a name="validations" class="anchor" href="#validations"><span class="octicon octicon-link"></span></a>Validations</h3>
 
 <pre><code># app/models/person.rb
 validates_attached_presence :file
@@ -116,7 +125,8 @@ validates_attached_size :file, in: 2.kilobytes..2.megabytes
 validates_attached_extension :file, in: %w(jpe jpg jpeg png)
 </code></pre>
 
-<h3>Storage</h3>
+<h3>
+<a name="storage" class="anchor" href="#storage"><span class="octicon octicon-link"></span></a>Storage</h3>
 
 <pre><code># app/models/user.rb
 has_attached :file, medium: :aws, credentials: "#{Rails.root}/config/aws.yml"
@@ -140,7 +150,8 @@ Attached::Attachment.options[:medium] = :rackspace
 Attached::Attachment.options[:credentials] = "#{Rails.root}/config/rackspace.yml"
 </code></pre>
 
-<h3>Processors</h3>
+<h3>
+<a name="processors" class="anchor" href="#processors"><span class="octicon octicon-link"></span></a>Processors</h3>
 
 <pre><code># app/models/image.rb
 has_attached :file, processor: :image, styles: {
@@ -178,30 +189,33 @@ has_attached :file, processor: :audio, styles: {
 }
 </code></pre>
 
-<h3>Strategies</h3>
+<h3>
+<a name="strategies" class="anchor" href="#strategies"><span class="octicon octicon-link"></span></a>Strategies</h3>
 
 <pre><code># app/models/sample.rb
 has_attached :file, processor: ..., styles: { ... }, strategy: :delay
 has_attached :file, processor: ..., styles: { ... }, strategy: :cache
 </code></pre>
 
-<h3>Reprocessing</h3>
+<h3>
+<a name="reprocessing" class="anchor" href="#reprocessing"><span class="octicon octicon-link"></span></a>Reprocessing</h3>
 
 <pre><code>rake attached:process[Image,file]
 rake attached:process[Audio,file]
 </code></pre>
 
-<h3>Aliases</h3>
+<h3>
+<a name="aliases" class="anchor" href="#aliases"><span class="octicon octicon-link"></span></a>Aliases</h3>
 
 <pre><code># app/initializer/attached.rb
-Attached::Attachment.options[:alias] = <a href="http://storage.ksylvest.com/">http://storage.ksylvest.com/</a>
+Attached::Attachment.options[:alias] = http://storage.ksylvest.com/
 
 # app/initializer/attached.rb
 Attached::Attachment.options[:aliases] = %w(
-  <a href="http://a.storage.ksylvest.com/">http://a.storage.ksylvest.com/</a>
-  <a href="http://b.storage.ksylvest.com/">http://b.storage.ksylvest.com/</a>
-  <a href="http://c.storage.ksylvest.com/">http://c.storage.ksylvest.com/</a>
-  <a href="http://d.storage.ksylvest.com/">http://d.storage.ksylvest.com/</a>
+  http://a.storage.ksylvest.com/
+  http://b.storage.ksylvest.com/
+  http://c.storage.ksylvest.com/
+  http://d.storage.ksylvest.com/
 )
 </code></pre>
       </section>
@@ -210,6 +224,17 @@ Attached::Attachment.options[:aliases] = %w(
         <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
       </footer>
     </div>
-    <!--[if !IE]><script>fixScale(document);</script><!--<![endif]-->
+    <script src="javascripts/scale.fix.js"></script>
+              <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-31911059-1");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
   </body>
 </html>
