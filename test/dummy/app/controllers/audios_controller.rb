@@ -32,7 +32,7 @@ class AudiosController < ApplicationController
 
   # POST /audios
   def create
-    @audio = Audio.create(params[:audio])
+    @audio = Audio.create(attributes)
 
     respond_with(@audio)
   end
@@ -40,7 +40,7 @@ class AudiosController < ApplicationController
   # PUT /audios/1
   def update
     @audio = Audio.find(params[:id])
-    @audio.attributes = params[:audio]
+    @audio.attributes = attributes
     @audio.save
   
     respond_with(@audio)
@@ -52,6 +52,12 @@ class AudiosController < ApplicationController
     @audio.destroy
 
     respond_with(@audio)
+  end
+
+private
+
+  def attributes
+    params.require(:audio).permit(:name, :file)
   end
 
 end

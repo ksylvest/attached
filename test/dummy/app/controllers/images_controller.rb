@@ -32,7 +32,7 @@ class ImagesController < ApplicationController
 
   # POST /images
   def create
-    @image = Image.create(params[:image])
+    @image = Image.create(attributes)
     @image.save
 
     respond_with(@image)
@@ -41,6 +41,8 @@ class ImagesController < ApplicationController
   # PUT /images/1
   def update
     @image = Image.find(params[:id])
+    @image.attributes = attributes
+    @image.save
 
     respond_with(@image)
   end
@@ -52,5 +54,12 @@ class ImagesController < ApplicationController
 
     respond_with(@image)
   end
+
+private
+
+  def attributes
+    params.require(:image).permit(:name, :file)
+  end
+
 
 end
