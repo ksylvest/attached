@@ -1,7 +1,7 @@
 PATH
   remote: ../
   specs:
-    attached (1.0.1)
+    attached (1.0.2)
       fog
       identifier
       rails (> 3.0.0)
@@ -99,14 +99,11 @@ GEM
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
     mime-types (1.25.1)
-    mini_portile (0.6.0)
     minitest (5.3.3)
     multi_json (1.10.0)
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
     net-ssh (2.9.1)
-    nokogiri (1.6.2.1)
-      mini_portile (= 0.6.0)
     nokogiri (1.6.2.1-java)
     polyglot (0.3.4)
     rack (1.5.2)
