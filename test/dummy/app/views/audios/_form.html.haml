@@ -1,16 +1,14 @@
-= form_for audio, :html => { :multipart => true, :class => 'form-horizontal' } do |form|
+= form_for audio, :html => { :multipart => true, :role => 'form' } do |form|
   - audio.errors.each do |method, message|
     = render 'shared/error', :method => method, :message => message
 
-  .control-group
-    = form.label :name, :class => "control-label"
-    .controls
-      = form.text_field :name
+  .form-group
+    = form.label :name
+    = form.text_field :name, :class => "form-control"
 
-  .control-group
-    = form.label :file, :class => "control-label"
-    .controls
-      = form.file_field :file
+  .form-group
+    = form.label :file
+    = form.file_field :file
 
   .form-actions
     = form.submit "Submit", :class => 'btn btn-primary'

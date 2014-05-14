@@ -1,4 +1,4 @@
-.alert.alert-error
-  .close{ :data => { :dismiss => "alert" } } &times;
+.alert.alert-warning.alert-dismissable
+  %button.close{ :data => { :dismiss => "alert" } } &times;
   %strong= "#{method}".humanize
   = message
