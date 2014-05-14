@@ -28,196 +28,188 @@
         </ul>
       </header>
       <section>
-        <h1>
-<a name="attached" class="anchor" href="#attached"><span class="octicon octicon-link"></span></a>Attached</h1>
+        <p>= Attached</p>
 
 <p>Attached is a Ruby on Rails file attachment tool that lets users upload to the cloud. The gem supports AWS, Google and Rackspace for storage networks by default. It is influenced (and copied) from Paperclip and makes heavy use of the incredibly awesome Fog library.</p>
 
-<h2>
-<a name="requirements" class="anchor" href="#requirements"><span class="octicon octicon-link"></span></a>Requirements</h2>
+<p>== Requirements</p>
 
 <p>The gem is tested with:</p>
 
 <ul>
-<li>Ruby on Rails 3.1.2</li>
-<li>Ruby (MRI) 1.9.3 (p0)</li>
-<li>Ruby (MRI) 1.9.2 (p290)</li>
-<li>Ruby (MRI) 1.8.7 (p352)</li>
-<li>Ruby (REE) 1.8.7 (2011.03)</li>
-<li>JRuby 1.6.5</li>
-<li>Rubinius 1.2.4</li>
-</ul><h2>
-<a name="installation" class="anchor" href="#installation"><span class="octicon octicon-link"></span></a>Installation</h2>
+<li>Ruby on Rails 4.1.1</li>
+<li>Ruby on Rails 4.0.5</li>
+<li>Ruby 2.1.2</li>
+<li>Ruby 2.0.0</li>
+<li>Ruby 1.9.3</li>
+<li>JRuby</li>
+</ul><p>== Installation</p>
 
 <p>gem install attached</p>
 
-<h2>
-<a name="optional" class="anchor" href="#optional"><span class="octicon octicon-link"></span></a>Optional</h2>
+<p>== Optional</p>
 
 <p>brew install imagemagick
   brew install lame</p>
 
-<h2>
-<a name="examples" class="anchor" href="#examples"><span class="octicon octicon-link"></span></a>Examples</h2>
+<p>== Examples</p>
 
 <p>Migration:</p>
 
-<pre><code>rails g model video name:string encoding:attached
+<p>rails g model video name:string encoding:attached</p>
 
-class CreateVideo &lt; ActiveRecord::Migration
-  def self.up
-    create_table :videos do |t|
-      t.string :name
-      t.attachment :encoding
+<p>class CreateVideo &lt; ActiveRecord::Migration
+    def self.up
+      create_table :videos do |t|
+        t.string :name
+        t.attachment :encoding</p>
 
-      t.timestamps
-    end
-  end
-
-  def self.down
-    drop_table :videos
+<pre><code>    t.timestamps
   end
 end
+
+def self.down
+  drop_table :videos
+end
 </code></pre>
+
+<p>end</p>
 
 <p>Model:</p>
 
-<pre><code>class Video &lt; ActiveRecord::Base
+<p>class Video &lt; ActiveRecord::Base</p>
 
-  has_attached :encoding, styles: { 
-    webm: { extension: '.webm' },
-    mp4:  { extension: '.mp4'  },
-    ogv:  { extension: '.ogv'  },
-  }
+<pre><code>has_attached :encoding, styles: { 
+  webm: { extension: '.webm' },
+  mp4:  { extension: '.mp4'  },
+  ogv:  { extension: '.ogv'  },
+}
 
-  after_save do
-    remote.encode(self.encoding.url)
-  end
-
+after_save do
+  remote.encode(self.encoding.url)
 end
 </code></pre>
 
+<p>end</p>
+
 <p>Form:</p>
 
-<pre><code>&lt;%= form_for @video, html: { multipart: true } do |form| %&gt;
-  &lt;%= form.file_field :encoding %&gt;
-&lt;% end %&gt;
-</code></pre>
+<p>&lt;%= form_for <a href="https://github.com/video" class="user-mention">@video</a>, html: { multipart: true } do |form| %&gt;
+    &lt;%= form.file_field :encoding %&gt;
+  &lt;% end %&gt;</p>
 
 <p>View:</p>
 
-<pre><code>&lt;video&gt;
-  &lt;source src="&lt;%= @video.encoding.url(:webm)" /&gt;
-  &lt;source src="&lt;%= @video.encoding.url(:mp4) %&gt;" /&gt;
-  &lt;source src="&lt;%= @video.encoding.url(:ogg) %&gt;" /&gt;
-&lt;/video&gt;
-</code></pre>
+<p>" /&gt;
+  </p>
 
-<h2>
-<a name="advanced" class="anchor" href="#advanced"><span class="octicon octicon-link"></span></a>Advanced</h2>
+<p>== Advanced</p>
 
-<h3>
-<a name="validations" class="anchor" href="#validations"><span class="octicon octicon-link"></span></a>Validations</h3>
+<p>=== Validations</p>
 
-<pre><code># app/models/person.rb
-validates_attached_presence :file
-validates_attached_size :file, in: 2.kilobytes..2.megabytes
-validates_attached_extension :file, in: %w(jpe jpg jpeg png)
-</code></pre>
+<p># app/models/person.rb
+  validates_attached_presence :file
+  validates_attached_size :file, in: 2.kilobytes..2.megabytes
+  validates_attached_extension :file, in: %w(jpe jpg jpeg png)</p>
 
-<h3>
-<a name="storage" class="anchor" href="#storage"><span class="octicon octicon-link"></span></a>Storage</h3>
+<p>==== Storage</p>
 
-<pre><code># app/models/user.rb
-has_attached :file, medium: :aws, credentials: "#{Rails.root}/config/aws.yml"
+<p># app/models/user.rb
+  has_attached :file, medium: :aws, credentials: "#{Rails.root}/config/aws.yml"</p>
 
-# app/models/user.rb
-has_attached :file, medium: :google, credentials: "#{Rails.root}/config/google.yml"
+<p># app/models/user.rb
+  has_attached :file, medium: :google, credentials: "#{Rails.root}/config/google.yml"</p>
 
-# app/models/user.rb
-has_attached :file, medium: :rackspace, credentials: "#{Rails.root}/config/rackspace.yml"
+<p># app/models/user.rb
+  has_attached :file, medium: :rackspace, credentials: "#{Rails.root}/config/rackspace.yml"</p>
 
-# config/initializers/attached.rb
-Attached::Attachment.options[:medium] = :aws
-Attached::Attachment.options[:credentials] = "#{Rails.root}/config/aws.yml"
+<p># config/initializers/attached.rb
+  Attached::Attachment.options[:medium] = :aws
+  Attached::Attachment.options[:credentials] = "#{Rails.root}/config/aws.yml"</p>
 
-# config/initializers/attached.rb
-Attached::Attachment.options[:medium] = :google
-Attached::Attachment.options[:credentials] = "#{Rails.root}/config/google.yml"
+<p># config/initializers/attached.rb
+  Attached::Attachment.options[:medium] = :google
+  Attached::Attachment.options[:credentials] = "#{Rails.root}/config/google.yml"</p>
 
-# config/initializers/attached.rb
-Attached::Attachment.options[:medium] = :rackspace
-Attached::Attachment.options[:credentials] = "#{Rails.root}/config/rackspace.yml"
-</code></pre>
+<p># config/initializers/attached.rb
+  Attached::Attachment.options[:medium] = :rackspace
+  Attached::Attachment.options[:credentials] = "#{Rails.root}/config/rackspace.yml"</p>
 
-<h3>
-<a name="processors" class="anchor" href="#processors"><span class="octicon octicon-link"></span></a>Processors</h3>
+<p>=== Processors</p>
 
-<pre><code># app/models/image.rb
-has_attached :file, processor: :image, styles: {
-  small:   { size: '200x200&gt;', extension: '.jpg', quality: 90 },
-  large:   { size: '400x400&lt;', extension: '.jpg', quality: 90 },
-  default: { size: '300x300#', extension: '.jpg', quality: 90 },
-}
+<p># app/models/image.rb
+  has_attached :file, processor: :image, styles: {
+    small:   { size: '200x200&gt;', extension: '.jpg', quality: 90 },
+    large:   { size: '400x400&lt;', extension: '.jpg', quality: 90 },
+    default: { size: '300x300#', extension: '.jpg', quality: 90 },
+  }</p>
 
-# app/models/image.rb
-has_attached :file, processor: :image, styles: {
-  small:   { operation: :decrease, width: 200, height: 200, extension: '.jpg', quality: 90 },
-  large:   { operation: :increase, width: 400, height: 400, extension: '.jpg', quality: 90 },
-  default: { operation: :resize,   width: 300, height: 300, extension: '.jpg', quality: 90 },
-}
+<p># app/models/image.rb
+  has_attached :file, processor: :image, styles: {
+    small:   { operation: :decrease, width: 200, height: 200, extension: '.jpg', quality: 90 },
+    large:   { operation: :increase, width: 400, height: 400, extension: '.jpg', quality: 90 },
+    default: { operation: :resize,   width: 300, height: 300, extension: '.jpg', quality: 90 },
+  }</p>
 
-# app/models/audio.rb
-has_attached :file, processor: :audio, styles: {
-  full:  { preset: '320kbps', extension: '.wav' },
-  large: { preset: '256kbps', extension: '.wav' },
-  small: { preset: '128kbps', extension: '.wav' },
-}
+<p># app/models/audio.rb
+  has_attached :file, processor: :audio, styles: {
+    full:  { preset: '320kbps', extension: '.wav' },
+    large: { preset: '256kbps', extension: '.wav' },
+    small: { preset: '128kbps', extension: '.wav' },
+  }</p>
 
-# app/models/audio.rb
-has_attached :file, processor: :audio, styles: {
-  full:  { preset: '320kbps', extension: '.wav' },
-  large: { preset: '256kbps', extension: '.wav' },
-  small: { preset: '128kbps', extension: '.wav' },
-}
+<p># app/models/audio.rb
+  has_attached :file, processor: :audio, styles: {
+    full:  { preset: '320kbps', extension: '.wav' },
+    large: { preset: '256kbps', extension: '.wav' },
+    small: { preset: '128kbps', extension: '.wav' },
+  }</p>
 
-# app/models/audio.rb
-has_attached :file, processor: :audio, styles: {
-  full:  { preset: 'insane',  extension: '.wav' },
-  large: { preset: 'extreme', extension: '.wav' },
-  small: { preset: 'medium',  extension: '.wav' },
-}
-</code></pre>
+<p># app/models/audio.rb
+  has_attached :file, processor: :audio, styles: {
+    full:  { preset: 'insane',  extension: '.wav' },
+    large: { preset: 'extreme', extension: '.wav' },
+    small: { preset: 'medium',  extension: '.wav' },
+  }</p>
 
-<h3>
-<a name="strategies" class="anchor" href="#strategies"><span class="octicon octicon-link"></span></a>Strategies</h3>
+<p>=== Strategies</p>
 
-<pre><code># app/models/sample.rb
-has_attached :file, processor: ..., styles: { ... }, strategy: :delay
-has_attached :file, processor: ..., styles: { ... }, strategy: :cache
-</code></pre>
+<p># app/models/sample.rb
+  has_attached :file, processor: ..., styles: { ... }, strategy: :delay
+  has_attached :file, processor: ..., styles: { ... }, strategy: :cache</p>
 
-<h3>
-<a name="reprocessing" class="anchor" href="#reprocessing"><span class="octicon octicon-link"></span></a>Reprocessing</h3>
+<p>=== Reprocessing</p>
 
-<pre><code>rake attached:process[Image,file]
-rake attached:process[Audio,file]
-</code></pre>
+<p>rake attached:process[Image,file]
+  rake attached:process[Audio,file]</p>
 
-<h3>
-<a name="aliases" class="anchor" href="#aliases"><span class="octicon octicon-link"></span></a>Aliases</h3>
+<p>=== Aliases</p>
 
-<pre><code># app/initializer/attached.rb
-Attached::Attachment.options[:alias] = http://storage.ksylvest.com/
+<p># app/initializer/attached.rb
+  Attached::Attachment.options[:alias] = "<a href="https://storage.ksylvest.com/">https://storage.ksylvest.com/</a>"</p>
 
-# app/initializer/attached.rb
-Attached::Attachment.options[:aliases] = %w(
-  http://a.storage.ksylvest.com/
-  http://b.storage.ksylvest.com/
-  http://c.storage.ksylvest.com/
-  http://d.storage.ksylvest.com/
-)
-</code></pre>
+<p># app/initializer/attached.rb
+  Attached::Attachment.options[:aliases] = %w(
+    <a href="https://a.storage.ksylvest.com/">https://a.storage.ksylvest.com/</a>
+    <a href="https://b.storage.ksylvest.com/">https://b.storage.ksylvest.com/</a>
+    <a href="https://c.storage.ksylvest.com/">https://c.storage.ksylvest.com/</a>
+    <a href="https://d.storage.ksylvest.com/">https://d.storage.ksylvest.com/</a>
+  )</p>
+
+<p>=== Metadata</p>
+
+<p># app/initializers/attached.rb
+  Attached::Attachment.options[:metadata] = { 'Cache-Control' =&gt; 'max-age=3153600' }</p>
+
+<p>== Status</p>
+
+<p>{<img src="http://img.shields.io/gemnasium/ksylvest/attached.svg">}[<a href="https://gemnasium.com/ksylvest/attached">https://gemnasium.com/ksylvest/attached</a>]
+{<img src="http://img.shields.io/travis/ksylvest/attached.svg">}[<a href="https://travis-ci.org/ksylvest/attached">https://travis-ci.org/ksylvest/attached</a>]
+{<img src="http://img.shields.io/codeclimate/github/ksylvest/attached.svg">}[<a href="https://codeclimate.com/github/ksylvest/attached">https://codeclimate.com/github/ksylvest/attached</a>]</p>
+
+<p>== Copyright</p>
+
+<p>Copyright (c) 2010 - 2013 Kevin Sylvestre. See LICENSE for details.</p>
       </section>
       <footer>
         <p>This project is maintained by <a href="https://github.com/ksylvest">ksylvest</a></p>
