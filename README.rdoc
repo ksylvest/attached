@@ -130,13 +130,6 @@ View:
   
   # app/models/audio.rb
   has_attached :file, processor: :audio, styles: {
-    full:  { preset: '320kbps', extension: '.wav' },
-    large: { preset: '256kbps', extension: '.wav' },
-    small: { preset: '128kbps', extension: '.wav' },
-  }
-  
-  # app/models/audio.rb
-  has_attached :file, processor: :audio, styles: {
     full:  { preset: 'insane',  extension: '.wav' },
     large: { preset: 'extreme', extension: '.wav' },
     small: { preset: 'medium',  extension: '.wav' },
