@@ -14,8 +14,8 @@ module Attached
       def parse(credentials)
         case credentials
         when Hash    then credentials
-        when File    then YAML::load(ERB.new(credentials))[Rails.env]
-        when String  then YAML::load(ERB.new(File.read(credentials)))[Rails.env]
+        when File    then YAML::load(ERB.new(credentials).result)[Rails.env]
+        when String  then YAML::load(ERB.new(File.read(credentials)).result)[Rails.env]
         else raise ArgumentError.new("credentials must be a hash, file, or string")
         end
       end
