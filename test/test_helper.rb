@@ -13,3 +13,7 @@ Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |f| require f }
 if ActiveSupport::TestCase.method_defined?(:fixture_path=)
   ActiveSupport::TestCase.fixture_path = File.expand_path("../fixtures", __FILE__)
 end
+
+# Configure Code Climate
+require "codeclimate-test-reporter"
+CodeClimate::TestReporter.start

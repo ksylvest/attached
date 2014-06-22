@@ -10,3 +10,6 @@ script:
   - "sudo apt-get install -qq lame"
   - "sh -c 'cd test/dummy && bundle exec rake db:create db:migrate db:test:prepare'"
   - "bundle exec rake test"
+addons:
+  code_climate:
+    repo_token: 04f74504e14746d520e17b4a2514c1ccce7ee40f676541a9e354f6d085e5a773
