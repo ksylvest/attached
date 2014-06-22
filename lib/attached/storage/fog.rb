@@ -9,10 +9,6 @@ module Attached
 
       attr_reader :defaults
 
-      attr_reader :bucket
-      attr_reader :access_key_id
-      attr_reader :secret_access_key
-
 
       # Create a new interface supporting save and destroy operations (should be overridden and called).
 
