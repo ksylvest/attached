@@ -1,3 +1,4 @@
+language: ruby
 rvm:
   - 2.1.2
   - 2.0.0
@@ -7,10 +8,7 @@ gemfile:
   - gemfiles/4.0.5.gemfile
   - gemfiles/4.1.1.gemfile
 script:
+  - "sudo apt-get update -qq"
   - "sudo apt-get install -qq lame"
   - "sh -c 'cd test/dummy && bundle exec rake db:create db:migrate db:test:prepare'"
-  - "bundle exec rake test"
-addons:
-  code_climate:
-    repo_token: 
-      secure: UwfHvYfl01m73ewViv5FCoXhFQQsICDtAlBYUS4wa3DzNicfTJAk08BvL3vQncXxcY6zyKTr+dYa225MaWZeAJO9YvlUcJs6cFAVXYW7gaLQb7V34MbrGiH6cCVt6zjwj/RTMyEO3iURGkXxbTb8mHtK+h+M51Z9reZUQScMtdg=
+  - "bundle exec rake"

@@ -166,9 +166,10 @@ View:
 
 == Status
 
-{<img src="http://img.shields.io/gemnasium/ksylvest/attached.svg" />}[https://gemnasium.com/ksylvest/attached]
-{<img src="http://img.shields.io/travis/ksylvest/attached.svg" />}[https://travis-ci.org/ksylvest/attached]
-{<img src="http://img.shields.io/codeclimate/github/ksylvest/attached.svg" />}[https://codeclimate.com/github/ksylvest/attached]
+{<img src="https://img.shields.io/gemnasium/ksylvest/attached.svg" />}[https://gemnasium.com/ksylvest/attached]
+{<img src="https://img.shields.io/travis/ksylvest/attached.svg" />}[https://travis-ci.org/ksylvest/attached]
+{<img src="https://img.shields.io/coveralls/ksylvest/attached.svg" />}[https://coveralls.io/r/ksylvest/attached]
+{<img src="https://img.shields.io/codeclimate/github/ksylvest/attached.svg" />}[https://codeclimate.com/github/ksylvest/attached]
 
 == Copyright
 
