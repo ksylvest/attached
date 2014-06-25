@@ -81,25 +81,13 @@ module Attached
 
       after_validation do
 
-        if self.errors.include?(:"#{name}_size")
-          self.errors[:"#{name}_size"].each do |message|
-            self.errors.add(name, message)
+        %w(size extension identifier).each do |attribute|
+          if self.errors.include?(:"#{name}_#{attribute}")
+            self.errors[:"#{name}_#{attribute}"].each do |message|
+              self.errors.add(name, message)
+            end
+            self.errors[:"#{name}_#{attribute}"].clear
           end
-          self.errors[:"#{name}_size"].clear
-        end
-
-        if self.errors.include?(:"#{name}_extension")
-          self.errors[:"#{name}_extension"].each do |message|
-            self.errors.add(name, message)
-          end
-          self.errors[:"#{name}_extension"].clear
-        end
-
-        if self.errors.include?(:"#{name}_identifier")
-          self.errors[:"#{name}_identifier"].each do |message|
-            self.errors.add(name, message)
-          end
-          self.errors[:"#{name}_identifier"].clear
         end
 
       end
