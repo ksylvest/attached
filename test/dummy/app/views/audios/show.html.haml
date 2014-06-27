@@ -9,5 +9,5 @@
 %p
   = audio_tag @audio.file.url(:large)
 %p
-  = link_to 'Edit', edit_audio_path(@audio), :class => 'btn btn-warning'
-  = link_to 'Back', audios_path, :class => 'btn'
+  = link_to 'Edit', edit_audio_path(@audio), class: 'btn btn-warning'
+  = link_to 'Back', audios_path, class: 'btn'

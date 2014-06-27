@@ -3,18 +3,18 @@
     List
     %small Audios
 %table.table.table-striped.table-bordered
-  %colgroup{ :width => '60%' }
-  %colgroup{ :width => '20%' }
-  %colgroup{ :width => '20%' }
+  %colgroup{ width: '60%' }
+  %colgroup{ width: '20%' }
+  %colgroup{ width: '20%' }
   - @audios.each do |audio|
     %tr
       %th= audio.name
       %td= audio.file_extension
       %td= number_to_human_size audio.file_size
-      %td= link_to 'Show', audio_path(audio), :class => 'btn btn-info'
-      %td= link_to 'Edit', edit_audio_path(audio), :class => 'btn btn-warning'
-      %td= link_to 'Destroy', audio_path(audio), :method => :delete, :class => 'btn btn-danger'
+      %td= link_to 'Show', audio_path(audio), class: 'btn btn-info'
+      %td= link_to 'Edit', edit_audio_path(audio), class: 'btn btn-warning'
+      %td= link_to 'Destroy', audio_path(audio), method: :delete, class: 'btn btn-danger'
 
 %p
-  = link_to 'New', new_audio_path, :class => 'btn btn-primary'
-  = link_to 'Back', root_path, :class => 'btn'
+  = link_to 'New', new_audio_path, class: 'btn btn-primary'
+  = link_to 'Back', root_path, class: 'btn'

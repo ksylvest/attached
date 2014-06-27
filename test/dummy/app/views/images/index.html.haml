@@ -3,18 +3,18 @@
     List
     %small Images
 %table.table.table-striped.table-bordered
-  %colgroup{ :width => '60%' }
-  %colgroup{ :width => '20%' }
-  %colgroup{ :width => '20%' }
+  %colgroup{ width: '60%' }
+  %colgroup{ width: '20%' }
+  %colgroup{ width: '20%' }
   - @images.each do |image|
     %tr
       %th= image.name
       %td= image.file_extension
       %td= number_to_human_size image.file_size
-      %td= link_to 'Show', image_path(image), :class => 'btn btn-info'
-      %td= link_to 'Edit', edit_image_path(image), :class => 'btn btn-warning'
-      %td= link_to 'Destroy', image_path(image), :method => :delete, :class => 'btn btn-danger'
+      %td= link_to 'Show', image_path(image), class: 'btn btn-info'
+      %td= link_to 'Edit', edit_image_path(image), class: 'btn btn-warning'
+      %td= link_to 'Destroy', image_path(image), method: :delete, class: 'btn btn-danger'
 
 %p
-  = link_to 'New', new_image_path, :class => 'btn btn-primary'
-  = link_to 'Back', root_path, :class => 'btn'
+  = link_to 'New', new_image_path, class: 'btn btn-primary'
+  = link_to 'Back', root_path, class: 'btn'

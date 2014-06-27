@@ -1,5 +1,7 @@
 module Attached
+
   module Definition
+
     def attachment(*args)
       options = args.extract_options!
       args.each do |name|
@@ -8,5 +10,7 @@ module Attached
         column("#{name}_size", :integer, options)
       end
     end
+
   end
+
 end

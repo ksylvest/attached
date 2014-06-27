@@ -22,30 +22,30 @@ class ImagesControllerTest < ActionController::TestCase
 
   test "should create image" do
     assert_difference('Image.count') do
-      post :create, :image => { :name => @image.name, :file => @file }
+      post :create, image: { name: @image.name, file: @file }
     end
   
     assert_redirected_to image_path(assigns(:image))
   end
 
   test "should show image" do
-    get :show, :id => @image.id
+    get :show, id: @image.id
     assert_response :success
   end
 
   test "should get edit" do
-    get :edit, :id => @image.id
+    get :edit, id: @image.id
     assert_response :success
   end
 
   test "should update image" do
-    put :update, :id => @image.id, :image => @image.attributes
+    put :update, id: @image.id, image: @image.attributes
     assert_redirected_to image_path(assigns(:image))
   end
 
   test "should destroy image" do
     assert_difference('Image.count', -1) do
-      delete :destroy, :id => @image.id
+      delete :destroy, id: @image.id
     end
   
     assert_redirected_to images_path

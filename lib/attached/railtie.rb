@@ -2,6 +2,7 @@ require 'attached'
 require 'rails'
 
 module Attached
+
   class Railtie < Rails::Railtie
 
     rake_tasks do
@@ -14,5 +15,7 @@ module Attached
         ActiveRecord::ConnectionAdapters::TableDefinition.send :include, Attached::Definition
       end
     end
+
   end
+
 end

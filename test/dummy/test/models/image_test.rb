@@ -19,31 +19,31 @@ class ImageTest < ActiveSupport::TestCase
   end
 
   test "valid file assignment" do
-    @image = Image.create(:file => @valid)
+    @image = Image.create(file: @valid)
     assert @image.valid?, "valid file assignment failed"
     assert @image.file?, "should have a file"
   end
 
   test "inavlid file assignment" do
-    @image = Image.create(:file => @invalid)
+    @image = Image.create(file: @invalid)
     assert !@image.valid?, "invalid file assignment succeeded"
     assert @image.errors[:file].include? "must be an image file"
   end
 
   test "undefined file assignment" do
-    @image = Image.create(:file => @undefined)
+    @image = Image.create(file: @undefined)
     assert !@image.valid?, "undefined file assignment succeeded"
     assert @image.errors[:file].include? "extension is invalid"
   end
 
   test "too large file assignment" do
-    @image = Image.create(:file => @large)
+    @image = Image.create(file: @large)
     assert !@image.valid?, "invalid file assignment succeeded"
     assert @image.errors[:file].include? "size must be between 2 kilobytes and 2 megabytes"
   end
 
   test "too small file assignment" do
-    @image = Image.create(:file => @small)
+    @image = Image.create(file: @small)
     assert !@image.valid?, "invalid file assignment succeeded"
     assert @image.errors[:file].include? "size must be between 2 kilobytes and 2 megabytes"
   end

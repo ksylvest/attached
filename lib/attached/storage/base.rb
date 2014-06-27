@@ -2,7 +2,6 @@ module Attached
   module Storage
     class Base
 
-
       # Helper for parsing credentials from a hash, file, or string.
       #
       # Usage:
@@ -20,7 +19,6 @@ module Attached
         end
       end
 
-
       # Helper for determining options from a file
       #
       # Usage:
@@ -32,7 +30,6 @@ module Attached
 
       def options(path)
         options = {}
-
         options[:content_type] = case File.extname(path)
         when /tiff/ then "image/tiff"
         when /tif/  then "image/tiff"
@@ -58,10 +55,8 @@ module Attached
         when /txt/  then "text/plain"
         when /csv/  then "text/csv"
         end
-
         return options
       end
-
 
       # Create a new file system storage interface supporting save and destroy operations.
       #
@@ -73,7 +68,6 @@ module Attached
         raise NotImplementedError.new
       end
 
-
       # Access the host for a storage service or return null if local.
       #
       # Usage:
@@ -83,7 +77,6 @@ module Attached
       def host()
         raise NotImplementedError.new
       end
-
 
       # Save a file to a given path (abstract).
       #
@@ -96,7 +89,6 @@ module Attached
         raise NotImplementedError.new
       end
 
-
       # Retrieve a file from a given path.
       #
       # Parameters:
@@ -106,7 +98,6 @@ module Attached
       def retrieve(path)
         raise NotImplementedError.new
       end
-
 
       # Destroy a file at a given path (abstract).
       #

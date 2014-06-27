@@ -1,36 +1,19 @@
+require 'attached/definition'
 require 'attached/attachment'
 require 'attached/railtie'
 
-
 module Attached
-
 
   def self.mock!
     Fog.mock!
   end
-
 
   def self.included(base)
     base.extend ClassMethods
     base.class_attribute :attached_options
   end
 
-
-  module Definition
-    def attachment(*args)
-      options = args.extract_options!
-
-      args.each do |name|
-        column("#{name}_identifier", :string, options)
-        column("#{name}_extension", :string, options)
-        column("#{name}_size", :integer, options)
-      end
-    end
-  end
-
-
   module ClassMethods
-
 
     # Add an attachment to a class.
     #
@@ -43,8 +26,8 @@ module Attached
     # Usage:
     #
     #   has_attached :video
-    #   has_attached :video, :storage => :aws
-    #   has_attached :video, styles => { :mov => { :size => "480p", :format => "mov" } }
+    #   has_attached :video, storage: :aws
+    #   has_attached :video, styles: { mov: { size: "480p", format: "mov" } }
 
     def has_attached(name, options = {})
 
@@ -94,7 +77,6 @@ module Attached
 
     end
 
-
     # Validates an attached size in a specified range or minimum and maximum.
     #
     # Options:
@@ -106,9 +88,9 @@ module Attached
     #
     # Usage:
     #
-    #   validates_attached_size :avatar, :range => 10.megabytes .. 20.megabytes
-    #   validates_attached_size :avatar, :minimum => 10.megabytes, :maximum => 20.megabytes
-    #   validates_attached_size :avatar, :message => "size must be between :minimum and :maximum bytes"
+    #   validates_attached_size :avatar, range: 10.megabytes .. 20.megabytes
+    #   validates_attached_size :avatar, minimum: 10.megabytes, maximum: 20.megabytes
+    #   validates_attached_size :avatar, message: "size must be between :minimum and :maximum bytes"
 
     def validates_attached_size(name, options = {})
 
@@ -129,11 +111,10 @@ module Attached
       message.gsub!(/:minimum/, number_to_size(minimum)) unless minimum == zero
       message.gsub!(/:maximum/, number_to_size(maximum)) unless maximum == infi
 
-      validates_inclusion_of :"#{name}_size", :in => range, :message => message,
-        :if => options[:if], :unless => options[:unless]
+      validates_inclusion_of :"#{name}_size", in: range, message: message,
+        if: options[:if], unless: options[:unless]
 
     end
-
 
     # Validates an attached extension in a specified set.
     #
@@ -143,11 +124,11 @@ module Attached
     #
     # Usage:
     #
-    #   validates_attached_extension :avatar, :is => 'png'
-    #   validates_attached_extension :avatar, :in => %w(png jpg)
-    #   validates_attached_extension :avatar, :in => [:png, :jpg]
-    #   validates_attached_extension :avatar, :in => %w(png jpg), :message => "extension must be :in"
-    #   validates_attached_extension :avatar, :in => %w(png jpg), :message => "extension must be :in"
+    #   validates_attached_extension :avatar, is: 'png'
+    #   validates_attached_extension :avatar, in: %w(png jpg)
+    #   validates_attached_extension :avatar, in: [:png, :jpg]
+    #   validates_attached_extension :avatar, in: %w(png jpg), message: "extension must be :in"
+    #   validates_attached_extension :avatar, in: %w(png jpg), message: "extension must be :in"
 
     def validates_attached_extension(name, options = {})
 
@@ -158,10 +139,9 @@ module Attached
 
       range = options[:in].map { |element| ".#{element}" }
 
-      validates_inclusion_of :"#{name}_extension", :in => range, :message => message,
-        :if => options[:if], :unless => options[:unless]
+      validates_inclusion_of :"#{name}_extension", in: range, message: message,
+        if: options[:if], unless: options[:unless]
     end
-
 
     # Validates that an attachment is included.
     #
@@ -172,21 +152,19 @@ module Attached
     # Usage:
     #
     #   validates_attached_presence :avatar
-    #   validates_attached_presence :avatar, :message => "must be attached"
+    #   validates_attached_presence :avatar, message: "must be attached"
 
     def validates_attached_presence(name, options = {})
 
       message = options[:message]
       message ||= "must be attached"
 
-      validates_presence_of :"#{name}_identifier", :message => message,
-        :if => options[:if], :unless => options[:unless]
+      validates_presence_of :"#{name}_identifier", message: message,
+        if: options[:if], unless: options[:unless]
 
     end
 
-
   private
-
 
     # Convert a number to a human readable size.
     #
@@ -215,12 +193,9 @@ module Attached
       "#{number} #{unit}"
     end
 
-
   end
 
-
   module InstanceMethods
-
 
     # Create or access attachment.
     #
@@ -232,7 +207,6 @@ module Attached
       @_attached_attachments ||= {}
       @_attached_attachments[name] ||= Attachment.new(name, self, self.class.attached_options[name])
     end
-
 
     # Log and save all attached (using specified storage).
     #
@@ -248,7 +222,6 @@ module Attached
       end
     end
 
-
     # Log and destroy all attached (using specified storage).
     #
     # Usage:
@@ -263,8 +236,6 @@ module Attached
       end
     end
 
-
   end
-
 
 end

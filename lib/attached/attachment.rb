@@ -1,17 +1,12 @@
 require 'open-uri'
-
 require 'identifier'
-
 require 'attached/storage'
 require 'attached/storage/error'
-
 require 'attached/processor'
 require 'attached/processor/error'
 
 module Attached
-
   class Attachment
-
 
     attr_reader :file
     attr_reader :name
@@ -33,24 +28,22 @@ module Attached
     attr_reader :storage
     attr_reader :host
 
-
     # A default set of options that can be extended to customize the path, storage or credentials.
     #
     # Usage:
     #
-    #   Attached::Attachment.options = { :storage => :fs, :path => ":name/:style/:identifier:extension" }
+    #   Attached::Attachment.options = { storage: :fs, path: ":name/:style/:identifier:extension" }
 
     def self.options
       @options ||= {
-        :path        => ":name/:style/:identifier:extension",
-        :missing     => ":name/:style/missing:extension",
-        :default     => :original,
-        :medium      => :local,
-        :credentials => {},
-        :metadata    => { 'Cache-Control' => 'max-age=3153600' }
+        path: ":name/:style/:identifier:extension",
+        missing: ":name/:style/missing:extension",
+        default: :original,
+        medium: :local,
+        credentials: {},
+        metadata: { 'Cache-Control' => 'max-age=3153600' }
       }
     end
-
 
     # Initialize a new attachment by providing a name and the instance the attachment is associated with.
     #
@@ -71,7 +64,7 @@ module Attached
     # * :aliases     - An array of aliases
 
     def initialize(name, instance, options = {})
-      options      = self.class.options.clone.merge(options)
+      options = self.class.options.clone.merge(options)
 
       options[:styles]     ||= {}
       options[:aliases]    ||= []
@@ -79,11 +72,9 @@ module Attached
 
       @name        = name
       @instance    = instance
-
       @queue       = {}
       @purge       = []
       @errors      = []
-
       @path        = options[:path]
       @missing     = options[:missing]
       @styles      = options[:styles]
@@ -95,15 +86,11 @@ module Attached
       @processor   = options[:processor]
       @aliases     = options[:aliases]
       @alias       = options[:alias]
-
       @aliases     = self.aliases << self.alias if self.alias
       @processors  = self.processors << self.processor if self.processor
-
       @storage     = Attached::Storage.storage(self.medium, self.credentials)
-
       @host        = self.storage.host
     end
-
 
     # Check if an attachment has been modified.
     #
@@ -115,7 +102,6 @@ module Attached
       instance.changed.include? "#{name}_identifier"
     end
 
-
     # Check if an attachment is present.
     #
     # Usage:
@@ -125,7 +111,6 @@ module Attached
     def file?
       not identifier.blank?
     end
-
 
     # Check if an attachment is present.
     #
@@ -137,7 +122,6 @@ module Attached
       not identifier.blank?
     end
 
-
     # Custom setter for specifying an attachment.
     #
     # Usage:
@@ -147,7 +131,6 @@ module Attached
     def file=(file)
       @file = file.respond_to?(:tempfile) ? file.tempfile : file
     end
-
 
     # Assign an attachment to a file.
     #
@@ -162,7 +145,6 @@ module Attached
         extension ||= file.extension if file.respond_to? :extension
         extension ||= File.extname(file.original_filename) if file.respond_to? :original_filename
         extension ||= File.extname(file.path) if file.respond_to? :path
-
         size ||= file.size if file.respond_to? :size
         size ||= File.size(file.path) if file.respond_to? :path
       end
@@ -176,7 +158,6 @@ module Attached
       process if file
     end
 
-
     # Assign an attachment to a file.
     #
     # Usage:
@@ -185,15 +166,11 @@ module Attached
 
     def url=(url)
       extension = File.extname(url)
-
       file = Tempfile.new(["", extension])
       file.binmode
-
       file << open(url).read
-
       self.assign(file)
     end
-
 
     # Save an attachment.
     #
@@ -206,15 +183,12 @@ module Attached
         path = self.path(style)
         self.storage.save(file, path) if file and path
       end
-
       self.purge.each do |path|
         self.storage.destroy(path)
       end
-
       @purge = []
       @queue = {}
     end
-
 
     # Destroy an attachment.
     #
@@ -229,11 +203,9 @@ module Attached
           self.storage.destroy(self.path(style))
         end
       end
-
       @purge = []
       @queue = {}
     end
-
 
     # Acesss the URL for an attachment.
     #
@@ -245,13 +217,10 @@ module Attached
 
     def url(style = self.default)
       path = self.path(style)
-
       host = self.host
       host = self.aliases[path.hash % self.aliases.count] unless self.aliases.empty?
-
       return "#{host}#{path}"
     end
-
 
     # Access the path for an attachment.
     #
@@ -263,15 +232,12 @@ module Attached
 
     def path(style = self.default)
       path = self.attached? ? @path.clone : @missing.clone
-
       path.gsub!(/:name/, name.to_s)
       path.gsub!(/:style/, style.to_s)
       path.gsub!(/:extension/, extension(style).to_s)
       path.gsub!(/:identifier/, identifier(style).to_s)
-
       return path
     end
-
 
     # Access the size for an attachment.
     #
@@ -283,7 +249,6 @@ module Attached
       return instance_get(:size)
     end
 
-
     # Access the status for an attachment.
     #
     # Usage:
@@ -293,7 +258,6 @@ module Attached
     def status
       instance_get(:status)
     end
-
 
     # Access the extension for an attachment. It will first check the styles
     # to see if one is specified before checking the instance.
@@ -310,7 +274,6 @@ module Attached
       instance_get(:extension)
     end
 
-
     # Access the identifier for an attachment. It will first check the styles
     # to see if one is specified before checking the instance.
     #
@@ -326,7 +289,6 @@ module Attached
       instance_get(:identifier)
     end
 
-
     # Set the size for an attachment.
     #
     # Usage:
@@ -337,7 +299,6 @@ module Attached
       instance_set(:size, size)
     end
 
-
     # Set the status for an attachment.
     #
     # Usage:
@@ -347,7 +308,6 @@ module Attached
     def status=(status)
       instance_set(:size, status)
     end
-
 
     # Set the extension for an attachment. It will act independently of the
     # defined style.
@@ -360,7 +320,6 @@ module Attached
       instance_set(:extension, extension)
     end
 
-
     # Set the identifier for an attachment. It will act independently of the
     # defined style.
     #
@@ -372,18 +331,14 @@ module Attached
       instance_set(:identifier, identifier)
     end
 
-
     # Access the original file .
 
     def reprocess!
       self.file = self.storage.retrieve(self.path)
-
       process
     end
 
-
   private
-
 
     # Helper function for calling processors (will queue default).
     #
@@ -393,21 +348,17 @@ module Attached
 
     def process
       self.queue[self.default] = self.file
-
       begin
-
         self.processors.each do |processor|
           processor = Attached::Processor.processor(processor)
           self.styles.each do |style, options|
             self.queue[style] = processor.process(self.queue[style] || self.file, options, self)
           end
         end
-
       rescue Attached::Processor::Error => error
         self.errors << error.message
       end
     end
-
 
     # Helper function for setting instance variables.
     #
@@ -420,7 +371,6 @@ module Attached
       self.instance.send(setter, value) if instance.respond_to?(setter)
     end
 
-
     # Helper function for getting instance variables.
     #
     # Usage:
@@ -432,7 +382,5 @@ module Attached
       self.instance.send(getter) if instance.respond_to?(getter)
     end
 
-
   end
-
 end

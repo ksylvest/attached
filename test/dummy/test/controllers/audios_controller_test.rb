@@ -22,30 +22,30 @@ class AudiosControllerTest < ActionController::TestCase
 
   test "should create audio" do
     assert_difference('Audio.count') do
-      post :create, :audio => { :name => @audio.name, :file => @file }
+      post :create, audio: { name: @audio.name, file: @file }
     end
   
     assert_redirected_to audio_path(assigns(:audio))
   end
 
   test "should show audio" do
-    get :show, :id => @audio.id
+    get :show, id: @audio.id
     assert_response :success
   end
 
   test "should get edit" do
-    get :edit, :id => @audio.id
+    get :edit, id: @audio.id
     assert_response :success
   end
 
   test "should update audio" do
-    put :update, :id => @audio.id, :audio => @audio.attributes
+    put :update, id: @audio.id, audio: @audio.attributes
     assert_redirected_to audio_path(assigns(:audio))
   end
 
   test "should destroy audio" do
     assert_difference('Audio.count', -1) do
-      delete :destroy, :id => @audio.id
+      delete :destroy, id: @audio.id
     end
   
     assert_redirected_to audios_path

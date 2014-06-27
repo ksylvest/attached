@@ -2,11 +2,9 @@ module Attached
   module Processor
     class Base
 
-
       attr_accessor :file
       attr_accessor :options
       attr_accessor :attachment
-
 
       # Create and run a processor.
       #
@@ -19,7 +17,6 @@ module Attached
       def self.process(file, options = {}, attachment = nil)
         new(file, options, attachment).process
       end
-
 
       # Create a processor.
       #
@@ -35,13 +32,11 @@ module Attached
         @attachment = attachment
       end
 
-
       # Run the processor.
 
       def process
         raise NotImplementedError.new
       end
-
 
     end
   end
