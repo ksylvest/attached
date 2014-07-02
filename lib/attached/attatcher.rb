@@ -16,6 +16,12 @@ module Attached
       new(klass, name, options).define
     end
 
+    # Define the model methods required to run.
+    #
+    # Usage:
+    #
+    #   attacher.define
+
     def define
       saving
       destroying
@@ -27,6 +33,12 @@ module Attached
       flusher
     end
 
+    # Define the saving callbacks.
+    #
+    # Usage:
+    #
+    #   attacher.saving
+
     def saving
       name = @name
       @klass.send(:before_save) do
@@ -35,6 +47,12 @@ module Attached
       end
     end
 
+    # Define the destroying callbacks.
+    #
+    # Usage:
+    #
+    #   attacher.destroying
+
     def destroying
       name = @name
       @klass.send(:before_destroy) do
@@ -42,6 +60,12 @@ module Attached
         send(name).destroy
       end
     end
+
+    # Define the getter.
+    #
+    # Usage:
+    #
+    #   attacher.getters
 
     def getters
       name = @name
@@ -59,12 +83,24 @@ module Attached
       end
     end
 
+    # Define the setter.
+    #
+    # Usage:
+    #
+    #   attacher.setters
+
     def setters
       name = @name
       @klass.send(:define_method, "#{name}=") do |file|
         send(name).assign(file)
       end
     end
+
+    # Define the query.
+    #
+    # Usage:
+    #
+    #   attacher.getters
 
     def query
       name = @name
@@ -73,12 +109,24 @@ module Attached
       end
     end
 
+    # Define the URL.
+    #
+    # Usage:
+    #
+    #   attacher.getters
+
     def url
       name = @name
       @klass.send(:define_method, "#{name}_url=") do |url|
         send(name).url = url
       end
     end
+
+    # Forward validations.
+    #
+    # Usage:
+    #
+    #   attacher.validations
 
     def validations
       name = @name
@@ -88,6 +136,12 @@ module Attached
         end
       end
     end
+
+    # Flush validations.
+    #
+    # Usage:
+    #
+    #   attacher.flusher
 
     def flusher
       name = @name

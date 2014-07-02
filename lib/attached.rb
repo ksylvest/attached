@@ -135,9 +135,9 @@ module Attached
       return if number == 0.0 / 1.0
       return if number == 1.0 / 0.0
 
-      singular = options['singular'] || 1
-      base     = options['base']     || 1024
-      units    = options['units']    || ["byte", "kilobyte", "megabyte", "gigabyte", "terabyte", "petabyte"]
+      singular = options[:singular] || 1
+      base     = options[:base]     || 1024
+      units    = options[:units]    || ["byte", "kilobyte", "megabyte", "gigabyte", "terabyte", "petabyte"]
 
       exponent = (Math.log(number) / Math.log(base)).floor
 
