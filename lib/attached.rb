@@ -1,5 +1,6 @@
 require 'attached/definition'
 require 'attached/attachment'
+require 'attached/attatcher'
 require 'attached/railtie'
 
 module Attached
@@ -10,7 +11,6 @@ module Attached
 
   def self.included(base)
     base.extend ClassMethods
-    base.class_attribute :attached_options
   end
 
   module ClassMethods
@@ -30,51 +30,7 @@ module Attached
     #   has_attached :video, styles: { mov: { size: "480p", format: "mov" } }
 
     def has_attached(name, options = {})
-
-      include InstanceMethods
-
-      self.attached_options ||= {}
-      self.attached_options[name] = options
-
-      before_save :save_attached
-      before_destroy :destroy_attached
-
-      define_method name do
-        attachment_for(name)
-      end
-
-      define_method "#{name}=" do |file|
-        attachment_for(name).assign(file)
-      end
-
-      define_method "#{name}?" do
-        attachment_for(name).attached?
-      end
-
-      define_method "#{name}_url=" do |url|
-        attachment_for(name).url = url
-      end
-
-      validates_each(name) do |record, attr, value|
-        attachment = record.attachment_for(name)
-        attachment.errors.each do |error|
-          record.errors.add(name, error)
-        end
-      end
-
-      after_validation do
-
-        %w(size extension identifier).each do |attribute|
-          if self.errors.include?(:"#{name}_#{attribute}")
-            self.errors[:"#{name}_#{attribute}"].each do |message|
-              self.errors.add(name, message)
-            end
-            self.errors[:"#{name}_#{attribute}"].clear
-          end
-        end
-
-      end
-
+      Attatcher.define(self, name, options)
     end
 
     # Validates an attached size in a specified range or minimum and maximum.
@@ -191,49 +147,6 @@ module Attached
       number == singular ?  unit.gsub!(/s$/, '') : unit.gsub!(/$/, 's')
 
       "#{number} #{unit}"
-    end
-
-  end
-
-  module InstanceMethods
-
-    # Create or access attachment.
-    #
-    # Usage:
-    #
-    #    attachment_for :avatar
-
-    def attachment_for(name)
-      @_attached_attachments ||= {}
-      @_attached_attachments[name] ||= Attachment.new(name, self, self.class.attached_options[name])
-    end
-
-    # Log and save all attached (using specified storage).
-    #
-    # Usage:
-    #
-    #   before_save :save_attached
-
-    def save_attached
-      logger.info "[attached] save attached"
-
-      self.class.attached_options.each do |name, options|
-        attachment_for(name).save
-      end
-    end
-
-    # Log and destroy all attached (using specified storage).
-    #
-    # Usage:
-    #
-    #   before_save :destroy_attached
-
-    def destroy_attached
-      logger.info "[attached] destroy attached"
-
-      self.class.attached_options.each do |name, options|
-        attachment_for(name).destroy
-      end
     end
 
   end
