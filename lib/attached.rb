@@ -56,11 +56,13 @@ module Attached
       minimum = options[:minimum] || options[:in] && options[:in].first || zero
       maximum = options[:maximum] || options[:in] && options[:in].last  || infi
 
-      message = options[:message]
-      message ||= "size must be specified" if minimum == zero && maximum == infi
-      message ||= "size must be a minimum of :minimum" if maximum == infi
-      message ||= "size must be a maximum of :maximum" if minimum == zero
-      message ||= "size must be between :minimum and :maximum"
+      message = case
+      when options[:message] then options[:message]
+      when minimum == zero && maximum == infi then "size must be specified"
+      when maximum == infi then "size must be a minimum of :minimum" 
+      when minimum == zero then "size must be a maximum of :maximum"
+      else "size must be between :minimum and :maximum"
+      end
 
       range = minimum..maximum
 
@@ -88,8 +90,7 @@ module Attached
 
     def validates_attached_extension(name, options = {})
 
-      message = options[:message]
-      message ||= "extension is invalid"
+      message = options[:message] || "extension is invalid"
 
       options[:in] ||= [options[:is]] if options[:is]
 
@@ -112,8 +113,7 @@ module Attached
 
     def validates_attached_presence(name, options = {})
 
-      message = options[:message]
-      message ||= "must be attached"
+      message = options[:message] || "must be attached"
 
       validates_presence_of :"#{name}_identifier", message: message,
         if: options[:if], unless: options[:unless]
