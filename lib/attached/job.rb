@@ -4,10 +4,12 @@ module Attached
     @queue = :attached
 
     def self.perform(klass, id, method)
-      object = eval(klass).find(id)
+      object = klass.constantize.find(id)
+
       attachment = object.send(name)
       attachment.reprocess!
       attachment.status = 'active'
+
       object.save
     end
 
@@ -16,6 +18,8 @@ module Attached
       id = attachment.instance.id
       method = attachment.name
       attachment.status = 'processing'
+
+      self.perform(klass, id, method)
     end
 
   end

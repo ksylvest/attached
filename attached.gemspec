@@ -13,7 +13,6 @@ Gem::Specification.new do |s|
   s.description = "Attached is a Ruby on Rails cloud attachment and processor library inspired by Paperclip. Attached lets users push files to the cloud, then perform remote processing on the files."
 
   s.files       = Dir["{bin,lib}/**/*"] + %w(LICENSE Rakefile README.rdoc)
-  s.test_files  = Dir["test/**/*"]
 
   s.add_dependency "fog"
   s.add_dependency "identifier"
