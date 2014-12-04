@@ -1,11 +1,10 @@
 language: ruby
 rvm:
-  - 2.1.2
+  - 2.1.5
   - 2.0.0
   - 1.9.3
   - jruby
 gemfile:
-  - gemfiles/4.0.12.gemfile
   - gemfiles/4.1.8.gemfile
 script:
   - "sudo apt-get update -qq"
